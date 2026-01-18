@@ -1,18 +1,56 @@
--- --------------------------------------------------------------------------------
--- -- The Yoneda lemma
--- -- (For about the millionth time I have lost the thread.)
--- -- Perhaps useful reading:
--- -- - https://homotopytypetheory.org/2012/05/02/a-type-theoretical-yoneda-lemma/
--- -- - https://math.uchicago.edu/~may/REU2022/REUPapers/Stern.pdf
+module Categories.Theorems.Yoneda where 
 
--- module Yoneda (𝒞 : Category o a e) (A : 𝒞 .Category.Obj) (F : Functor 𝒞 (Setoids o e)) where 
+open import Categories.Prelude
+open import Categories.Category 
+open import Categories.Functor 
 
-  -- YonedaLemma : 
+open import Categories.NaturalTransformation 
 
--- Yoneda₁ :  (𝓒 : Category {ℓ₁} {ℓ₂}) → (A : 𝓒 .Obj) → (F : Functor 𝓒 Sets) → NaturalTransformation _ _ (Hom[ 𝓒 , A ]) F → F .F₀ A 
--- Yoneda₁ 𝓒 A F record { η = η ; nat = nat } = η A (𝓒 .id[_] A) 
+open import Categories.Category.Product
 
--- Yoneda₂ : (𝓒 : Category {ℓ₁} {ℓ₂}) → (A : 𝓒 .Obj) → (F : Functor 𝓒 Sets) → F .F₀ A → NaturalTransformation _ _ (Hom[ 𝓒 , A ]) F
--- Yoneda₂ 𝓒 A F a = record 
---     { η = λ X A⇒X → F .F₁ A⇒X a ; 
---     nat = λ A B A⇒B → extensionality (λ f → cong-app (F .F-∘ f A⇒B) a) } 
+open import Categories.Instances.Sets
+
+open import Categories.Reasoning.Hom 
+
+
+-------------------------------------------------------------------------------
+-- The Yoneda Lemma.
+
+-- Perhaps useful reading:
+-- - https://homotopytypetheory.org/2012/05/02/a-type-theoretical-yoneda-lemma/
+-- - https://math.uchicago.edu/~may/REU2022/REUPapers/Stern.pdf
+
+-------------------------------------------------------------------------------
+-- See Categories.Functor.Hom for a description of hom-functors
+
+open import Categories.Functor.Hom
+
+-------------------------------------------------------------------------------
+-- The covariant Yoneda lemma:
+-- 
+-- For locally small 𝒞 and functor F : 𝒞 → Set, the set 
+-- of natural transformations from Hom(A,—) to F, denoted
+--   Nat(Hom(A,—), F) 
+-- is isomorphic to F(A). Formally:
+--   Nat(Hom(A,—), F) ≃ F(A)
+-- where _≃_ denotes a bijection between sets.
+
+module CovariantYoneda {ℓ} 
+      (𝒞 : Category a o e) 
+      (F : Functor 𝒞 (Setoids ℓ)) where
+
+-------------------------------------------------------------------------------
+-- The contravariant Yoneda lemma:
+-- 
+-- For locally small 𝒞 and functor F : 𝒞ᵒᵖ → Set, the set 
+-- of natural transformations from Hom(—,A) to F, denoted
+--   Nat(Hom(—,A), F) 
+-- is isomorphic to F(A). Formally:
+--   Nat(Hom(—,A), F) ≃ F(A)
+-- where _≃_ denotes a bijection between sets.
+
+module ContravariantYoneda {ℓ}
+      (𝒞 : Category a o e) (
+       F : Functor (𝒞 .op) (Setoids ℓ)) where
+
+

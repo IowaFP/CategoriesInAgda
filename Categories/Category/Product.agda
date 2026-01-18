@@ -26,6 +26,8 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   _×_ .cong-∘ {f = f₁ , f₂} {h₁ , h₂} {g₁ , g₂} {i₁ , i₂} (f₁≈h₁ , f₂≈h₂) (g₁≈i₁ , g₂≈i₂)  = 
     (cong-∘ 𝒞 f₁≈h₁ g₁≈i₁) , (cong-∘ 𝒟 f₂≈h₂ g₂≈i₂) 
 
+
+
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   open Category
   open Functor 
@@ -48,3 +50,24 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   π² .F-id = D.refl-≈
   π² .F-∘ _ _ = D.refl-≈
   π² .F-cong = snd 
+
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} where
+  open Category
+  private
+    module C = Category 𝒞
+    module D = Category 𝒟
+
+  -- The product of two functors---or, when viewing products of categories
+  -- as binary products in the category of categories, we can view 
+  -- ⟨ F ⨾ G ⟩ as giving the unique morphism H : 𝒞 → D × ℰ that commutes
+  -- with π¹ and π².
+  ⟨_⨾_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
+  ⟨ F ⨾ G ⟩ = record
+    { F₀         = λ c → F₀ c , G₀ c -- F₀ , G₀
+    ; fmap       = λ f → (fmap f) , (gmap f) -- < F.F₁ , G.F₁ >
+    ; F-id       = F-id , G-id
+    ; F-∘        = λ f g → F-∘ f g , G-∘ f g
+    ; F-cong     = λ eq → (F-cong eq) , (G-cong eq) 
+    }
+    where 
+      open Functor F ; open Gunctor G

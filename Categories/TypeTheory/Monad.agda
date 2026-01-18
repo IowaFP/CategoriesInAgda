@@ -71,11 +71,11 @@ record BifunctorLaws {ℓ₁} {ℓ₂} {F₀ : Set ℓ₁ → Set ℓ₁ → Set
                       (g₁ : B₁ → C₁) → (f₁ : A₁ → B₁) → 
                       bmap (g₀ ○ f₀) (g₁ ○ f₁) ~ bmap g₀ g₁ ○ bmap f₀ f₁
 
-BFPrj₁ : ∀ {ℓ₁} {F : Set ℓ₁ → Set ℓ₁ → Set ℓ₁} → Bifunctor F → (A : Set ℓ₁) → Functor (λ X → F X A) 
-BFPrj₁ (Bifunc bmap) I .Functor._$_ f = bmap f id 
+Bf-π₁ : ∀ {ℓ₁} {F : Set ℓ₁ → Set ℓ₁ → Set ℓ₁} → Bifunctor F → (A : Set ℓ₁) → Functor (λ X → F X A) 
+Bf-π₁ (Bifunc bmap) I .Functor._$_ f = bmap f id 
 
-BFPrj₂ : ∀ {ℓ₁} {F : Set ℓ₁ → Set ℓ₁ → Set ℓ₁} → Bifunctor F → (A : Set ℓ₁) → Functor (F A) 
-BFPrj₂ (Bifunc bmap) _ .Functor._$_ f = bmap id f
+Bf-π₂ : ∀ {ℓ₁} {F : Set ℓ₁ → Set ℓ₁ → Set ℓ₁} → Bifunctor F → (A : Set ℓ₁) → Functor (F A) 
+Bf-π₂ (Bifunc bmap) _ .Functor._$_ f = bmap id f
 
 -- Functor composition forms a Bifunctor 
 
@@ -143,9 +143,9 @@ record Monoidal {ℓ} (_⊗_ : Set ℓ → Set ℓ → Set ℓ) (BF : Bifunctor 
         α : ∀ {A B C : Set ℓ} → (A ⊗ B) ⊗ C → A ⊗ (B ⊗ C)
         αIso : ∀ {A B C : Set ℓ} → Iso {A = (A ⊗ B) ⊗ C } {B = A ⊗ (B ⊗ C)} α
 
-        leftUnit : let I⊗— = BFPrj₂ BF I in Nat I⊗— IdF 
+        leftUnit : let I⊗— = Bf-π₂ BF I in Nat I⊗— IdF 
         leftUnit-iso : ∀ {A : Set ℓ} → Iso {A = I ⊗ A} {B = A} ((leftUnit .η) {A})
-        rightUnit : let —⊗I = BFPrj₁ BF I in Nat —⊗I IdF 
+        rightUnit : let —⊗I = Bf-π₁ BF I in Nat —⊗I IdF 
         rightUnit-iso : ∀ {A : Set ℓ} → Iso {A = A ⊗ I} {B = A} ((rightUnit .η) {A})        
 
     λₘ = leftUnit .η 

@@ -9,7 +9,29 @@ open import Categories.Instances.Setoids
 open import Categories.Reasoning.Hom 
 
 -------------------------------------------------------------------------------
--- The hom bifunctor
+-- The hom bifunctor: 
+
+-- For locally-small 𝒞, each object A induces a covariant hom-functor 
+--   Hom(A, —) : 𝒞 → Set 
+-- that maps objects B ∈ 𝒞 to the hom set of arrows from A to B:
+--   Hom(A, B) = { f ∣ f : A ⇒ B } 
+-- and maps arrows f : B ⇒ C via pre-composition
+--   Hom(A, f) : Hom(A, B) → Hom(A, C) 
+--   Hom(A, f)(g : A ⇒ B) = f ∘ g 
+-- Dually, each object A in 𝒞 likewise induces a contravariant hom-functor
+--   Hom(—, A) : 𝒞ᵒᵖ → Set 
+-- such that:
+--   Hom(B, A) = { f ∣ f : B ⇒ A } 
+-- and, for g : B → C,
+--   Hom(g, A) : Hom(C, A) → Hom(B, A)
+--   Hom(g, A)(f : C ⇒ A) = f ∘ g 
+-- More generally, each hom-functor is a projection from the bi-functor
+--   - Hom(—,—) : 𝒞ᵒᵖ × 𝒞 → Set 
+--   - Hom(A, B) = { f ∣ f : A ⇒ B} 
+-- And for arrows f : A ⇒ B and g : C ⇒ D, 
+--   - Hom(f , g) : Hom(B, C) → Hom(A, D)
+--   - Hom(f, g)(h : B ⇒ C) = g ∘ h ∘ f
+-------------------------------------------------------------------------------
 
 module _ (𝒞 : Category a o e) where
   open Category 𝒞 
@@ -36,9 +58,9 @@ module _ (𝒞 : Category a o e) where
 
   -- Covariant hom functor 
   Hom[_][_,—] : Obj → Functor 𝒞 (Setoids o e)
-  Hom[_][_,—] A = BFPrj₂ Hom[_][—,—] A 
+  Hom[_][_,—] A = Bf-π₂ Hom[_][—,—] A 
 
   -- Contravariant hom functor
   Hom[_][—,_] : Obj → Functor 𝒞ᵒᵖ (Setoids o e)
-  Hom[_][—,_] A = BFPrj₁ Hom[_][—,—] A
+  Hom[_][—,_] A = Bf-π₁ Hom[_][—,—] A
   

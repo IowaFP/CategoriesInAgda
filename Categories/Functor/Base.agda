@@ -31,6 +31,25 @@ Endofunctor : Category o a e → Set (lsuc o ⊔ a ⊔ e)
 Endofunctor 𝒞 = Functor 𝒞 𝒞 
 
 --------------------------------------------------------------------------------
+-- Common syntax 
+
+module Gunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (G : Functor 𝒞 𝒟) where 
+  open Functor G 
+    renaming (F₀ to G₀ ; 
+            fmap to gmap ; 
+            F-id to G-id ; 
+             F-∘ to G-∘ ; 
+          F-cong to G-cong) public
+
+module Hunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (H : Functor 𝒞 𝒟) where 
+  open Functor H 
+    renaming (F₀ to H₀ ; 
+            fmap to hmap ; 
+            F-id to H-id ; 
+             F-∘ to H-∘ ; 
+          F-cong to H-cong) public
+
+--------------------------------------------------------------------------------
 -- Functor composition
 
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} (F : Functor 𝒟 ℰ) (G : Functor 𝒞 𝒟) where 
@@ -69,6 +88,21 @@ module _ {𝒞 : Category o a e} where
   IdF .F-id = refl-≈
   IdF .F-∘ _ _ = refl-≈ 
   IdF .F-cong = id 
+
+
+--------------------------------------------------------------------------------
+-- The constant functor
+
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (A : 𝒟 .Category.Obj) where 
+  open Category 𝒟
+  open Functor 
+
+  Const : Functor 𝒞 𝒟 
+  Const .F₀ _ = A
+  Const .fmap f = Id
+  Const .F-id = refl-≈
+  Const .F-∘ f g = sym-≈ left-id
+  Const .F-cong eq = refl-≈ 
 
 --------------------------------------------------------------------------------
 -- Opposite functors

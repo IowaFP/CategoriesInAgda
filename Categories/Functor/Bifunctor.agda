@@ -27,20 +27,8 @@ module _ {𝒞 : Category o₁ a₁ e₁}
   open Functor F   
 
   -- Projecting a unary functor from a bifunctor
-  BFPrj₁ : (A : 𝒟 .Obj) → Functor 𝒞 ℰ
-  BFPrj₁ A .F₀ = F₀ ○ (_, A) 
-  BFPrj₁ A .fmap  f = fmap (f , Id) 
-  BFPrj₁ A .F-id  = F-id 
-  BFPrj₁ A .F-∘ f g = trans-≈ ⦃ ℰ ⦄ 
-    (F-cong ((refl-≈ {{𝒞}}) , sym-≈ {{𝒟}} (right-id {{𝒟}}))) 
-    (F-∘ (f , Id) (g , Id)) 
-  BFPrj₁ A .F-cong f≈g = F-cong (f≈g , (refl-≈ {{𝒟}}))
+  Bf-π₁ : (A : 𝒟 .Obj) → Functor 𝒞 ℰ
+  Bf-π₁ A = F ∘F ⟨ IdF ⨾ Const A ⟩
 
-  BFPrj₂ : (A : 𝒞 .Obj) → Functor 𝒟 ℰ
-  BFPrj₂ A .F₀ = F₀ ○ (A ,_) 
-  BFPrj₂ A .fmap  f = fmap (Id {{𝒞}} , f)
-  BFPrj₂ A .F-id  = F-id 
-  BFPrj₂ A .F-∘ f g = trans-≈ ⦃ ℰ ⦄ 
-    (F-cong ((sym-≈ {{𝒞}} (right-id {{𝒞}})) , (refl-≈ {{𝒟}}))) 
-    (F-∘ (Id {{𝒞}} , f) (Id {{𝒞}} , g))
-  BFPrj₂ A .F-cong f≈g = F-cong ((refl-≈ {{𝒞}}) , f≈g)    
+  Bf-π₂ : (A : 𝒞 .Obj) → Functor 𝒟 ℰ
+  Bf-π₂ A = F ∘F ⟨ Const A ⨾ IdF ⟩ 

@@ -13,9 +13,13 @@
 - Category Theory in Context. Emily Riehl.
   - https://emilyriehl.github.io/files/context.pdf
 
-## Cheat sheets
+## Cheat sheets / short texts
 - Basic Concepts in Category Theory. Emily Riehl. 
   - https://math.jhu.edu/~eriehl/266x/basic.pdf
+- Introduction to Category Theory and the Yoneda Lemma. Alex Stern.
+  - https://math.uchicago.edu/~may/REU2022/REUPapers/Stern.pdf
+- A Type Theoretical Yoneda Lemma. Egbert Rijke, 2012.
+  - https://homotopytypetheory.org/2012/05/02/a-type-theoretical-yoneda-lemma/
 
 # Papers 
 
