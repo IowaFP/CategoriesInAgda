@@ -1,0 +1,7 @@
+name: Categories
+depend: standard-library
+include : ./
+
+flags:
+  --allow-unsolved-metas
+

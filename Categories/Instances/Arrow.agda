@@ -1,0 +1,1 @@
+-- Arrow category. See Awodey pp. 26-27

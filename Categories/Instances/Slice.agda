@@ -1,0 +1,1 @@
+-- Slice category. See Awodey pp 27
