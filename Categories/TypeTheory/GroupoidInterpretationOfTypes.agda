@@ -11,8 +11,8 @@ open import Categories.Constructions.Preorder
 open import Categories.Constructions.Discrete
 open import Categories.Constructions.Initial
 
-open import Categories.Instances.Groupoids 
-open import Categories.Instances.Cats
+open import Categories.Instances.Groupoid
+open import Categories.Instances.Cat
 
 open PropositionalEquality hiding (isPreorder ; preorder ; _⨾_)
 
@@ -91,7 +91,7 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
 --------------------------------------------------------------------------------
 -- Δ[ ⊤ ] is terminal in the category of groupoids.
 
-⊤-terminal : isTerminal (Groupoids o o o) (Δ[ ≡-setoid {A = ⊤} ])
+⊤-terminal : isTerminal (𝐆𝐩𝐝 o o o) (Δ[ ≡-setoid {A = ⊤} ])
 ⊤-terminal {o = o} = term F λ {𝒞} → unique {𝒞}
   where 
     F : ∀ (𝒞 : GroupoidCategory o o o) → Functor {o₂ = o} {e₂ = o} (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)
@@ -110,7 +110,7 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
 -- Each discrete groupoid is isomorphic to some Δ[ X ] 
 
 module _ {o} where 
-  open Isomorphism (Groupoids o o o) using (_≃_ ; _,_)
+  open Isomorphism (𝐆𝐩𝐝 o o o) using (_≃_ ; _,_)
 
   -- This definition really highlights that I need better tooling for notation
   -- and to possibly reorganize/re-modularize the definitions in Categories.Arrows.

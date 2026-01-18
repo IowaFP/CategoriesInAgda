@@ -11,19 +11,19 @@ open import Categories.Constructions.FAlgebra hiding (⦅_⦆)
 open import Categories.Constructions.Initial
 
 open import Categories.Reasoning.Hom 
-open import Categories.Instances.Sets
+open import Categories.Instances.Set
 
 -- ------------------------------------------------------------------------------
 -- The naturals are an initial F-Algebra in the category F-Alg of F-Algebras on Sets.
 
 module NatInitial where 
-  open Category (Sets lzero)
+  open Category (𝐒𝐞𝐭 lzero)
   open PropositionalEquality
   open FAlg 
-  open Isomorphism (Sets lzero) 
+  open Isomorphism (𝐒𝐞𝐭 lzero) 
   open Hom 
 
-  NatF : Endofunctor (Sets lzero)
+  NatF : Endofunctor (𝐒𝐞𝐭 lzero)
   NatF .Functor.F₀ = λ X → ⊤ {lzero} or X
   NatF .Functor.fmap f (left t) = left t
   NatF .Functor.fmap f (right n) = right (f n)
@@ -37,7 +37,7 @@ module NatInitial where
   open Functor NatF 
   
   AlgCat : Category (lsuc lzero) lzero lzero 
-  AlgCat = FAlgebras (Sets lzero) NatF 
+  AlgCat = FAlgebras (𝐒𝐞𝐭 lzero) NatF 
 
   -- We need to leverage Agda data types to construct fixed-points
   data Nat : Set where 
@@ -45,7 +45,7 @@ module NatInitial where
     suc  : Nat → Nat 
   
   -- Likewise we need Agda's recursion to define an initial algebra
-  NatIn : FAlg (Sets lzero) NatF
+  NatIn : FAlg (𝐒𝐞𝐭 lzero) NatF
   NatIn = Nat , (λ { (left x) → zero
                    ; (right y) → suc y }) 
 
@@ -53,7 +53,7 @@ module NatInitial where
   -- write that 
   --   cata (A , φ) n = φ ○ (fmap (cata φ)) ○ NatOut
   -- Instead we'll describe NatOut in terms of cata.
-  cata : (φ : FAlg (Sets lzero) NatF) → Nat → φ .Carrier 
+  cata : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → Nat → φ .Carrier 
   cata (A , φ) zero = φ (left tt)
   cata (A , φ) (suc n) = φ (right (cata (A , φ) n))  
 
@@ -73,7 +73,7 @@ module NatInitial where
         inv₂ (right y) = cong right (inv₁ y) 
 
   -- The catamorphism indeed commutes
-  ⦅_⦆ : (φ : FAlg (Sets lzero) NatF) → Hom NatIn φ
+  ⦅_⦆ : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → Hom NatIn φ
   ⦅ (A , φ) ⦆ = cata (A , φ) , λ { (left x) → refl
                                  ; (right y) → refl } 
                                   
@@ -82,7 +82,7 @@ module NatInitial where
   NatInitial = init (λ φ → ⦅ φ ⦆) λ { {φ} f → unique φ f }
     where 
       open ≡-Reasoning 
-      unique : ∀ (φ : FAlg (Sets lzero) NatF) → (h : Hom NatIn φ) → (n : Nat) → h .hom n ≡ cata φ n
+      unique : ∀ (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → (h : Hom NatIn φ) → (n : Nat) → h .hom n ≡ cata φ n
       unique (A , φ) (f , commutes) zero = commutes (left tt)
       unique (A , φ) (f , commutes) (suc n) = begin 
         f (suc n)                  ≡⟨ commutes (right n) ⟩ 

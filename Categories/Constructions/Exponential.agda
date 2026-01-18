@@ -89,12 +89,12 @@ private module Demo where
     eval (f , y) = f y 
 
     -- We may obviously curry any tuple function
-    curry : (g : (X * Y) → Z) → Σ[ λg ∈ (X → Y → Z) ] (eval ○ cross λg id ≡ g)
-    curry g = (λ x y → g (x , y)) , refl 
+    curry′ : (g : (X * Y) → Z) → Σ[ λg ∈ (X → Y → Z) ] (eval ○ cross λg id ≡ g)
+    curry′ g = (λ x y → g (x , y)) , refl 
 
     -- Further, λg is unique
     unique′ : (g : (X * Y) → Z) (λg : X → Y → Z) → 
               eval ○ (cross λg id) ≡ g → 
-              λg ≡ curry g .fst 
+              λg ≡ curry′ g .fst 
     unique′ g λg refl = refl              
 

@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-module Categories.Instances.Sets where 
+module Categories.Instances.Set where 
 
 open import Data.List.Properties
 
@@ -21,18 +21,18 @@ open PropositionalEquality
 module _ (ℓ : Level) where 
   open Category
   open Functions₁ using (_~_ ; ~-equiv ; ~-setoid)
-
-  Sets : Category (lsuc ℓ) ℓ ℓ
-  Sets .Obj = Set ℓ 
-  Sets ._⇒_ A B =  A → B 
-  Sets ._∘_ f g = f ○ g 
-  Sets .Id = id 
-  Sets ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
-  Sets .eqv {A} {B} = ~-equiv (≡-setoid {_} {B})
-  Sets .cong-∘ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
-  Sets .idᵣ _ = refl 
-  Sets .idₗ _ = refl 
-  Sets .assₗ _ = refl 
+  
+  𝐒𝐞𝐭 : Category (lsuc ℓ) ℓ ℓ
+  𝐒𝐞𝐭 .Obj = Set ℓ 
+  𝐒𝐞𝐭 ._⇒_ A B =  A → B 
+  𝐒𝐞𝐭 ._∘_ f g = f ○ g 
+  𝐒𝐞𝐭 .Id = id 
+  𝐒𝐞𝐭 ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
+  𝐒𝐞𝐭 .eqv {A} {B} = ~-equiv (≡-setoid {_} {B})
+  𝐒𝐞𝐭 .cong-∘ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
+  𝐒𝐞𝐭 .idᵣ _ = refl 
+  𝐒𝐞𝐭 .idₗ _ = refl 
+  𝐒𝐞𝐭 .assₗ _ = refl 
 
 -- -----------------------------------------------------------------------------
 -- A note on equality:
@@ -58,15 +58,15 @@ private module Problem where
   -- where λg x : Y → Z, but what I would really like is the goal:
   --   λg x y ≡ g (x , y)
   -- To demonstrate:
-  open Category (Sets lzero)
+  open Category (𝐒𝐞𝐭 lzero)
   problem : ∀ {A B C : Obj} (f g : A ⇒ (B ⇒ C)) → 
             (f ≈ g) ≡ (∀ (x : A) → f x ≡ g x)
   problem f g = refl 
 
 ------------------------------------------------------------------------------
--- As an example, List is an Endofunctor on Sets
+-- As an example, List is an Endofunctor on 𝐒𝐞𝐭
 
-ListFunctor : Endofunctor (Sets ℓ)
+ListFunctor : Endofunctor (𝐒𝐞𝐭 ℓ)
 ListFunctor = record 
   { F₀ = List 
   ; fmap = map 
@@ -75,45 +75,45 @@ ListFunctor = record
   ; F-cong = map-cong  }
 
 -- ------------------------------------------------------------------------------
--- initial and terminal objects in Sets
+-- initial and terminal objects in 𝐒𝐞𝐭
 
 -- ⊤ is a terminal object in Set.
-SetTerminal : ∀ {o} → isTerminal (Sets o) ⊤ 
+SetTerminal : ∀ {o} → isTerminal (𝐒𝐞𝐭 o) ⊤ 
 SetTerminal = term (λ _ _ → tt) (λ f a → refl)
 
 -- ⊥ is an initial object in Set.
-SetInitial : ∀ {o} → isInitial (Sets o) ⊥ 
+SetInitial : ∀ {o} → isInitial (𝐒𝐞𝐭 o) ⊥ 
 SetInitial = init (λ _ ()) λ { _ () }
 
 -------------------------------------------------------------------------
--- _*_ forms products on Sets
+-- _*_ forms products on 𝐒𝐞𝐭
 
 open hasProduct  
 open AdmitsProducts 
 
-SetsProducts : ∀ ℓ → AdmitsProducts (Sets ℓ) 
-SetsProducts _ .products X Y .X₁×X₂ = X * Y
-SetsProducts _ .products X Y .`π₁ = fst
-SetsProducts _ .products X Y .`π₂ = snd
-SetsProducts _ .products X Y .⟨_⨾_⟩ f g x = (f x , g x)
-SetsProducts _ .products X Y .project₁ _ = refl 
-SetsProducts _ .products X Y .project₂ _ = refl 
-SetsProducts _ .products X Y .unique eq₁ eq₂ x = cong₂ _,_ (sym (eq₁ x)) (sym (eq₂ x)) 
+𝐒𝐞𝐭Products : ∀ ℓ → AdmitsProducts (𝐒𝐞𝐭 ℓ) 
+𝐒𝐞𝐭Products _ .products X Y .X₁×X₂ = X * Y
+𝐒𝐞𝐭Products _ .products X Y .`π₁ = fst
+𝐒𝐞𝐭Products _ .products X Y .`π₂ = snd
+𝐒𝐞𝐭Products _ .products X Y .⟨_⨾_⟩ f g x = (f x , g x)
+𝐒𝐞𝐭Products _ .products X Y .project₁ _ = refl 
+𝐒𝐞𝐭Products _ .products X Y .project₂ _ = refl 
+𝐒𝐞𝐭Products _ .products X Y .unique eq₁ eq₂ x = cong₂ _,_ (sym (eq₁ x)) (sym (eq₂ x)) 
 
 -------------------------------------------------------------------------
--- _→_ forms exponentials on Sets
+-- _→_ forms exponentials on 𝐒𝐞𝐭
 
 module _ ℓ where 
-  open AdmitsProducts (SetsProducts ℓ) 
+  open AdmitsProducts (𝐒𝐞𝐭Products ℓ) 
   open hasExponential
   open AdmitsExponentials
   open import Categories.Prelude.Equality.Extensionality.Propositional
   
-  SetsExponentials : AdmitsExponentials (Sets ℓ) (SetsProducts ℓ)
-  SetsExponentials .exponentials Z Y .Zʸ = Y → Z 
-  SetsExponentials .exponentials Z Y .`eval (f , y) = f y
-  SetsExponentials .exponentials Z Y .`λ[_]  f x y = f (x , y)
-  SetsExponentials .exponentials Z Y .`transpose g (x , y) = refl
+  𝐒𝐞𝐭Exponentials : AdmitsExponentials (𝐒𝐞𝐭 ℓ) (𝐒𝐞𝐭Products ℓ)
+  𝐒𝐞𝐭Exponentials .exponentials Z Y .Zʸ = Y → Z 
+  𝐒𝐞𝐭Exponentials .exponentials Z Y .`eval (f , y) = f y
+  𝐒𝐞𝐭Exponentials .exponentials Z Y .`λ[_]  f x y = f (x , y)
+  𝐒𝐞𝐭Exponentials .exponentials Z Y .`transpose g (x , y) = refl
   -- Begrudgingly need extensionality, here. See note above.
-  SetsExponentials .exponentials Z Y .`unique g λg λg-exponential x = 
+  𝐒𝐞𝐭Exponentials .exponentials Z Y .`unique g λg λg-exponential x = 
     extensionality (λ y → λg-exponential (x , y)) 

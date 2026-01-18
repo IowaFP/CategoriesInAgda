@@ -7,7 +7,7 @@ open import Categories.Category
 open import Categories.Functor
 open import Categories.NaturalTransformation
 open import Categories.Constructions.Initial
-open import Categories.Instances.Sets
+open import Categories.Instances.Set
 
 open import Categories.Prelude.Equality.Heterogeneous
 open HeterogeneousEquality
@@ -55,20 +55,20 @@ module _ where
   open FamMorphism
   -- -- The category of families of (small) sets
   -- TODO clean all of this up
-  Families : ∀ (ℓ₁ ℓ₂ : Level) → Category (lsuc (ℓ₁ ⊔ ℓ₂)) (ℓ₁ ⊔ ℓ₂) (ℓ₁ ⊔ ℓ₂) 
-  Families ℓ₁ ℓ₂ .Obj = Fam ℓ₁ ℓ₂
-  Families ℓ₁ ℓ₂ ._⇒_ =  FamMorphism
-  Families ℓ₁ ℓ₂ ._∘_ (i₁ , g₁) (i₂ , g₂) = i₁ ○ i₂ , λ x a → g₁ (i₂ x) (g₂ x a)
-  Families ℓ₁ ℓ₂ .Id = id , (λ _ → id)
+  𝐅𝐚𝐦 : ∀ (ℓ₁ ℓ₂ : Level) → Category (lsuc (ℓ₁ ⊔ ℓ₂)) (ℓ₁ ⊔ ℓ₂) (ℓ₁ ⊔ ℓ₂) 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .Obj = Fam ℓ₁ ℓ₂
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ ._⇒_ =  FamMorphism
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ ._∘_ (i₁ , g₁) (i₂ , g₂) = i₁ ○ i₂ , λ x a → g₁ (i₂ x) (g₂ x a)
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .Id = id , (λ _ → id)
   -- This definition of equality is very difficult to work with.
   -- N.b. Agda errors are from --cumulativity flag
-  Families ℓ₁ ℓ₂ ._≈_  {A = A} {B} (i₁ , g₁) (i₂ , g₂) =  
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ ._≈_  {A = A} {B} (i₁ , g₁) (i₂ , g₂) =  
     ∀ (x : A .index) → (i₁ x ≡ i₂ x) * (∀ (y : A .Fam.elements x) → g₁ x y ≅ g₂ x y)
-  Families ℓ₁ ℓ₂ .eqv  .IsEquivalence.refl x = refl , λ _ → refl 
-  Families ℓ₁ ℓ₂ .eqv  .IsEquivalence.sym x≈y i = cross sym (λ a y → sym-≅ (a y)) (x≈y i) 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.refl x = refl , λ _ → refl 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.sym x≈y i = cross sym (λ a y → sym-≅ (a y)) (x≈y i) 
   -- There must be a cleverer way of writing this
-  Families ℓ₁ ℓ₂ .eqv  .IsEquivalence.trans x≈y y≈z i = (cross (trans (x≈y i .fst)) (λ a y → trans-≅ (x≈y i .snd y) (a y)) (y≈z i)) 
-  Families ℓ₁ ℓ₂ .cong-∘ {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = sorry 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.trans x≈y y≈z i = (cross (trans (x≈y i .fst)) (λ a y → trans-≅ (x≈y i .snd y) (a y)) (y≈z i)) 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .cong-∘ {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = sorry 
     -- cong-both (λ y → eq₁ y .fst) (eq₂ x .fst) , λ y → 
     -- cong-app-≅ {x = g x y} {j x y} 
     --   (subst (λ X → (λ _ → C .B (i₁ (i₃ x))) ≅ (λ _ → C .B X)) (cong-both (λ y → eq₁ y .fst) (eq₂ x .fst)) {! refl     !}) 
@@ -77,9 +77,9 @@ module _ where
     --   (cong-app-≅ 
     --     {! subst (λ X → (λ z → B₁ .B z → C .B (i₁ z)) ≅ (λ z → B₁ .B z → C .B (i₂ z)))   !} f h 
     --     {!   !} (≡-to-≅ (eq₂ x .fst))) (eq₂ x .snd y) 
-  Families ℓ₁ ℓ₂ .idᵣ x = refl , λ _ → refl
-  Families ℓ₁ ℓ₂ .idₗ x = refl , λ _ → refl
-  Families ℓ₁ ℓ₂ .assₗ x = refl , λ _ → refl
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .idᵣ x = refl , λ _ → refl
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .idₗ x = refl , λ _ → refl
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .assₗ x = refl , λ _ → refl
 
 
 {- ------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ record CWF {ℓ} (Con : Category o a e) : Set (lsuc (lsuc o) ⊔ e ⊔ a ⊔ lsu
   Conᵒᵖ = op 
 
   field 
-    Ty : Functor Conᵒᵖ (Families o ℓ)
+    Ty : Functor Conᵒᵖ (𝐅𝐚𝐦 o ℓ)
     ⟨⟩ : Obj 
     ⟨⟩-terminal : isTerminal Con ⟨⟩ 
   open Functor Ty 
@@ -204,31 +204,31 @@ record CWF {ℓ} (Con : Category o a e) : Set (lsuc (lsuc o) ⊔ e ⊔ a ⊔ lsu
 -- A trivial CWF model
 
 module _ where 
-  open Category (Sets lzero)
+  open Category (𝐒𝐞𝐭 lzero)
   open CWF
   open Fam ; open FamMorphism 
   open Functor 
 
-  SetsCWF : CWF {ℓ = lzero} (Sets lzero) 
+  SetCWF : CWF {ℓ = lzero} (𝐒𝐞𝐭 lzero) 
   -- We let Ty(Γ) = the set of Γ-indexed sets
-  SetsCWF .Ty .F₀ Γ .index = Γ → Set 
+  SetCWF .Ty .F₀ Γ .index = Γ → Set 
   -- Let Term Γ A = { A(x) ∣ x ∈ Γ }
-  SetsCWF .Ty .F₀ Γ .elements A = ∀ (x : Γ) → A x
-  SetsCWF .Ty .fmap σ = (λ Ty → Ty ○ σ) , (λ Ty Tm → Tm ○ σ)
-  SetsCWF .Ty .F-∘ = sorry
-  SetsCWF .Ty .F-id = λ Ty → refl , λ _ → refl
-  SetsCWF .Ty .F-cong = sorry
-  SetsCWF .⟨⟩ = ⊤
-  SetsCWF .⟨⟩-terminal = SetTerminal
-  SetsCWF ._▷_ Γ A = Σ[ x ∈ Γ ] (A x)
+  SetCWF .Ty .F₀ Γ .elements A = ∀ (x : Γ) → A x
+  SetCWF .Ty .fmap σ = (λ Ty → Ty ○ σ) , (λ Ty Tm → Tm ○ σ)
+  SetCWF .Ty .F-∘ = sorry
+  SetCWF .Ty .F-id = λ Ty → refl , λ _ → refl
+  SetCWF .Ty .F-cong = sorry
+  SetCWF .⟨⟩ = ⊤
+  SetCWF .⟨⟩-terminal = SetTerminal
+  SetCWF ._▷_ Γ A = Σ[ x ∈ Γ ] (A x)
   -- Here we confirm that p and q really are projections.
-  SetsCWF .p Con Ty (Γ , τ) = Γ
-  SetsCWF .q Γ τ (σ , τ[σ]) = τ[σ]
-  SetsCWF .⟨_,_∋_⟩ σ τ M δ = (σ δ) , (M δ)
-  SetsCWF .p-law Δ Γ σ τ M x = refl
-  SetsCWF .q-law Δ Γ σ τ M = refl
+  SetCWF .p Con Ty (Γ , τ) = Γ
+  SetCWF .q Γ τ (σ , τ[σ]) = τ[σ]
+  SetCWF .⟨_,_∋_⟩ σ τ M δ = (σ δ) , (M δ)
+  SetCWF .p-law Δ Γ σ τ M x = refl
+  SetCWF .q-law Δ Γ σ τ M = refl
   -- Need extensionality, again, and I'm not sure a way around it.
-  SetsCWF .unique Δ Γ σ τ M θ plaw qlaw x with 
+  SetCWF .unique Δ Γ σ τ M θ plaw qlaw x with 
         θ x   | plaw x | cong-app-≅ {x = x} {x} {! plaw x  !} (snd ○ θ) M qlaw refl
   ... | δ , t | refl   | refl = refl 
 
@@ -248,10 +248,10 @@ module _ {𝒞 𝒟 : Category o a e} where
   record CWFMorphism {ℓ} (𝒜 : CWF {ℓ = ℓ} 𝒞) (ℬ : CWF {ℓ = ℓ} 𝒟) :  Set {!   !} where
     private 
       module A = CWF 𝒜 ; module B = CWF ℬ
-    Ty₁ : Functor C.op (Families o ℓ)
+    Ty₁ : Functor C.op (𝐅𝐚𝐦 o ℓ)
     Ty₁ = A.Ty 
 
-    Ty₂ : Functor D.op (Families o ℓ)
+    Ty₂ : Functor D.op (𝐅𝐚𝐦 o ℓ)
     Ty₂ = B.Ty 
 
     field 

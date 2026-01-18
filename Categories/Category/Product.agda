@@ -69,7 +69,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
   -- _×_ forms a product on the category of categories, where 
   -- ⟨ F , G ⟩ is the unique morphism such that 
   -- F ≃ π¹ ∘ ⟨ F , G ⟩ and G ≃  π² ∘ ⟨ F , G ⟩. 
-  -- (See Categories.Instances.Cats)
+  -- (See Categories.Instances.Cat)
   ⟨_,_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
   ⟨ F , G ⟩ = record
     { F₀         = < F₀ , G₀ >

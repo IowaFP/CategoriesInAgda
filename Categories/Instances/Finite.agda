@@ -20,60 +20,60 @@ data Zero {ℓ} : Set ℓ where
 module _ where 
   open Category 
     
-  `0 : Category o o o 
-  `0 .Obj = Zero
-  `0 ._⇒_ _ _ = ⊥ 
-  `0 ._∘_ () 
-  `0 .Id {()} 
-  `0 ._≈_ ()
-  `0 .eqv .IsEquivalence.refl {()}
-  `0 .eqv .IsEquivalence.sym {()}
-  `0 .eqv .IsEquivalence.trans {k = ()}
-  `0 .idᵣ {f = ()}
-  `0 .idₗ {f = ()}
-  `0 .assₗ {h = ()}
-  `0 .cong-∘ {f = ()}
+  𝟘 : Category o o o 
+  𝟘 .Obj = Zero
+  𝟘 ._⇒_ _ _ = ⊥ 
+  𝟘 ._∘_ () 
+  𝟘 .Id {()} 
+  𝟘 ._≈_ ()
+  𝟘 .eqv .IsEquivalence.refl {()}
+  𝟘 .eqv .IsEquivalence.sym {()}
+  𝟘 .eqv .IsEquivalence.trans {k = ()}
+  𝟘 .idᵣ {f = ()}
+  𝟘 .idₗ {f = ()}
+  𝟘 .assₗ {h = ()}
+  𝟘 .cong-∘ {f = ()}
 
 module _ {ℓ} where 
-  open Category (`0 {ℓ})
+  open Category (𝟘 {ℓ})
 
-  `0-no-objects : ¬ Obj
-  `0-no-objects () 
+  𝟘-no-objects : ¬ Obj
+  𝟘-no-objects () 
   
-  `0-no-arrows : ∀ (A B : Obj) → ¬ (A ⇒ B) 
-  `0-no-arrows () 
+  𝟘-no-arrows : ∀ (A B : Obj) → ¬ (A ⇒ B) 
+  𝟘-no-arrows () 
 
 -- --------------------------------------------------------------------------------
 -- -- The category with one object and one arrow
 
 data One : Set where 
   A : One 
-
+ 
 data _⇒₁_ : One → One → Set where 
-  ↻ : A ⇒₁ A 
+  ↻ : A ⇒₁ A  
 
 module _ where 
   open Category 
-  `1 : Category lzero lzero lzero 
-  `1 .Obj = One
-  `1 ._⇒_ X Y = X ⇒₁ Y 
-  `1 ._∘_ {X} {Y} {Z} ↻ ↻ = ↻ 
-  `1 .Id {A} = ↻ 
-  `1 ._≈_ = _≡_ 
-  `1 .eqv = ≡-equiv 
-  `1 .idᵣ {f = ↻} = refl 
-  `1 .idₗ {f = ↻} = refl
-  `1 .assₗ {A} {D = A} {↻} {↻} {↻} = refl 
-  `1 .cong-∘ {A} {C = C} refl refl  = refl
+  𝟙 : Category lzero lzero lzero 
+  𝟙 .Obj = One
+  𝟙 ._⇒_ X Y = X ⇒₁ Y 
+  𝟙 ._∘_ {X} {Y} {Z} ↻ ↻ = ↻ 
+  𝟙 .Id {A} = ↻ 
+  𝟙 ._≈_ = _≡_ 
+  𝟙 .eqv = ≡-equiv 
+  𝟙 .idᵣ {f = ↻} = refl 
+  𝟙 .idₗ {f = ↻} = refl
+  𝟙 .assₗ {A} {D = A} {↻} {↻} {↻} = refl 
+  𝟙 .cong-∘ {A} {C = C} refl refl  = refl
 
 module _ where 
-  open Category `1 
+  open Category 𝟙 
 
-  `1-one-object : ∀ (x y : Obj) → x ≡ y 
-  `1-one-object A A = refl 
+  𝟙-one-object : ∀ (x y : Obj) → x ≡ y 
+  𝟙-one-object A A = refl 
   
-  `1-one-arrow : ∀ (A : Obj) (f : A ⇒ A) → f ≈ Id -- _≈_ {A} {A} f (Id {A})
-  `1-one-arrow A ↻ = refl    
+  𝟙-one-arrow : ∀ (A : Obj) (f : A ⇒ A) → f ≈ Id -- _≈_ {A} {A} f (Id {A})
+  𝟙-one-arrow A ↻ = refl    
 
 --------------------------------------------------------------------------------
 -- the category with two objects and one nontrivial arrow: 
@@ -89,27 +89,27 @@ data _⇒₂_ : Two → Two → Set where
 
 module _ where 
   open Category 
-  `2 : Category lzero lzero lzero 
-  `2 .Obj = Two  
-  `2 ._⇒_ X Y = X ⇒₂ Y
-  _∘_ `2 {X} {Y} {Z} (↻ .X) (↻ .X) = ↻ X
-  _∘_ `2 {X} {Y} {Z} (↻ .B) A↦B = A↦B
-  _∘_ `2 {X} {Y} {Z} A↦B (↻ .A) = A↦B
-  `2 .Id {X} = ↻ X  
-  `2 ._≈_ = _≡_ 
-  `2 .eqv = ≡-equiv 
-  `2 .idᵣ {f = ↻ _} = refl
-  `2 .idᵣ {f = A↦B} = refl
-  `2 .idₗ {f = ↻ _} = refl
-  `2 .idₗ {f = A↦B} = refl
-  `2 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
-  `2 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
-  `2 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
-  `2 .assₗ {f = A↦B} {↻ .B} {↻ .B} = refl
-  `2 .cong-∘ refl refl = refl
+  𝟚 : Category lzero lzero lzero 
+  𝟚 .Obj = Two  
+  𝟚 ._⇒_ X Y = X ⇒₂ Y
+  _∘_ 𝟚 {X} {Y} {Z} (↻ .X) (↻ .X) = ↻ X
+  _∘_ 𝟚 {X} {Y} {Z} (↻ .B) A↦B = A↦B
+  _∘_ 𝟚 {X} {Y} {Z} A↦B (↻ .A) = A↦B
+  𝟚 .Id {X} = ↻ X  
+  𝟚 ._≈_ = _≡_ 
+  𝟚 .eqv = ≡-equiv 
+  𝟚 .idᵣ {f = ↻ _} = refl
+  𝟚 .idᵣ {f = A↦B} = refl
+  𝟚 .idₗ {f = ↻ _} = refl
+  𝟚 .idₗ {f = A↦B} = refl
+  𝟚 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
+  𝟚 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
+  𝟚 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
+  𝟚 .assₗ {f = A↦B} {↻ .B} {↻ .B} = refl
+  𝟚 .cong-∘ refl refl = refl
 
 module _ where 
-  open Category `2 
+  open Category 𝟚 
 
   allIds : ∀ {X : Two} → (f : X ⇒ X) → f ≡ ↻ X
   allIds {A} (↻ .A) = refl
@@ -145,42 +145,42 @@ data _⇒₃_ : Three → Three → Set where
 
 module _ where 
   open Category 
-  `3 : Category lzero lzero lzero 
-  `3 .Obj = Three
-  `3 ._⇒_ = _⇒₃_
-  `3 ._∘_ (↻ _) f = f
-  `3 ._∘_ f (↻ _) = f
-  `3 ._∘_ B↦C A↦B = A↦C
-  `3 .Id = ↻ _
-  `3 ._≈_ = _≡_
-  `3 .eqv = ≡-equiv
+  𝟛 : Category lzero lzero lzero 
+  𝟛 .Obj = Three
+  𝟛 ._⇒_ = _⇒₃_
+  𝟛 ._∘_ (↻ _) f = f
+  𝟛 ._∘_ f (↻ _) = f
+  𝟛 ._∘_ B↦C A↦B = A↦C
+  𝟛 .Id = ↻ _
+  𝟛 ._≈_ = _≡_
+  𝟛 .eqv = ≡-equiv
   -- Not sure why Agda can't infer that f ∘ (↻ _) ≡ f until f is destructed.
-  `3 .idᵣ {f = ↻ _} = refl
-  `3 .idᵣ {f = A↦B} = refl
-  `3 .idᵣ {f = B↦C} = refl
-  `3 .idᵣ {f = A↦C} = refl
-  `3 .idₗ = refl
-  `3 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
-  `3 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
-  `3 .assₗ {f = ↻ .B} {↻ .B} {B↦C} = refl
-  `3 .assₗ {f = ↻ .A} {↻ .A} {A↦C} = refl
-  `3 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
-  `3 .assₗ {f = ↻ .A} {A↦B} {B↦C} = refl
-  `3 .assₗ {f = ↻ .B} {B↦C} {↻ .C} = refl
-  `3 .assₗ {f = ↻ .A} {A↦C} {↻ .C} = refl
-  `3 .assₗ {f = A↦B} {↻ .B} {↻ .B} = refl
-  `3 .assₗ {f = A↦B} {↻ .B} {B↦C} = refl
-  `3 .assₗ {f = A↦B} {B↦C} {↻ .C} = refl
-  `3 .assₗ {f = B↦C} {↻ .C} {↻ .C} = refl
-  `3 .assₗ {f = A↦C} {↻ .C} {↻ .C} = refl
-  `3 .cong-∘ refl refl = refl 
+  𝟛 .idᵣ {f = ↻ _} = refl
+  𝟛 .idᵣ {f = A↦B} = refl
+  𝟛 .idᵣ {f = B↦C} = refl
+  𝟛 .idᵣ {f = A↦C} = refl
+  𝟛 .idₗ = refl
+  𝟛 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
+  𝟛 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
+  𝟛 .assₗ {f = ↻ .B} {↻ .B} {B↦C} = refl
+  𝟛 .assₗ {f = ↻ .A} {↻ .A} {A↦C} = refl
+  𝟛 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
+  𝟛 .assₗ {f = ↻ .A} {A↦B} {B↦C} = refl
+  𝟛 .assₗ {f = ↻ .B} {B↦C} {↻ .C} = refl
+  𝟛 .assₗ {f = ↻ .A} {A↦C} {↻ .C} = refl
+  𝟛 .assₗ {f = A↦B} {↻ .B} {↻ .B} = refl
+  𝟛 .assₗ {f = A↦B} {↻ .B} {B↦C} = refl
+  𝟛 .assₗ {f = A↦B} {B↦C} {↻ .C} = refl
+  𝟛 .assₗ {f = B↦C} {↻ .C} {↻ .C} = refl
+  𝟛 .assₗ {f = A↦C} {↻ .C} {↻ .C} = refl
+  𝟛 .cong-∘ refl refl = refl 
 
 -- --------------------------------------------------------------------------------
 -- Demonstrating a simple functor that is full but not surjective on morphisms
 
 module _ where 
   open Functor 
-  ι₂→₃ : Functor `2 `3 
+  ι₂→₃ : Functor 𝟚 𝟛 
   ι₂→₃ .F₀ A = A
   ι₂→₃ .F₀ B = B
   ι₂→₃ .fmap (↻ X) = ↻ (ι₂→₃ .Functor.F₀ X)
@@ -195,7 +195,7 @@ module _ where
   open Functor ι₂→₃ 
 
   -- ι₂→₃ is Full, but clearly not surjective on morphisms: 
-  -- the arrows ↻ C and B↦C have no corresponding arrows in `2
+  -- the arrows ↻ C and B↦C have no corresponding arrows in 𝟚
   -- mapped by ι₂→₃.
   ι₂→₃IsFull : Full ι₂→₃
   ι₂→₃IsFull {A} {A} (↻ .(F₀ A)) = (↻ A) , refl
@@ -210,11 +210,11 @@ module _ where
 
 -- --------------------------------------------------------------------------------
 -- Demonstrating a simple functor that is faithful but not injective on morphisms:
--- Map `3 to `2 s.t. A ↦ A , B ↦ B , C ↦ B.
+-- Map 𝟛 to 𝟚 s.t. A ↦ A , B ↦ B , C ↦ B.
 
 module _ where 
   open Functor 
-  γ₃→₂ : Functor `3 `2
+  γ₃→₂ : Functor 𝟛 𝟚
   γ₃→₂ .F₀ A = A 
   γ₃→₂ .F₀ B = B
   γ₃→₂ .F₀ C = B
@@ -237,17 +237,17 @@ module _ where
   open Functor γ₃→₂
 
   -- γ₂→₃ is clearly not injective on arrows: We have 
-  --          `3          `2
+  --          𝟛          𝟚
   --   -----------------|------
   --  {A↦B , A↦C}      ↦ A↦B 
   --  {B↦B, B↦C, C↦C} ↦ B↦B.
-  -- That is, nearly all arrows in `2 are hit by 
-  -- multiple arrows in `3. It is faithful, however.
+  -- That is, nearly all arrows in 𝟚 are hit by 
+  -- multiple arrows in 𝟛. It is faithful, however.
   --   Faithful = ∀ {A B : C.Obj} → (f : A C.⇒ B) 
   --                (g : A C.⇒ B) → 
   --                fmap f ≈ fmap g → 
   --                f C.≈ g 
-  -- `3 is a preorder category (each pair of objects
+  -- 𝟛 is a preorder category (each pair of objects
   -- has at most 1 arrow between them), and so trivially,
   -- if both f, g : A ⇒ B, we have f ≈ g.
   γ₃→₂IsFaithful : Faithful γ₃→₂

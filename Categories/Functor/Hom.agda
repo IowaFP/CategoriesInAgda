@@ -5,7 +5,7 @@ open import Categories.Category
 open import Categories.Functor 
 open import Categories.NaturalTransformation 
 open import Categories.Category.Product
-open import Categories.Instances.Setoids
+open import Categories.Instances.Setoid
 open import Categories.Reasoning.Hom 
 
 -------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ module _ (𝒞 : Category a o e) where
   private 
     𝒞ᵒᵖ = op  
 
-  Hom[_][—,—] :  Functor (𝒞ᵒᵖ × 𝒞) (Setoids o e)
+  Hom[_][—,—] :  Functor (𝒞ᵒᵖ × 𝒞) (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
   Hom[_][—,—] .F₀ (A , B) = hom-setoid A B 
   Hom[_][—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
     (λ h → g ∘ h ∘ f) , cong-∘ₗ ○ cong-∘ᵣ
@@ -57,10 +57,10 @@ module _ (𝒞 : Category a o e) where
       g₂ ∘ h ∘ g₁ ∎ 
 
   -- Covariant hom functor 
-  Hom[_][_,—] : Obj → Functor 𝒞 (Setoids o e)
+  Hom[_][_,—] : Obj → Functor 𝒞 (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
   Hom[_][_,—] A = Bf-π₂ Hom[_][—,—] A 
 
   -- Contravariant hom functor
-  Hom[_][—,_] : Obj → Functor 𝒞ᵒᵖ (Setoids o e)
+  Hom[_][—,_] : Obj → Functor 𝒞ᵒᵖ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
   Hom[_][—,_] A = Bf-π₁ Hom[_][—,—] A
   

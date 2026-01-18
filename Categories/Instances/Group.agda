@@ -1,5 +1,5 @@
 {-# OPTIONS --without-K #-}
-module Categories.Instances.Groups where
+module Categories.Instances.Group where
 
 open import Categories.Prelude
 open import Categories.Category
@@ -7,7 +7,7 @@ open import Categories.Functor
 open import Categories.NaturalTransformation
 open import Categories.Constructions.Groupoid
 open import Categories.Constructions.Preorder
-open import Categories.Instances.Groupoids
+open import Categories.Instances.Groupoid
 
 open PropositionalEquality hiding (isPreorder)
 
@@ -83,14 +83,14 @@ module _ (A : Set o) (G : Group A) where
 -- Groups form a category
 
 module _ where
-  -- GroupGroupoid : Category o o o 
-  -- GroupGroupoid .Obj = ⊤ 
-  -- GroupGroupoid  ._⇒_ =  λ _ _ → A
-  -- GroupGroupoid  ._∘_ = _+_
-  -- GroupGroupoid  .Id = `0
-  -- GroupGroupoid  ._≈_  = _≡_
-  -- GroupGroupoid  .eqv  = ≡-equiv
-  -- GroupGroupoid  .cong-∘ = cong₂ _+_ 
-  -- GroupGroupoid  .idᵣ =  G .idᵣ
-  -- GroupGroupoid  .idₗ = G .idₗ
-  -- GroupGroupoid  .assₗ = G .assₗ 
+  -- 𝐆𝐫𝐩 : Category o o o 
+  -- 𝐆𝐫𝐩 .Obj = ⊤ 
+  -- 𝐆𝐫𝐩  ._⇒_ =  λ _ _ → A
+  -- 𝐆𝐫𝐩  ._∘_ = _+_
+  -- 𝐆𝐫𝐩  .Id = `0
+  -- 𝐆𝐫𝐩  ._≈_  = _≡_
+  -- 𝐆𝐫𝐩  .eqv  = ≡-equiv
+  -- 𝐆𝐫𝐩  .cong-∘ = cong₂ _+_ 
+  -- 𝐆𝐫𝐩  .idᵣ =  G .idᵣ
+  -- 𝐆𝐫𝐩  .idₗ = G .idₗ
+  -- 𝐆𝐫𝐩  .assₗ = G .assₗ 

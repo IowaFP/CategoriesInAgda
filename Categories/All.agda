@@ -23,12 +23,12 @@ open import Categories.Constructions.Product public
 open import Categories.Constructions.Exponential public
 open import Categories.Constructions.Pullback public 
 
-open import Categories.Instances.Cats public 
-open import Categories.Instances.Functors public 
-open import Categories.Instances.Setoids public 
-open import Categories.Instances.Sets public 
-open import Categories.Instances.Groupoids public
-open import Categories.Instances.Groups public
+open import Categories.Instances.Cat public 
+open import Categories.Instances.Functor public 
+open import Categories.Instances.Setoid public 
+open import Categories.Instances.Set public 
+open import Categories.Instances.Groupoid public
+open import Categories.Instances.Group public
 open import Categories.Instances.NatFAlgebra public
 
 open import Categories.TypeTheory.GroupoidInterpretationOfTypes public 

@@ -12,8 +12,8 @@ open import Categories.NaturalTransformation
 --   F ○ G ≃ₙ IdF   and   G ○ F ≃ₙ IdF
 
 module Definition1 (𝒞 𝒟 : Category o a e) where
-  open import Categories.Instances.Cats
-  open Isomorphism (Cats o a e)
+  open import Categories.Instances.Cat
+  open Isomorphism (𝐂𝐚𝐭 o a e)
 
   -- In other words, 𝒞 and 𝒟 are isomorphic objects in the category of categories
   areEquivalent : Set _
