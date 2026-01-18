@@ -29,8 +29,8 @@ module _ where
   `0 .eqv .IsEquivalence.refl {()}
   `0 .eqv .IsEquivalence.sym {()}
   `0 .eqv .IsEquivalence.trans {k = ()}
-  `0 .right-id {f = ()}
-  `0 .left-id {f = ()}
+  `0 .idᵣ {f = ()}
+  `0 .idₗ {f = ()}
   `0 .assₗ {h = ()}
   `0 .cong-∘ {f = ()}
 
@@ -61,8 +61,8 @@ module _ where
   `1 .Id {A} = ↻ 
   `1 ._≈_ = _≡_ 
   `1 .eqv = ≡-equiv 
-  `1 .right-id {f = ↻} = refl 
-  `1 .left-id {f = ↻} = refl
+  `1 .idᵣ {f = ↻} = refl 
+  `1 .idₗ {f = ↻} = refl
   `1 .assₗ {A} {D = A} {↻} {↻} {↻} = refl 
   `1 .cong-∘ {A} {C = C} refl refl  = refl
 
@@ -98,10 +98,10 @@ module _ where
   `2 .Id {X} = ↻ X  
   `2 ._≈_ = _≡_ 
   `2 .eqv = ≡-equiv 
-  `2 .right-id {f = ↻ _} = refl
-  `2 .right-id {f = A↦B} = refl
-  `2 .left-id {f = ↻ _} = refl
-  `2 .left-id {f = A↦B} = refl
+  `2 .idᵣ {f = ↻ _} = refl
+  `2 .idᵣ {f = A↦B} = refl
+  `2 .idₗ {f = ↻ _} = refl
+  `2 .idₗ {f = A↦B} = refl
   `2 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
   `2 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
   `2 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
@@ -155,11 +155,11 @@ module _ where
   `3 ._≈_ = _≡_
   `3 .eqv = ≡-equiv
   -- Not sure why Agda can't infer that f ∘ (↻ _) ≡ f until f is destructed.
-  `3 .right-id {f = ↻ _} = refl
-  `3 .right-id {f = A↦B} = refl
-  `3 .right-id {f = B↦C} = refl
-  `3 .right-id {f = A↦C} = refl
-  `3 .left-id = refl
+  `3 .idᵣ {f = ↻ _} = refl
+  `3 .idᵣ {f = A↦B} = refl
+  `3 .idᵣ {f = B↦C} = refl
+  `3 .idᵣ {f = A↦C} = refl
+  `3 .idₗ = refl
   `3 .assₗ {f = ↻ _} {↻ _} {↻ _} = refl
   `3 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
   `3 .assₗ {f = ↻ .B} {↻ .B} {B↦C} = refl

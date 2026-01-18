@@ -80,17 +80,17 @@ module _ (𝒞 : Category o a e) where
   -- Every section is a monomorphism
   section⇒mono : (f : A ⇒ B) → isSection f → isMono f 
   section⇒mono f (g , rinv) = Mono (λ g₁ g₂ eq → begin 
-      g₁         ≈⟨ sym-≈ left-id ⨾ sym-≈ (cong-∘ₗ rinv) ⟩ 
+      g₁         ≈⟨ sym-≈ idₗ ⨾ sym-≈ (cong-∘ₗ rinv) ⟩ 
       g ∘ f ∘ g₁ ≈⟨ (assᵣ ⨾ cong-∘ᵣ eq ⨾ assₗ) ⟩ 
-      g ∘ f ∘ g₂ ≈⟨ (cong-∘ₗ rinv ⨾ left-id) ⟩ 
+      g ∘ f ∘ g₂ ≈⟨ (cong-∘ₗ rinv ⨾ idₗ) ⟩ 
       g₂ ∎)
   
   -- Every retraction is an epimorphism
   retraction⇒epi : (f : A ⇒ B) → isRetraction f → isEpi f 
   retraction⇒epi f (g , linv) = Epi (λ g₁ g₂ eq → begin 
-      g₁         ≈⟨ (sym-≈ right-id ⨾ sym-≈ (cong-∘ᵣ linv) ⨾ assₗ) ⟩ 
+      g₁         ≈⟨ (sym-≈ idᵣ ⨾ sym-≈ (cong-∘ᵣ linv) ⨾ assₗ) ⟩ 
       g₁ ∘ f ∘ g ≈⟨ cong-∘ₗ eq ⟩ 
-      g₂ ∘ f ∘ g ≈⟨ (assᵣ ⨾ cong-∘ᵣ linv ⨾ right-id) ⟩ 
+      g₂ ∘ f ∘ g ≈⟨ (assᵣ ⨾ cong-∘ᵣ linv ⨾ idᵣ) ⟩ 
       g₂ ∎)
   
   -- Trivially, every isomorphism is both a section & retraction
@@ -122,7 +122,7 @@ module Isomorphism (𝒞 : Category o a e) where
       A B C : Obj 
 
   refl-≃ : A ≃ A 
-  refl-≃ = Id , Id , right-id , right-id
+  refl-≃ = Id , Id , idᵣ , idᵣ
 
   sym-≃ : A ≃ B → B ≃ A 
   sym-≃ (f , g , linv , rinv) = g , f , rinv , linv
@@ -134,13 +134,13 @@ module Isomorphism (𝒞 : Category o a e) where
       (begin 
           (h ∘ f ∘ (g ∘ j)) ≈⟨ assₗ ⟩ 
           (h ∘ f ∘ g ∘ j) ≈⟨ cong-∘ₗ (assᵣ ⨾ (cong-∘ᵣ linv-f)) ⟩ 
-          (h ∘ Id ∘ j) ≈⟨ assᵣ ⨾ (cong-∘ᵣ left-id) ⟩ 
+          (h ∘ Id ∘ j) ≈⟨ assᵣ ⨾ (cong-∘ᵣ idₗ) ⟩ 
           (h ∘ j) ≈⟨ linv-h ⟩ 
           Id ∎) ,  
       (begin 
           (g ∘ j ∘ (h ∘ f)) ≈⟨ assₗ ⟩ 
           (g ∘ j ∘ h ∘ f) ≈⟨ ((cong-∘ₗ (assᵣ ⨾ cong-∘ᵣ rinv-h))) ⟩ 
-          (g ∘ Id ∘ f) ≈⟨ (assᵣ ⨾ cong-∘ᵣ left-id) ⟩ 
+          (g ∘ Id ∘ f) ≈⟨ (assᵣ ⨾ cong-∘ᵣ idₗ) ⟩ 
           (g ∘ f) ≈⟨ rinv-f ⟩ 
           Id ∎) 
   

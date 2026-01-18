@@ -36,8 +36,8 @@ module _ (A : Set o) where
   Types .category .eqv .IsEquivalence.sym  = sym
   Types .category .eqv .IsEquivalence.trans  = trans
   Types .category .cong-∘  refl refl = refl
-  Types .category .right-id  = refl 
-  Types .category .left-id {f = refl} = refl 
+  Types .category .idᵣ  = refl 
+  Types .category .idₗ {f = refl} = refl 
   Types .category .assₗ {f = refl} {refl} {refl} = refl
   Types .groupoid = Groupoid (λ { refl → refl , refl , refl }) 
 
@@ -77,8 +77,8 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
   Δ[_] .category .eqv .IsEquivalence.sym  = λ _ → tt 
   Δ[_] .category .eqv .IsEquivalence.trans  = λ _ _ → tt
   Δ[_] .category .cong-∘  = λ _ _ → tt
-  Δ[_] .category .right-id  = tt 
-  Δ[_] .category .left-id  = tt
+  Δ[_] .category .idᵣ  = tt 
+  Δ[_] .category .idₗ  = tt
   Δ[_] .category .assₗ  = tt
   Δ[_] .groupoid = Groupoid λ { A∼B → (sym-∼ A∼B) , tt , tt }
 
@@ -122,8 +122,8 @@ module _ {o} where
     -- (Func id (λ f → f Isomorphism., 𝒞 .groupoid .allIso f) tt (λ _ _ → tt) (λ _ → tt) , 
     --   IsIso (Func id (λ { (f Isomorphism., iso₁) → f })  refl-≈ (λ _ _ → refl-≈) 
     --     λ { {f = f Isomorphism., iso₁} {g Isomorphism., iso₂} _ → pre .preorder f g }) , 
-    --     (Inverse (((Id Isomorphism., (IsIso Id (Inverse left-id left-id))) , λ _ → tt) , IsIso refl-≃ (Inverse tt tt)) 
-    --     ((Id , λ f → right-id ⨾ sym-≈ left-id) , IsIso Id (Inverse left-id left-id))))                        
+    --     (Inverse (((Id Isomorphism., (IsIso Id (Inverse idₗ idₗ))) , λ _ → tt) , IsIso refl-≃ (Inverse tt tt)) 
+    --     ((Id , λ f → idᵣ ⨾ sym-≈ idₗ) , IsIso Id (Inverse idₗ idₗ))))                        
     where 
       open Category (𝒞 .category)
       open Isomorphism (𝒞 .category) using (obj-setoid ; refl-≃)

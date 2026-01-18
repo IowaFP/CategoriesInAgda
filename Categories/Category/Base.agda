@@ -27,8 +27,8 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
       eqv : ∀ {A B} → IsEquivalence (_≈_ {A} {B})
 
       -- laws 
-      right-id : ∀ {A B} {f : A ⇒ B} → f ∘ Id ≈ f 
-      left-id : ∀ {A B} {f : A ⇒ B} → Id ∘ f ≈ f 
+      idᵣ : ∀ {A B} {f : A ⇒ B} → f ∘ Id ≈ f 
+      idₗ : ∀ {A B} {f : A ⇒ B} → Id ∘ f ≈ f 
       assₗ : ∀ {A B C D} {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D} →  
               h ∘ (g ∘ f) ≈ (h ∘ g) ∘ f
       cong-∘  : ∀ {A B C} {f h : B ⇒ C} {g i : A ⇒ B} → 
@@ -76,8 +76,8 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     op .Id = Id 
     op ._≈_ = _≈_
     op .eqv = eqv 
-    op .right-id = left-id
-    op .left-id = right-id
+    op .idᵣ = idₗ
+    op .idₗ = idᵣ
     op .assₗ = assᵣ
     op .cong-∘ e₁ e₂ = cong-∘ e₂ e₁  
 

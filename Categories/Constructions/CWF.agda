@@ -77,8 +77,8 @@ module _ where
     --   (cong-app-≅ 
     --     {! subst (λ X → (λ z → B₁ .B z → C .B (i₁ z)) ≅ (λ z → B₁ .B z → C .B (i₂ z)))   !} f h 
     --     {!   !} (≡-to-≅ (eq₂ x .fst))) (eq₂ x .snd y) 
-  Families ℓ₁ ℓ₂ .right-id x = refl , λ _ → refl
-  Families ℓ₁ ℓ₂ .left-id x = refl , λ _ → refl
+  Families ℓ₁ ℓ₂ .idᵣ x = refl , λ _ → refl
+  Families ℓ₁ ℓ₂ .idₗ x = refl , λ _ → refl
   Families ℓ₁ ℓ₂ .assₗ x = refl , λ _ → refl
 
 

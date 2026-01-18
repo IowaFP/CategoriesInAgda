@@ -23,8 +23,8 @@ record Group (A : Set o) : Set o where
     `0 : A 
 
     assₗ : ∀ {x y z} → x + (y + z) ≡ (x + y) + z 
-    left-id : ∀ {x} → `0 + x ≡ x
-    right-id : ∀ {x} → x + `0 ≡ x 
+    idₗ : ∀ {x} → `0 + x ≡ x
+    idᵣ : ∀ {x} → x + `0 ≡ x 
     right-inv : ∀ (x : A) → Σ[ x⁻¹ ∈ A ] (x + x⁻¹ ≡ `0) 
 
   _⁻¹ : A → A 
@@ -37,9 +37,9 @@ record Group (A : Set o) : Set o where
 
   inverse-unique : ∀ {a b} → b + a ≡ `0 → b ≡ a ⁻¹ 
   inverse-unique {a} {b} e = begin 
-    b ≡⟨ (sym right-id ⨾ cong-+R (sym (right-inv a .snd))) ⟩ 
+    b ≡⟨ (sym idᵣ ⨾ cong-+R (sym (right-inv a .snd))) ⟩ 
     b + (a + a ⁻¹) ≡⟨ (assₗ ⨾ cong-+L e) ⟩ 
-    `0 + a ⁻¹ ≡⟨ left-id ⟩ 
+    `0 + a ⁻¹ ≡⟨ idₗ ⟩ 
     a ⁻¹ ∎ 
    
   inverse-involutive : ∀ {a} → (a ⁻¹) ⁻¹ ≡ a 
@@ -53,7 +53,7 @@ record Group (A : Set o) : Set o where
 
   inverse-distribute : ∀ {a b} → (a + b) ⁻¹ ≡ b ⁻¹ + a ⁻¹ 
   inverse-distribute {a} {b} = sym (inverse-unique {a + b} (begin 
-    (b ⁻¹) + (a ⁻¹) + (a + b) ≡⟨ (assₗ ⨾ cong-+L (sym assₗ ⨾ (cong-+R (left-inv a) ⨾ right-id))) ⟩ 
+    (b ⁻¹) + (a ⁻¹) + (a + b) ≡⟨ (assₗ ⨾ cong-+L (sym assₗ ⨾ (cong-+R (left-inv a) ⨾ idᵣ))) ⟩ 
     b ⁻¹ + b ≡⟨ left-inv b ⟩ 
     `0 ∎))     
 
@@ -74,8 +74,8 @@ module _ (A : Set o) (G : Group A) where
   GroupGroupoid .category ._≈_  = _≡_
   GroupGroupoid .category .eqv  = ≡-equiv
   GroupGroupoid .category .cong-∘ = cong₂ _+_ 
-  GroupGroupoid .category .right-id =  G .right-id
-  GroupGroupoid .category .left-id = G .left-id
+  GroupGroupoid .category .idᵣ =  G .idᵣ
+  GroupGroupoid .category .idₗ = G .idₗ
   GroupGroupoid .category .assₗ = G .assₗ 
   GroupGroupoid .groupoid = Groupoid (λ a → a ⁻¹ , (right-inv a .snd) , left-inv a)
 
@@ -91,6 +91,6 @@ module _ where
   -- GroupGroupoid  ._≈_  = _≡_
   -- GroupGroupoid  .eqv  = ≡-equiv
   -- GroupGroupoid  .cong-∘ = cong₂ _+_ 
-  -- GroupGroupoid  .right-id =  G .right-id
-  -- GroupGroupoid  .left-id = G .left-id
+  -- GroupGroupoid  .idᵣ =  G .idᵣ
+  -- GroupGroupoid  .idₗ = G .idₗ
   -- GroupGroupoid  .assₗ = G .assₗ 

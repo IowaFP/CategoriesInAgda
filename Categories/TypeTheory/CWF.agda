@@ -122,8 +122,8 @@ data Var where
 
 --       -- laws 
 --       id[_] : ∀ (A : Obj) → A ⇒ A 
---       right-id : ∀ {A B} {f : A ⇒ B} → f ∘' id[ A ] ≡ f 
---       left-id : ∀ {A B} {f : A ⇒ B} → id[ B ] ∘' f ≡ f 
+--       idᵣ : ∀ {A B} {f : A ⇒ B} → f ∘' id[ A ] ≡ f 
+--       idₗ : ∀ {A B} {f : A ⇒ B} → id[ B ] ∘' f ≡ f 
 --     --   assₗ : ∀ {A B C} {f : A ⇒ B} {g : B ⇒ C} →  
 --     --           g ○ f 
 
@@ -137,8 +137,8 @@ data Var where
 -- _⇒_ RenCategory = Renaming 
 -- _∘'_ RenCategory = λ r₂ r₁ → r₂ ○ r₁
 -- id[_] RenCategory = λ Γ → id
--- left-id RenCategory = refl
--- right-id RenCategory = refl
+-- idₗ RenCategory = refl
+-- idᵣ RenCategory = refl
 
 -- _ : WeaklyInitial RenCategory 
 -- _ = ∅ , (λ { _ () })
@@ -148,8 +148,8 @@ data Var where
 -- _⇒_ SubstCategory = Substitution 
 -- _∘'_ SubstCategory = λ σ₂ σ₁ → sub σ₂ ○ σ₁
 -- id[_] SubstCategory = λ Γ → `
--- left-id SubstCategory = {! sub-id (f x)  !}
--- right-id SubstCategory = refl
+-- idₗ SubstCategory = {! sub-id (f x)  !}
+-- idᵣ SubstCategory = refl
 
 -- substInitial : WeaklyInitial SubstCategory 
 -- substInitial = ∅ , (λ { _ () })
@@ -189,8 +189,8 @@ data Var where
 --   ; _⇒_ = λ a b → a → b 
 --   ; _∘'_ = λ f g → f ○ g
 --   ; id[_] = λ _ x → x
---   ; right-id = refl
---   ; left-id = refl
+--   ; idᵣ = refl
+--   ; idₗ = refl
 --   }
 
 -- FamCategory : Category 
@@ -199,8 +199,8 @@ data Var where
 --   ; _⇒_ = λ { (A₁ , B₁) (A₂ , B₂) → Σ[ f ∈ (A₁ → A₂) ] (∀ (a₁ : A₁) → B₁ a₁ → B₂ (f a₁))  }
 --   ; _∘'_ = {!   !}
 --   ; id[_] = λ A → id , (λ _ → id)
---   ; right-id = {!   !}
---   ; left-id = {!   !}
+--   ; idᵣ = {!   !}
+--   ; idₗ = {!   !}
 --   }
 
 

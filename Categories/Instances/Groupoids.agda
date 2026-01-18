@@ -25,6 +25,6 @@ module _  where
   Groupoids o a e ._≈_ {𝒞} {𝒟} F G = F ≃ₙ G
   Groupoids o a e .eqv  = nat-setoid .Setoid.isEquivalence
   Groupoids o a e .cong-∘ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
-  Groupoids o a e .right-id =  IdF-right-id  
-  Groupoids o a e .left-id = IdF-left-id   
+  Groupoids o a e .idᵣ =  IdF-idᵣ  
+  Groupoids o a e .idₗ = IdF-idₗ   
   Groupoids o a e .assₗ {f = F} {G} {H} = Functor-assₗ F G H 

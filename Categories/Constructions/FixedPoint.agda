@@ -43,5 +43,5 @@ module _ (𝒞 : Category o a e)
   FAlgebras .Category.eqv  .sym = sym-≈
   FAlgebras .Category.eqv  .trans = trans-≈
   FAlgebras .Category.cong-∘  = cong-∘
-  FAlgebras .Category.right-id =  right-id
-  FAlgebras .Category.left-id = left-id
+  FAlgebras .Category.idᵣ =  idᵣ
+  FAlgebras .Category.idₗ = idₗ

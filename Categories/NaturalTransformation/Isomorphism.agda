@@ -44,10 +44,10 @@ module _
   -- the identity natural isomorphism
   IdN : ∀ {F : Functor 𝒞 𝒟} → F ≃ₙ F
   IdN {F} = (Id , λ f → begin 
-    F.fmap f ∘ Id ≈⟨ right-id ⟩ 
-    F.fmap f      ≈⟨ sym-≈ left-id ⟩ 
+    F.fmap f ∘ Id ≈⟨ idᵣ ⟩ 
+    F.fmap f      ≈⟨ sym-≈ idₗ ⟩ 
     Id ∘ F.fmap f ∎) ,
-    Id , left-id , left-id
+    Id , idₗ , idₗ
     where 
       module F = Functor F 
   
@@ -59,12 +59,12 @@ module _
     -- A subtlety: we must confirm that the inverse of a morphism
     -- induced by a natural transformation is indeed a natural transformation.
     λ f → begin 
-      F.fmap f ∘ i .∼              ≈⟨ cong-∘ₗ (sym-≈ left-id) ⟩ 
+      F.fmap f ∘ i .∼              ≈⟨ cong-∘ₗ (sym-≈ idₗ) ⟩ 
       Id ∘ F.fmap f ∘ i .∼         ≈⟨ cong-∘ₗ (cong-∘ₗ (sym-≈ (i .iso .rinv))) ⟩ 
       i .∼ ∘ η ∘ F.fmap f ∘ i .∼   ≈⟨ cong-∘ₗ assᵣ ⟩ 
       i .∼ ∘ (η ∘ F.fmap f) ∘ i .∼ ≈⟨ cong-∘ₗ (cong-∘ᵣ (sym-≈ (nat f))) ⟩ 
       i .∼ ∘ (G.fmap f ∘ η) ∘ i .∼ ≈⟨ ((cong-∘ₗ assₗ) ⨾ assᵣ) ⟩ 
-      i .∼ ∘ G.fmap f ∘ (η ∘ i .∼) ≈⟨ ((cong-∘ᵣ (i .iso .linv)) ⨾ right-id) ⟩ 
+      i .∼ ∘ G.fmap f ∘ (η ∘ i .∼) ≈⟨ ((cong-∘ᵣ (i .iso .linv)) ⨾ idᵣ) ⟩ 
       i .∼ ∘ G.fmap f ∎ ) , 
       λ {A} → η {A} , i {A} .iso .rinv , i {A} .iso .linv
     where 
@@ -80,12 +80,12 @@ module _
     λ {A} → (i₁ {A} .∼ ∘ i₂ {A} .∼) , 
       (begin 
         ε ∘ η ∘ (i₁ .∼ ∘ i₂ .∼) ≈⟨ (assₗ ⨾ cong-∘ₗ assᵣ ⨾ cong-∘ₗ (cong-∘ᵣ (i₁ .iso .linv))) ⟩ 
-        ε ∘ Id ∘ i₂ .∼          ≈⟨ (assᵣ ⨾ cong-∘ᵣ left-id) ⟩ 
+        ε ∘ Id ∘ i₂ .∼          ≈⟨ (assᵣ ⨾ cong-∘ᵣ idₗ) ⟩ 
         ε ∘ i₂ .∼               ≈⟨ i₂ .iso .linv ⟩ 
         Id ∎)  , 
       (begin
         i₁ .∼ ∘ i₂ .∼ ∘ (ε ∘ η) ≈⟨ (assₗ ⨾ (cong-∘ₗ assᵣ ⨾ cong-∘ₗ (cong-∘ᵣ (i₂ .iso .rinv)))) ⟩ 
-        i₁ .∼ ∘ Id ∘ η          ≈⟨ cong-∘ₗ right-id ⟩
+        i₁ .∼ ∘ Id ∘ η          ≈⟨ cong-∘ₗ idᵣ ⟩
         i₁ .∼ ∘ η               ≈⟨ i₁ .iso .rinv ⟩ 
         Id ∎)
     where 
@@ -131,13 +131,13 @@ module _ {𝒞 : Category o₁ a₁ e₁}
         K.fmap μ ∘ ε ∘ (J.fmap α ∘ β) ≈⟨ (cong-∘ₗ (nat₂ μ) ⨾ assₗ) ⟩ 
         ε ∘ J.fmap μ ∘ J.fmap α ∘ β   ≈⟨ cong-∘ₗ (assᵣ ⨾ cong-∘ᵣ (sym-≈ (J.F-∘ α μ))) ⟩ 
         ε ∘ J.fmap (μ D.∘ α) ∘ β      ≈⟨ cong-∘ₗ (cong-∘ᵣ ((J.F-cong (i₁ .iso .linv)) ⨾ J.F-id)) ⟩ 
-        ε ∘ Id ∘ β                    ≈⟨ (cong-∘ₗ right-id ⨾ i₂ .iso .linv) ⟩ 
+        ε ∘ Id ∘ β                    ≈⟨ (cong-∘ₗ idᵣ ⨾ i₂ .iso .linv) ⟩ 
         Id ∎) ,  
       (begin 
         J.fmap α ∘ β ∘ (K.fmap μ ∘ ε) ≈⟨ (cong-∘ₗ (nat-β α) ⨾ assₗ) ⟩ 
         β ∘ K.fmap α ∘ K.fmap μ ∘ ε   ≈⟨ cong-∘ₗ (assᵣ ⨾ cong-∘ᵣ (sym-≈ (K.F-∘ μ α))) ⟩ 
         β ∘ K.fmap (α D.∘ μ) ∘ ε      ≈⟨ cong-∘ₗ (cong-∘ᵣ ((K.F-cong (i-α .iso .linv)) ⨾ K.F-id)) ⟩ 
-        β ∘ Id ∘ ε                    ≈⟨ (cong-∘ₗ right-id ⨾ i₂ .iso .rinv) ⟩
+        β ∘ Id ∘ ε                    ≈⟨ (cong-∘ₗ idᵣ ⨾ i₂ .iso .rinv) ⟩
         Id ∎)
     where 
       α : G ≃ₙ F
@@ -157,15 +157,15 @@ module _ {𝒞 : Category o₁ a₁ e₁}
 
   open Category 𝒟
 
-  IdF-left-id : (IdF ∘F F) ≃ₙ F 
-  IdF-left-id = 
-    (Id , λ f → right-id ⨾ (sym-≈ left-id)) , 
-    Id , left-id , left-id
+  IdF-idₗ : (IdF ∘F F) ≃ₙ F 
+  IdF-idₗ = 
+    (Id , λ f → idᵣ ⨾ (sym-≈ idₗ)) , 
+    Id , idₗ , idₗ
 
-  IdF-right-id : (F ∘F IdF) ≃ₙ F 
-  IdF-right-id = 
-    (Id , λ f → right-id ⨾ (sym-≈ left-id)) , 
-    Id , left-id , left-id
+  IdF-idᵣ : (F ∘F IdF) ≃ₙ F 
+  IdF-idᵣ = 
+    (Id , λ f → idᵣ ⨾ (sym-≈ idₗ)) , 
+    Id , idₗ , idₗ
 
 module _ 
     {𝒜 : Category o a e}
@@ -180,4 +180,4 @@ module _
     module F = Functor F ; module G = Functor G ; module H = Functor H 
   open Category 𝒟 
   Functor-assₗ : H ∘F (G ∘F F) ≃ₙ (H ∘F G) ∘F F 
-  Functor-assₗ = (Id , λ f → right-id ⨾ sym-≈ left-id) , Id , right-id , right-id
+  Functor-assₗ = (Id , λ f → idᵣ ⨾ sym-≈ idₗ) , Id , idᵣ , idᵣ

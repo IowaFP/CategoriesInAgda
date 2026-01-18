@@ -47,7 +47,7 @@ module _ (𝒞 : Category o a e) where
     ×-g-η = unique refl-≈ refl-≈ 
 
     ×-η : ⟨ `π₁ ⨾ `π₂ ⟩ ≈ Id
-    ×-η = unique right-id right-id 
+    ×-η = unique idᵣ idᵣ 
 
     ∘-distrib-⟨⟩ : ∀ {q : A ⇒ Y} → ⟨ f ∘ q ⨾ g ∘ q ⟩ ≈ ⟨ f ⨾ g ⟩ ∘ q
     ∘-distrib-⟨⟩ = unique (assₗ ⨾ cong-∘ₗ project₁) (assₗ ⨾ cong-∘ₗ project₂) 
@@ -100,7 +100,7 @@ module _ (𝒞 : Category o a e) where
     +-g-η = unique refl-≈ refl-≈ 
 
     +-η : [ ι₁ , ι₂ ] ≈ Id
-    +-η = unique left-id left-id 
+    +-η = unique idₗ idₗ 
 
   -- A category admits coproducts if every two objects has a coproduct
   record AdmitsCoproducts : Set (o ⊔ e ⊔ a) where 

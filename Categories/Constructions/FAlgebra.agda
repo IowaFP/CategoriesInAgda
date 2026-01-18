@@ -81,8 +81,8 @@ module _ {𝒞 : Category o a e}
   
   IdHom : ∀ {φ : FAlg 𝒞 F} → Hom φ φ 
   IdHom {φ = (A , φ)} = Id , (begin 
-    Id ∘ φ  ≈⟨ left-id ⟩
-    φ       ≈⟨ (sym-≈ right-id ⨾ cong-∘ᵣ (sym-≈ F-id)) ⟩ 
+    Id ∘ φ  ≈⟨ idₗ ⟩
+    φ       ≈⟨ (sym-≈ idᵣ ⨾ cong-∘ᵣ (sym-≈ F-id)) ⟩ 
     φ ∘ fmap Id ∎)
 
 -- ------------------------------------------------------------------------------
@@ -106,8 +106,8 @@ module _ (𝒞 : Category o a e)
   FAlgebras .Category.eqv  .sym = sym-≈
   FAlgebras .Category.eqv  .trans = trans-≈
   FAlgebras .Category.cong-∘  = cong-∘
-  FAlgebras .Category.right-id =  right-id
-  FAlgebras .Category.left-id = left-id
+  FAlgebras .Category.idᵣ =  idᵣ
+  FAlgebras .Category.idₗ = idₗ
   FAlgebras .Category.assₗ = assₗ
 
   -- ------------------------------------------------------------------------------

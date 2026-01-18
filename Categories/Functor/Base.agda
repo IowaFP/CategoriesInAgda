@@ -101,7 +101,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (A : 
   Const .F₀ _ = A
   Const .fmap f = Id
   Const .F-id = refl-≈
-  Const .F-∘ f g = sym-≈ left-id
+  Const .F-∘ f g = sym-≈ idₗ
   Const .F-cong eq = refl-≈ 
 
 --------------------------------------------------------------------------------

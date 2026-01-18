@@ -42,8 +42,8 @@ Obj SubstCategory = Env
 _⇒_ SubstCategory = Substitution 
 _□_ SubstCategory = λ σ₂ σ₁ → sub σ₂ ○ σ₁
 id[_] SubstCategory = λ Γ → `
-left-id SubstCategory = {! sub-id (f x)  !}
-right-id SubstCategory = {!   !} -- refl
+idₗ SubstCategory = {! sub-id (f x)  !}
+idᵣ SubstCategory = {!   !} -- refl
 
 
 -- This isn't quite right
@@ -53,8 +53,8 @@ TypeCategory = record
   ; _⇒_ = λ τ₁ τ₂ → ∀ Γ → Term Γ τ₁ → Term Γ τ₂
   ; _□_ = λ f g Γ → f Γ  ○ g Γ
   ; id[_] = λ _ _ M → M
-  ; right-id = extensionality (λ _ → extensionality (λ _ → refl))
-  ; left-id = extensionality (λ _ → extensionality (λ _ → refl))
+  ; idᵣ = extensionality (λ _ → extensionality (λ _ → refl))
+  ; idₗ = extensionality (λ _ → extensionality (λ _ → refl))
   ; assₗ = λ {A} {B} {C} {D} {f} {g} {h} → refl
   } 
 

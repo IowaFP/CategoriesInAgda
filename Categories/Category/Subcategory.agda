@@ -66,8 +66,8 @@ module _ (𝒟 : Category o a e) where
   Subcategory I _ .Category.eqv .IsEquivalence.refl = refl-≈
   Subcategory I _ .Category.eqv .IsEquivalence.sym = sym-≈ 
   Subcategory I _ .Category.eqv .IsEquivalence.trans = trans-≈
-  Subcategory I _ .Category.right-id = right-id
-  Subcategory I _ .Category.left-id = left-id
+  Subcategory I _ .Category.idᵣ = idᵣ
+  Subcategory I _ .Category.idₗ = idₗ
   Subcategory I _ .Category.assₗ = assₗ
   Subcategory I _ .Category.cong-∘ = cong-∘ 
 
@@ -81,8 +81,8 @@ module _ (𝒟 : Category o a e) where
   FullSubcategory I U .Category.Id = Id
   FullSubcategory I U .Category._≈_ = _≈_
   FullSubcategory I U .Category.eqv = eqv
-  FullSubcategory I U .Category.right-id = right-id
-  FullSubcategory I U .Category.left-id = left-id
+  FullSubcategory I U .Category.idᵣ = idᵣ
+  FullSubcategory I U .Category.idₗ = idₗ
   FullSubcategory I U .Category.assₗ = assₗ
   FullSubcategory I U .Category.cong-∘ = cong-∘ 
 

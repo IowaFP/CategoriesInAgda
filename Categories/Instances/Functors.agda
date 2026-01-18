@@ -28,6 +28,6 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   Functors .eqv .IsEquivalence.sym x≈y {A} = sym-≈ (x≈y {A})
   Functors .eqv .IsEquivalence.trans x≈y y≈z {A} = trans-≈ (x≈y {A}) (y≈z {A})
   Functors .cong-∘ {f = f} {h} {g} {i} e₁ e₂ {A} =  cong-∘ (e₁ {A}) (e₂ {A}) 
-  Functors .right-id = right-id   
-  Functors .left-id = left-id   
+  Functors .idᵣ = idᵣ   
+  Functors .idₗ = idₗ   
   Functors .assₗ = assₗ   

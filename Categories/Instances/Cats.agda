@@ -8,7 +8,7 @@ open import Categories.Functor
 open import Categories.NaturalTransformation
 
 --------------------------------------------------------------------------------
--- The Category of Categories 
+-- The Category of Categories  
 
 open Category 
 Cats : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (lsuc o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
@@ -19,6 +19,14 @@ Cats o a e .Id = IdF
 Cats o a e ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
 Cats o a e .eqv  = nat-setoid .Setoid.isEquivalence
 Cats o a e .cong-∘ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
-Cats o a e .right-id =  IdF-right-id  
-Cats o a e .left-id = IdF-left-id   
+Cats o a e .idᵣ =  IdF-idᵣ  
+Cats o a e .idₗ = IdF-idₗ   
 Cats o a e .assₗ {f = F} {G} {H} = Functor-assₗ F G H 
+ 
+--------------------------------------------------------------------------------
+-- Cats admits products
+
+open import Categories.Constructions.Product 
+
+CatsProducts : AdmitsProducts (Cats o a e) 
+CatsProducts = {!   !} 

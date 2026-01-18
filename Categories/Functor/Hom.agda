@@ -45,7 +45,7 @@ module _ (𝒞 : Category a o e) where
   Hom[_][—,—] .F₀ (A , B) = hom-setoid A B 
   Hom[_][—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
     (λ h → g ∘ h ∘ f) , cong-∘ₗ ○ cong-∘ᵣ
-  Hom[_][—,—] .F-id x =  right-id ⨾ left-id 
+  Hom[_][—,—] .F-id x =  idᵣ ⨾ idₗ 
   Hom[_][—,—] .F-∘  (f , g) (h , k) i = begin
     k ∘ g ∘ i ∘ (f ∘ h)  ≈⟨ assₗ ⟩ 
     k ∘ g ∘ i ∘ f ∘ h    ≈⟨ cong-∘ₗ (cong-∘ₗ assᵣ) ⟩ 

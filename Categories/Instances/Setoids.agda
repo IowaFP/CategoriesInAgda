@@ -37,6 +37,6 @@ module _ where
   Setoids o e .eqv {A} {B} .IsEquivalence.trans f~g g~h x = B .Setoid.trans (f~g x) (g~h x)
   Setoids o e .cong-∘ {C = C} {f = f , _} {h = h , hom-h} {g = g , _} {i = i , _} e₁ e₂ x = 
     C .Setoid.trans (e₁ (g x)) (hom-h (e₂ x))
-  Setoids o e .right-id {B = B} x = B .Setoid.refl
-  Setoids o e .left-id {B = B} x = B .Setoid.refl
+  Setoids o e .idᵣ {B = B} x = B .Setoid.refl
+  Setoids o e .idₗ {B = B} x = B .Setoid.refl
   Setoids o e .assₗ {D = D} x = D .Setoid.refl

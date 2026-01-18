@@ -30,8 +30,8 @@ module _ (ℓ : Level) where
   Sets ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
   Sets .eqv {A} {B} = ~-equiv (≡-setoid {_} {B})
   Sets .cong-∘ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
-  Sets .right-id _ = refl 
-  Sets .left-id _ = refl 
+  Sets .idᵣ _ = refl 
+  Sets .idₗ _ = refl 
   Sets .assₗ _ = refl 
 
 -- -----------------------------------------------------------------------------
