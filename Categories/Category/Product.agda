@@ -60,14 +60,14 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
   -- The product of two functors---or, when viewing products of categories
   -- as binary products in the category of categories, we can view 
   -- ⟨ F ⨾ G ⟩ as giving the unique morphism H : 𝒞 → D × ℰ that commutes
-  -- with π¹ and π².
-  ⟨_⨾_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
-  ⟨ F ⨾ G ⟩ = record
-    { F₀         = λ c → F₀ c , G₀ c -- F₀ , G₀
-    ; fmap       = λ f → (fmap f) , (gmap f) -- < F.F₁ , G.F₁ >
+  -- with π¹ and π². (See Categories.Instances.Cats)
+  ⟨_,_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
+  ⟨ F , G ⟩ = record
+    { F₀         = < F₀ , G₀ >
+    ; fmap       = < fmap , gmap > 
     ; F-id       = F-id , G-id
     ; F-∘        = λ f g → F-∘ f g , G-∘ f g
-    ; F-cong     = λ eq → (F-cong eq) , (G-cong eq) 
+    ; F-cong     = < F-cong , G-cong > 
     }
     where 
       open Functor F ; open Gunctor G

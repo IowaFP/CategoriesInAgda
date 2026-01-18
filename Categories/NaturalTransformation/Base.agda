@@ -28,7 +28,7 @@ module _ {𝒞 : Category o₁ a₁ e₁}
       naturality : ∀ {A B : 𝒞 .Obj} → (f : 𝒞 [ A , B ]) → 
                     𝒟 [ 𝒟 [ G.fmap f ∘ η ] ≈ 𝒟 [ η ∘ (F.fmap f) ] ]
 
-
+  open NaturalTransformation public 
 --------------------------------------------------------------------------------
 -- Vertical composition of natural transformations
 

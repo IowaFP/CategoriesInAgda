@@ -14,7 +14,7 @@ open import Data.Fin renaming
 open import Data.Bool hiding (_∨_ ; _∧_) public
 open import Data.Product as Product
   renaming (proj₁ to fst ; proj₂ to snd ; _×_ to _*_) 
-  using ( _,_  ; ∃ ; ∃-syntax ; Σ ; Σ-syntax ; map₂) public
+  using ( _,_  ; ∃ ; ∃-syntax ; Σ ; Σ-syntax ; map₂ ; curry ; uncurry) public
 open import Data.Sum
   renaming (_⊎_ to _or_; inj₁ to left; inj₂ to right) 
   hiding (map₂ ; map ; [_,_]) public 
@@ -24,7 +24,7 @@ open import Data.Unit.Polymorphic using (⊤ ; tt) public
 open import Data.List using 
   (List ; _∷_ ; [] ; map ; reverse) public
 
-open import Function renaming (_∘_ to _○_) using (id ; const ; flip ; _⇔_ ; Equivalence) public
+open import Function renaming (_∘_ to _○_) using (id ; const ; flip ; _⇔_ ; Equivalence ) public
 open import Relation.Binary.Definitions using (Decidable ; DecidableEquality) public
 open import Relation.Nullary.Negation using (contradiction; contraposition) public
 open import Relation.Nullary using (Dec; yes; no ; map′ ; Irrelevant) public
@@ -40,9 +40,15 @@ variable
 
 --------------------------------------------------------------------------------
 -- Common functions
+private
+  variable 
+    A B C D : Set ℓ 
 
-cross : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃} {D : Set ℓ₄} → (A → C) → (B → D) → A * B → C * D 
+cross : (A → C) → (B → D) → A * B → C * D 
 cross f g (a , b) = (f a , g b) 
+
+<_,_> : (A → B) → (A → C) → A → B * C 
+< f , g > a = f a , g a 
 
 -- Redefining negation to be universe polymorphic
 ¬_ : (A : Set ℓ) → Set ℓ

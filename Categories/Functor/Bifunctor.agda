@@ -28,7 +28,7 @@ module _ {𝒞 : Category o₁ a₁ e₁}
 
   -- Projecting a unary functor from a bifunctor
   Bf-π₁ : (A : 𝒟 .Obj) → Functor 𝒞 ℰ
-  Bf-π₁ A = F ∘F ⟨ IdF ⨾ Const A ⟩
+  Bf-π₁ A = F ∘F ⟨ IdF , Const A ⟩
 
   Bf-π₂ : (A : 𝒞 .Obj) → Functor 𝒟 ℰ
-  Bf-π₂ A = F ∘F ⟨ Const A ⨾ IdF ⟩ 
+  Bf-π₂ A = F ∘F ⟨ Const A , IdF ⟩ 

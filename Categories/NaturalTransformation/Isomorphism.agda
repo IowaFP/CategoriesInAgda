@@ -28,6 +28,7 @@ module _ {𝒞 : Category o₁ a₁ e₁}
     field 
       nat : NaturalTransformation F G 
       iso : ∀ {A : 𝒞 .Obj} → isIso 𝒟 (nat .η {A})
+  open _≃ₙ_ public 
 
 --------------------------------------------------------------------------------
 -- Natural isomorphisms form an equivalence relation on functors
