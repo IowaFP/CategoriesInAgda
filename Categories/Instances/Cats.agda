@@ -37,19 +37,14 @@ module _ {o a e} where
   CatsProducts .products X Y .`π₁ = π¹
   CatsProducts .products X Y .`π₂ = π²
   CatsProducts .products X Y .⟨_⨾_⟩ = ⟨_∶_⟩
-  CatsProducts .products X Y .project₁ .nat .η = Id
+  CatsProducts .products X Y .project₁ .nat = Id , λ _ → idᵣ ⨾ sym-≈ idₗ
     where open Category X 
-  CatsProducts .products X Y .project₁ .nat .naturality f = idᵣ ⨾ sym-≈ idₗ
+  CatsProducts .products X Y .project₁ .iso = Id , idₗ , idₗ
     where open Category X 
-  CatsProducts .products X Y .project₁ .iso .∼ = X .Category.Id
-  CatsProducts .products X Y .project₁ .iso .iso = idₗ , idₗ
-    where open Category X 
-  CatsProducts .products X Y .project₂ .nat .η = Y .Category.Id
-  CatsProducts .products X Y .project₂ .nat .naturality f = idᵣ ⨾ sym-≈ idₗ
+  CatsProducts .products X Y .project₂ .nat = Id , λ _ → idᵣ ⨾ sym-≈ idₗ
     where open Category Y 
-  CatsProducts .products X Y .project₂ .iso .∼ = Y .Category.Id
-  CatsProducts .products X Y .project₂ .iso .iso = idₗ , idₗ
+  CatsProducts .products X Y .project₂ .iso = Id , idₗ , idₗ
     where open Category Y 
-  CatsProducts .products X Y .unique π₁∘f π₂∘f .nat .η = {!   !}
-  CatsProducts .products X Y .unique π₁∘f π₂∘f .nat .naturality = {!   !}
-  CatsProducts .products X Y .unique π₁∘f π₂∘f .iso = {!   !} 
+  CatsProducts .products X Y .unique {f = F} {G} {H} π₁∘f π₂∘f = ⟨⟩-unique G H F π₁∘f π₂∘f
+    where 
+      module X = Category X ; module Y = Category Y

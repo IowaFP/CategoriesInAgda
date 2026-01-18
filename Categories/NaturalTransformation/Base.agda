@@ -4,7 +4,7 @@ module Categories.NaturalTransformation.Base where
 
 open import Categories.Prelude
 open import Categories.Category 
-open import Categories.Functor 
+open import Categories.Functor.Base 
 
 open import Categories.Reasoning.Hom
 
@@ -19,14 +19,17 @@ module _ {𝒞 : Category o₁ a₁ e₁}
   private 
     module F = Functor F 
     module G = Functor G 
+  
+  Natural : (η : ∀ {A : 𝒞 .Obj} → 𝒟 [ F.₀ A , G.₀ A ]) → Set _ 
+  Natural η = ∀ {A B : 𝒞 .Obj} → (f : 𝒞 [ A , B ]) → 
+                    𝒟 [ 𝒟 [ G.fmap f ∘ η ] ≈ 𝒟 [ η ∘ (F.fmap f) ] ]
 
   record NaturalTransformation : Set (o₁ ⊔ a₁ ⊔ e₁ ⊔ o₂ ⊔ a₂ ⊔ e₂) where 
     constructor _,_
 
     field 
       η : ∀ {A : 𝒞 .Obj} → 𝒟 [ (F.₀ A) , (G.₀ A) ]
-      naturality : ∀ {A B : 𝒞 .Obj} → (f : 𝒞 [ A , B ]) → 
-                    𝒟 [ 𝒟 [ G.fmap f ∘ η ] ≈ 𝒟 [ η ∘ (F.fmap f) ] ]
+      naturality : Natural η
 
   open NaturalTransformation public 
 --------------------------------------------------------------------------------

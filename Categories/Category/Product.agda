@@ -4,7 +4,10 @@ module Categories.Category.Product where
 
 open import Categories.Prelude
 open import Categories.Category.Base 
+open import Categories.Category.Arrows
 open import Categories.Functor.Base
+open import Categories.NaturalTransformation
+open import Categories.Reasoning.NaturalIsomorphism
 
 --------------------------------------------------------------------------------
 -- Product categories
@@ -27,6 +30,8 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
     (cong-∘ 𝒞 f₁≈h₁ g₁≈i₁) , (cong-∘ 𝒟 f₂≈h₂ g₂≈i₂) 
 
 
+--------------------------------------------------------------------------------
+-- Canonical projections
 
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   open Category
@@ -51,16 +56,20 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   π² .F-∘ _ _ = D.refl-≈
   π² .F-cong = snd 
 
+--------------------------------------------------------------------------------
+-- Universal morphism
+
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} where
   open Category
   private
     module C = Category 𝒞
     module D = Category 𝒟
+    module E = Category ℰ
 
-  -- The product of two functors---or, when viewing products of categories
-  -- as binary products in the category of categories, we can view 
-  -- ⟨ F ⨾ G ⟩ as giving the unique morphism H : 𝒞 → D × ℰ that commutes
-  -- with π¹ and π². (See Categories.Instances.Cats)
+  -- _×_ forms a product on the category of categories, where 
+  -- ⟨ F , G ⟩ is the unique morphism such that 
+  -- F ≃ π¹ ∘ ⟨ F , G ⟩ and G ≃  π² ∘ ⟨ F , G ⟩. 
+  -- (See Categories.Instances.Cats)
   ⟨_,_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
   ⟨ F , G ⟩ = record
     { F₀         = < F₀ , G₀ >
@@ -71,3 +80,17 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
     }
     where 
       open Functor F ; open Gunctor G
+
+  
+  module _ (F : Functor 𝒞 𝒟) (G : Functor 𝒞 ℰ) (H : Functor 𝒞 (𝒟 × ℰ)) where 
+    open Functor F ; open Gunctor G ; open Hunctor H 
+    
+    -- ⟨ F , G ⟩ is unique w.r.t. to commutativity of product diagrams 
+    ⟨⟩-unique : π¹ ∘F H ≃ₙ F → π² ∘F H ≃ₙ G → ⟨ F , G ⟩ ≃ₙ H
+    ⟨⟩-unique π¹∘H π²∘H .nat .η = π¹∘H .iso .∼ , π²∘H .iso .∼
+    ⟨⟩-unique π¹∘H π²∘H .nat .naturality f = η⁻¹-natural π¹∘H f , η⁻¹-natural π²∘H f
+    ⟨⟩-unique π¹∘H π²∘H .iso .∼ = π¹∘H .nat .η , π²∘H .nat .η
+    ⟨⟩-unique π¹∘H π²∘H .iso .iso = 
+      (π¹∘H .iso .iso .rinv , π²∘H .iso .iso .rinv) , 
+      (π¹∘H .iso .iso .linv , π²∘H .iso .iso .linv)
+                

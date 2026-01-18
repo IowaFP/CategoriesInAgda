@@ -4,7 +4,7 @@ module Categories.NaturalTransformation.Isomorphism where
 
 open import Categories.Prelude
 open import Categories.Category 
-open import Categories.Functor 
+open import Categories.Functor.Base  
 open import Categories.NaturalTransformation.Base
 open import Categories.Reasoning.Hom
 
@@ -52,25 +52,38 @@ module _
     where 
       module F = Functor F 
   
+
+  -- η : F → G is a natural isomorphism if each arrow η(A) : F A ⇒ G A is 
+  -- an isomorphism. We prove here that it is unnecessary to further 
+  -- require (in defining a nat. isomorphism) that η⁻¹ be natural, which
+  -- (we show) can be derived.
+  η⁻¹-natural : ∀ {F G : Functor 𝒞 𝒟} (i : F ≃ₙ G) → 
+                  Natural G F (λ {A : 𝒞 .Category.Obj} → i .iso {A} .∼)
+  η⁻¹-natural {F = F} {G} ((η , nat) , i) f = 
+    let η⁻¹ : ∀ {A} → G.F₀ A ⇒ F.F₀ A   
+        η⁻¹ = λ {A} → i {A} .∼ in 
+      begin 
+        F.fmap f ∘ η⁻¹              ≈⟨ cong-∘ₗ (sym-≈ idₗ) ⟩ 
+        Id ∘ F.fmap f ∘ η⁻¹         ≈⟨ cong-∘ₗ (cong-∘ₗ (sym-≈ (i .iso .rinv))) ⟩ 
+        η⁻¹ ∘ η ∘ F.fmap f ∘ η⁻¹   ≈⟨ cong-∘ₗ assᵣ ⟩ 
+        η⁻¹ ∘ (η ∘ F.fmap f) ∘ η⁻¹ ≈⟨ cong-∘ₗ (cong-∘ᵣ (sym-≈ (nat f))) ⟩ 
+        η⁻¹ ∘ (G.fmap f ∘ η) ∘ η⁻¹ ≈⟨ ((cong-∘ₗ assₗ) ⨾ assᵣ) ⟩ 
+        η⁻¹ ∘ G.fmap f ∘ (η ∘ η⁻¹) ≈⟨ ((cong-∘ᵣ (i .iso .linv)) ⨾ idᵣ) ⟩ 
+        η⁻¹ ∘ G.fmap f ∎
+      where 
+        module F = Functor F 
+        module G = Functor G 
+
+  --------------------------------------------------------------------------------
   -- Natural isomorphisms form an equivalence relation on functors
+
   refl-≃ₙ = IdN 
+
   sym-≃ₙ : ∀ {F G : Functor 𝒞 𝒟} → F ≃ₙ G → G ≃ₙ F 
   sym-≃ₙ {F} {G} ((η , nat) , i) = 
-    ((λ {A} → i {A} .∼) ,
-    -- A subtlety: we must confirm that the inverse of a morphism
-    -- induced by a natural transformation is indeed a natural transformation.
-    λ f → begin 
-      F.fmap f ∘ i .∼              ≈⟨ cong-∘ₗ (sym-≈ idₗ) ⟩ 
-      Id ∘ F.fmap f ∘ i .∼         ≈⟨ cong-∘ₗ (cong-∘ₗ (sym-≈ (i .iso .rinv))) ⟩ 
-      i .∼ ∘ η ∘ F.fmap f ∘ i .∼   ≈⟨ cong-∘ₗ assᵣ ⟩ 
-      i .∼ ∘ (η ∘ F.fmap f) ∘ i .∼ ≈⟨ cong-∘ₗ (cong-∘ᵣ (sym-≈ (nat f))) ⟩ 
-      i .∼ ∘ (G.fmap f ∘ η) ∘ i .∼ ≈⟨ ((cong-∘ₗ assₗ) ⨾ assᵣ) ⟩ 
-      i .∼ ∘ G.fmap f ∘ (η ∘ i .∼) ≈⟨ ((cong-∘ᵣ (i .iso .linv)) ⨾ idᵣ) ⟩ 
-      i .∼ ∘ G.fmap f ∎ ) , 
+    ((λ {A} → i {A} .∼) , η⁻¹-natural {F} {G} ((η , nat) , i)) , 
       λ {A} → η {A} , i {A} .iso .rinv , i {A} .iso .linv
-    where 
-      module F = Functor F 
-      module G = Functor G 
+
   trans-≃ₙ : ∀ {F G H : Functor 𝒞 𝒟} → F ≃ₙ G → G ≃ₙ H → F ≃ₙ H
   trans-≃ₙ {F} {G} {H} ((η , nat-η) , i₁) ((ε , nat-ε) , i₂) = 
     ((λ {A} →  ε ∘ η) , λ f → 
