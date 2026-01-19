@@ -12,6 +12,7 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     infixr 5 _⇒_ 
     infixl 5 _∘_
     infixl 0 _≈_
+    infixr 7 _⋆_
 
     field
       -- The types of objects, arrows, and composition
@@ -31,7 +32,8 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
       idₗ : ∀ {A B} {f : A ⇒ B} → Id ∘ f ≈ f 
       assₗ : ∀ {A B C D} {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D} →  
               h ∘ (g ∘ f) ≈ (h ∘ g) ∘ f
-      cong-∘  : ∀ {A B C} {f h : B ⇒ C} {g i : A ⇒ B} → 
+      -- congruence
+      _⋆_  : ∀ {A B C} {f h : B ⇒ C} {g i : A ⇒ B} → 
                   f ≈ h → g ≈ i → f ∘ g ≈ h ∘ i        
      
     module _ {A B : Obj} where
@@ -48,25 +50,29 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
       ; _≈_           = _≈_
       ; isEquivalence = eqv {A} {B} 
       }
-
-    -- congruence on left of a composition
-    cong-∘ₗ : ∀ {A B C} {f h : B ⇒ C} {g : A ⇒ B} → f ≈ h → f ∘ g ≈ h ∘ g
-    cong-∘ₗ pf = cong-∘ pf refl-≈
-
-    -- congruence on right of a composition
-    cong-∘ᵣ : ∀ {A B C} {f h : A ⇒ B} {g : B ⇒ C} → f ≈ h → g ∘ f ≈ g ∘ h
-    cong-∘ᵣ pf = cong-∘ refl-≈ pf              
     
-    -- reassociate from left *to right*
-    assᵣ : ∀ {A B C D} {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D} →  
-                (h ∘ g) ∘ f ≈ h ∘ (g ∘ f)
-    assᵣ = sym-≈ assₗ
-
     -- Infix notation for transitivity; emphasizes that
     -- transitivity is composition on the groupoid model of identity types.
     infixr 3 _⨾_ 
     _⨾_ : ∀ {A B} {f g h : A ⇒ B} → f ≈ g → g ≈ h → f ≈ h
     _⨾_ = trans-≈ 
+
+    _⁻¹ : ∀ {A B} {f g : A ⇒ B} → f ≈ g → g ≈ f
+    _⁻¹ = sym-≈ 
+
+    -- congruence on left of a composition
+    infixl 7 _⋆ₗ_
+    _⋆ₗ_ : ∀ {A B C} {f h : B ⇒ C} → f ≈ h → (g : A ⇒ B) → f ∘ g ≈ h ∘ g
+    pf ⋆ₗ g = pf ⋆ refl-≈
+
+    -- congruence on right of a composition
+    _⋆ᵣ_ : ∀ {A B C} {f h : A ⇒ B} (g : B ⇒ C) → f ≈ h → g ∘ f ≈ g ∘ h
+    g ⋆ᵣ pf = refl-≈ ⋆ pf              
+    
+    -- reassociate from left *to right*
+    assᵣ : ∀ {A B C D} {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D} →  
+                (h ∘ g) ∘ f ≈ h ∘ (g ∘ f)
+    assᵣ = assₗ ⁻¹
     
     -- opposite category
     op : Category o a e 
@@ -79,7 +85,7 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     op .idᵣ = idₗ
     op .idₗ = idᵣ
     op .assₗ = assᵣ
-    op .cong-∘ e₁ e₂ = cong-∘ e₂ e₁  
+    op ._⋆_ e₁ e₂ = e₂ ⋆ e₁  
 
 
     

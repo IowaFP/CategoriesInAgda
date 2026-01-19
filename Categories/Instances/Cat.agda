@@ -2,7 +2,7 @@
 
 module Categories.Instances.Cat where 
 
-open import Categories.Prelude
+open import Categories.Prelude hiding (ℓ)
 open import Categories.Category
 open import Categories.Category.Product renaming (_×_ to _⊗_ ; ⟨_,_⟩ to ⟨_∶_⟩)
 open import Categories.Functor 
@@ -14,24 +14,26 @@ open import Categories.Instances.Functor
 
 --------------------------------------------------------------------------------
 -- The Category of Categories  
-module _ where 
+module _ o a e where 
   open Category  
-  𝐂𝐚𝐭 : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
-  𝐂𝐚𝐭 o a e .Obj = Category o a e 
-  𝐂𝐚𝐭 o a e ._⇒_ 𝒞 𝒟 =  Functor 𝒞 𝒟
-  𝐂𝐚𝐭 o a e ._∘_ = _∘F_
-  𝐂𝐚𝐭 o a e .Id = IdF 
-  𝐂𝐚𝐭 o a e ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
-  𝐂𝐚𝐭 o a e .eqv  = nat-setoid .Setoid.isEquivalence
-  𝐂𝐚𝐭 o a e .cong-∘ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
-  𝐂𝐚𝐭 o a e .idᵣ =  IdF-idᵣ  
-  𝐂𝐚𝐭 o a e .idₗ = IdF-idₗ   
-  𝐂𝐚𝐭 o a e .assₗ {f = F} {G} {H} = Functor-assₗ F G H 
+  private 
+    ℓ = o ⊔ a ⊔ e 
+
+  𝐂𝐚𝐭 : Category (lsuc ℓ) ℓ ℓ 
+  𝐂𝐚𝐭 .Obj = Category o a e 
+  𝐂𝐚𝐭 ._⇒_ 𝒞 𝒟 =  Functor 𝒞 𝒟
+  𝐂𝐚𝐭 ._∘_ = _∘F_
+  𝐂𝐚𝐭 .Id = IdF 
+  𝐂𝐚𝐭 ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
+  𝐂𝐚𝐭 .eqv  = nat-setoid .Setoid.isEquivalence
+  𝐂𝐚𝐭 .cong-∘ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
+  𝐂𝐚𝐭 .idᵣ =  IdF-idᵣ  
+  𝐂𝐚𝐭 .idₗ = IdF-idₗ   
+  𝐂𝐚𝐭 .assₗ {f = F} {G} {H} = Functor-assₗ F G H 
  
 --------------------------------------------------------------------------------
 -- The product of categories are products in 𝐂𝐚𝐭
 
-module _ o a e where 
   open hasProduct  
   open AdmitsProducts 
   
@@ -66,16 +68,19 @@ module _ o a e where
 -- *at level (o ⊔ a ⊔ e)* admits exponentials.
 
 module _ o a e where 
-  open AdmitsProducts (𝐂𝐚𝐭Products o a e)
+  private 
+    ℓ = o ⊔ a ⊔ e 
+
+  open AdmitsProducts (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   open hasExponential
   open AdmitsExponentials
   
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
-    (𝐂𝐚𝐭 (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e)) 
-    (𝐂𝐚𝐭Products (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e))
+    (𝐂𝐚𝐭 ℓ ℓ ℓ) 
+    (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
   -- Goal: Functor ([ 𝒟 , 𝒞 ] ⊗ 𝒟) 𝒞 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {! π¹    !} 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {! 𝒞 × 𝒟   !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = {!   !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = {!   !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = {!   !} 
