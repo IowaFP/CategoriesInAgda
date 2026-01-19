@@ -40,7 +40,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   open Category 𝒞 ; open `Category 𝒟
 
   -- Projecting the left category out of a product category
-  π¹ : Functor (𝒞 × 𝒟) 𝒞
+  π¹ : (𝒞 × 𝒟) ⇛ 𝒞
   π¹ .F₀ = fst
   π¹ .fmap = fst
   π¹ .F-id = refl-≈
@@ -48,7 +48,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   π¹ .F-cong = fst 
 
   -- Projecting the right category
-  π² : Functor (𝒞 × 𝒟) 𝒟 
+  π² : (𝒞 × 𝒟) ⇛ 𝒟 
   π² .F₀ = snd
   π² .fmap = snd
   π² .F-id = `refl-≈
@@ -64,7 +64,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
   -- ⟨ F , G ⟩ is the unique morphism such that 
   -- F ≃ π¹ ∘ ⟨ F , G ⟩ and G ≃  π² ∘ ⟨ F , G ⟩. 
   -- (See Categories.Instances.Cat)
-  ⟨_,_⟩ : ∀ (F : Functor 𝒞 𝒟) → (G : Functor 𝒞 ℰ) → Functor 𝒞 (𝒟 × ℰ)
+  ⟨_,_⟩ : ∀ (F : 𝒞 ⇛ 𝒟) → (G : 𝒞 ⇛ ℰ) → 𝒞 ⇛ (𝒟 × ℰ)
   ⟨ F , G ⟩ = record
     { F₀         = < F₀ , G₀ >
     ; fmap       = < fmap , gmap > 
@@ -76,7 +76,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
       open Functor F ; open Gunctor G
 
   
-  module _ (F : Functor 𝒞 𝒟) (G : Functor 𝒞 ℰ) (H : Functor 𝒞 (𝒟 × ℰ)) where 
+  module _ (F : 𝒞 ⇛ 𝒟) (G : 𝒞 ⇛ ℰ) (H : 𝒞 ⇛ (𝒟 × ℰ)) where 
     open Functor F ; open Gunctor G ; open Hunctor H 
     
     -- ⟨ F , G ⟩ is unique w.r.t. to commutativity of product diagrams 

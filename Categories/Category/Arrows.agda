@@ -151,6 +151,14 @@ module Isomorphism (𝒞 : Category o a e) where
     ; isEquivalence = record { refl = refl-≃ ; sym = sym-≃ ; trans = trans-≃ }
     }
 
+module `Isomorphism (𝒞 : Category o a e) where 
+  open Isomorphism 𝒞 
+    renaming (_≃_ to _`≃_ ; 
+              refl-≃ to `refl-≃ ; 
+              sym-≃ to `sym-≃ ; 
+              trans-≃ to `trans-≃ ; 
+              obj-setoid to `obj-setoid) public 
+
 -- Accessor for isomorphism when category is unopened
 _[_≃_] : (𝒞 : Category o a e) → (A B : 𝒞 .Category.Obj) → Set (o ⊔ a ⊔ e)
 𝒞 [ A ≃ B ] = Isomorphism._≃_ 𝒞 A B

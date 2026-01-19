@@ -22,7 +22,7 @@ module _ o a e where
 
   𝐂𝐚𝐭 : Category (lsuc ℓ) ℓ ℓ 
   𝐂𝐚𝐭 .Obj = Category o a e 
-  𝐂𝐚𝐭 ._⇒_ 𝒞 𝒟 =  Functor 𝒞 𝒟
+  𝐂𝐚𝐭 ._⇒_ 𝒞 𝒟 =  𝒞 ⇛ 𝒟
   𝐂𝐚𝐭 ._∘_ = _∘F_
   𝐂𝐚𝐭 .Id = IdF 
   𝐂𝐚𝐭 ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
@@ -61,7 +61,7 @@ module _ o a e where
 -- N.b. we have to be a bit careful with what we are asserting because of 
 -- levels. Functor records quantify over objects, arrows, and equivalences,
 -- hence if (𝒞 𝒟 : Category o a e), we have:
---   Functor 𝒞 𝒟 : Set (o ⊔ a ⊔ e) 
+--   𝒞 ⇛ 𝒟 : Set (o ⊔ a ⊔ e) 
 -- Correspondingly, functor categories have type
 --   [ 𝒞 , 𝒟 ] : Category (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e).
 -- So it is a bit incorrect to assert that "the category of categories admits
@@ -77,6 +77,7 @@ module _ o a e where
   open hasExponential
   open AdmitsExponentials
   
+
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
@@ -102,6 +103,6 @@ module _ o a e where
       open Category 𝒞 ; open `Category 𝒟 
       open Functor F ; open Gunctor G ; open Hunctor H 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.F-cong = {!   !} 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_] {X = X}  = TODO (Functor (X × 𝒟) 𝒞 → Functor X ([ 𝒟 , 𝒞 ]))
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_] {X = X}  = TODO ((X × 𝒟) ⇛ 𝒞 → X ⇛ ([ 𝒟 , 𝒞 ]))
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO _ 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO _ 

@@ -13,7 +13,7 @@ open import Categories.Reasoning.Hom
 
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
-    (F G : Functor 𝒞 𝒟) where 
+    (F G : 𝒞 ⇛ 𝒟) where 
 
   open Category 𝒞
   open Functor F ; open Gunctor G 
@@ -41,7 +41,7 @@ module _
   open areInverse 
 
   -- the identity natural isomorphism
-  IdN : ∀ {F : Functor 𝒞 𝒟} → F ≃ₙ F
+  IdN : ∀ {F : 𝒞 ⇛ 𝒟} → F ≃ₙ F
   IdN {F} = (Id , λ f → begin 
     fmap f ∘ Id ≈⟨ idᵣ ⟩ 
     fmap f      ≈⟨ idₗ ⁻¹ ⟩ 
@@ -57,7 +57,7 @@ module _
   -- that each the natural transformation induced as the inverse of η
   -- is indeed natural. We prove here that is unnecessary to do so:
   -- we can show directly that η⁻¹ is natural.
-  η⁻¹-natural : ∀ {F G : Functor 𝒞 𝒟} (γ : F ≃ₙ G) → 
+  η⁻¹-natural : ∀ {F G : 𝒞 ⇛ 𝒟} (γ : F ≃ₙ G) → 
                   Natural G F (λ {A : 𝒞 .Category.Obj} → γ .iso {A} .∼)
   η⁻¹-natural {F = F} {G} ((η , nat) , γ) f = 
     let η⁻¹ : ∀ {A} → G₀ A ⇒ F₀ A   
@@ -80,12 +80,12 @@ module _
 
   refl-≃ₙ = IdN 
 
-  sym-≃ₙ : ∀ {F G : Functor 𝒞 𝒟} → F ≃ₙ G → G ≃ₙ F 
+  sym-≃ₙ : ∀ {F G : 𝒞 ⇛ 𝒟} → F ≃ₙ G → G ≃ₙ F 
   sym-≃ₙ {F} {G} ((η , nat) , γ) = 
     ((λ {A} → ∼ γ) , η⁻¹-natural {F} {G} ((η , nat) , γ)) , 
       λ {A} → η , γ .iso .rinv , γ  .iso .linv
 
-  trans-≃ₙ : ∀ {F G H : Functor 𝒞 𝒟} → F ≃ₙ G → G ≃ₙ H → F ≃ₙ H
+  trans-≃ₙ : ∀ {F G H : 𝒞 ⇛ 𝒟} → F ≃ₙ G → G ≃ₙ H → F ≃ₙ H
   trans-≃ₙ {F} {G} {H} ((η , nat-η) , γ₁) ((ε , nat-ε) , γ₂) = 
     ((λ {A} →  ε ∘ η) , λ f →    
       begin
@@ -108,7 +108,7 @@ module _
  
   nat-setoid : Setoid _ _
   nat-setoid = record
-    { Carrier       = Functor 𝒞 𝒟 
+    { Carrier       = 𝒞 ⇛ 𝒟 
     ; _≈_           = _≃ₙ_
     ; isEquivalence = record { refl = refl-≃ₙ ; sym = sym-≃ₙ ; trans = trans-≃ₙ }
     }
@@ -124,8 +124,8 @@ module _
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
     {ℰ : Category o₃ a₃ e₃}
-    {F G : Functor 𝒞 𝒟}
-    {J K : Functor 𝒟 ℰ} where
+    {F G : 𝒞 ⇛ 𝒟}
+    {J K : 𝒟 ⇛ ℰ} where
   open Category ℰ ; open `Category 𝒟 
   open Functor F ; open Gunctor G 
   open Junctor J ; open Kunctor K 
@@ -163,7 +163,7 @@ module _ {𝒞 : Category o₁ a₁ e₁}
 
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
-    {F : Functor 𝒞 𝒟} where
+    {F : 𝒞 ⇛ 𝒟} where
   open `Category 𝒞 ; open Category 𝒟 
   open Functor F 
 
@@ -184,9 +184,9 @@ module _
     {ℬ : Category o₁ a₁ e₁} 
     {𝒞 : Category o₂ a₂ e₂}
     {𝒟 : Category o₃ a₃ e₃}
-    (F : Functor 𝒜 ℬ)
-    (G : Functor ℬ 𝒞)
-    (H : Functor 𝒞 𝒟) where
+    (F : 𝒜 ⇛ ℬ)
+    (G : ℬ ⇛ 𝒞)
+    (H : 𝒞 ⇛ 𝒟) where
   open Category 𝒟 
   Functor-assₗ : H ∘F (G ∘F F) ≃ₙ (H ∘F G) ∘F F 
   Functor-assₗ = (Id , λ f → idᵣ ⨾ idₗ ⁻¹) , Id , idᵣ , idᵣ

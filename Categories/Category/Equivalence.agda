@@ -3,7 +3,6 @@ module Categories.Category.Equivalence where
 open import Categories.Prelude
 open import Categories.Category
 open import Categories.Functor 
-open import Categories.NaturalTransformation
 
 --------------------------------------------------------------------------------
 -- Definition 1: 𝒞 and 𝒟 are equivalent if there is a pair of functors
@@ -29,7 +28,7 @@ module Definition2 (𝒞 𝒟 : Category o a e) where
 
   record areEquivalent : Set (lsuc (o ⊔ a ⊔ e)) where 
     field 
-        F : Functor 𝒞 𝒟
+        F : 𝒞 ⇛ 𝒟
         essentiallySurjective : EssentiallySurjective F 
         fullyFaithful : FullyFaithful F
 

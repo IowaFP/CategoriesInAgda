@@ -32,13 +32,18 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
     ₀ = F₀ 
     ₁ = fmap
 
+-- Infix notation for Functor
+infixr 5 _⇛_ 
+_⇛_ = Functor 
+
+-- An endofunctor is a functor with equal domain & codomain
 Endofunctor : Category o a e → Set (o ⊔ a ⊔ e) 
 Endofunctor 𝒞 = Functor 𝒞 𝒞 
 
 --------------------------------------------------------------------------------
 -- Common syntax 
 
-module Gunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (G : Functor 𝒞 𝒟) where 
+module Gunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (G : 𝒞 ⇛ 𝒟) where 
   open Functor G 
     renaming (F₀ to G₀ ; 
             fmap to gmap ; 
@@ -46,7 +51,7 @@ module Gunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂}
              F-∘ to G-∘ ; 
           F-cong to G-cong) public
 
-module Hunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (H : Functor 𝒞 𝒟) where 
+module Hunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (H : 𝒞 ⇛ 𝒟) where 
   open Functor H 
     renaming (F₀ to H₀ ; 
             fmap to hmap ; 
@@ -54,7 +59,7 @@ module Hunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂}
              F-∘ to H-∘ ; 
           F-cong to H-cong) public
 
-module Junctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (J : Functor 𝒞 𝒟) where 
+module Junctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (J : 𝒞 ⇛ 𝒟) where 
   open Functor J 
     renaming (F₀ to J₀ ; 
             fmap to jmap ; 
@@ -62,7 +67,7 @@ module Junctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂}
              F-∘ to J-∘ ; 
           F-cong to J-cong) public
 
-module Kunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (K : Functor 𝒞 𝒟) where 
+module Kunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (K : 𝒞 ⇛ 𝒟) where 
   open Functor K 
     renaming (F₀ to K₀ ; 
             fmap to kmap ; 
@@ -73,13 +78,14 @@ module Kunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂}
 --------------------------------------------------------------------------------
 -- Functor composition
 
-module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} (F : Functor 𝒟 ℰ) (G : Functor 𝒞 𝒟) where 
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} 
+  (F : 𝒟 ⇛ ℰ) (G : 𝒞 ⇛ 𝒟) where 
   open Category ℰ 
   open HomReasoning ℰ 
 
   open Functor F ; open Gunctor G 
 
-  _∘F_ : Functor 𝒞 ℰ 
+  _∘F_ : 𝒞 ⇛ ℰ 
   _∘F_ .Functor.F₀ = (F₀ ○ G₀)
   _∘F_ .Functor.fmap = fmap ○ gmap 
   _∘F_ .Functor.F-id {A} = 
@@ -117,7 +123,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (A : 
   open Category 𝒟
   open Functor 
 
-  Const : Functor 𝒞 𝒟 
+  Const : 𝒞 ⇛ 𝒟 
   Const .F₀ _ = A
   Const .fmap f = Id
   Const .F-id = refl-≈
@@ -127,14 +133,14 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (A : 
 --------------------------------------------------------------------------------
 -- Opposite functors
 
-module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : Functor 𝒞 𝒟) where 
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 𝒞 ⇛ 𝒟) where 
   open Category 
   open Functor F 
   private 
     module C = Category 𝒞 ; module D = Category 𝒟 
 
   -- A functor from 𝒞 to 𝒟 is also a contravariant functor into 𝒟ᵒᵖ. 
-  opF : Functor (op 𝒞) (op 𝒟)
+  opF : (op 𝒞) ⇛ (op 𝒟)
   opF .Functor.F₀ = F₀
   opF .Functor.fmap = fmap
   opF .Functor.F-id = F-id
@@ -144,25 +150,25 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 
 --------------------------------------------------------------------------------
 -- Isomorphisms are preserved by functors
 
-module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : Functor 𝒞 𝒟) where 
-  open Category 𝒟 ; open HomReasoning 𝒟 
-  open Functor F 
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 𝒞 ⇛ 𝒟) where 
+  open `Category 𝒞 ; open Category 𝒟 ; open HomReasoning 𝒟 
+  open Functor F ; open `Isomorphism 𝒞 ; open Isomorphism 𝒟 
 
-  private 
-    module C = Category 𝒞 ; module Cᵢ = Isomorphism 𝒞 ; module Dᵢ = Isomorphism 𝒟 
+  private variable A B C : `Obj 
   
-  iso-preservation : ∀ {A B : C.Obj} (f : A C.⇒ B) (g : B C.⇒ A) → 
-                        areInverse 𝒞 f g → areInverse 𝒟 (fmap f) (fmap g)
+  iso-preservation : (f : A `⇒ B) (g : B `⇒ A) → 
+                      areInverse 𝒞 f g → 
+                      areInverse 𝒟 (fmap f) (fmap g)
   iso-preservation f g (linv , rinv) = 
     (begin 
-      (fmap f ∘ fmap g) ≈⟨ sym-≈ (F-∘ g f) ⟩ 
-      (fmap (f C.∘ g))  ≈⟨ F-cong linv ⟩ 
-      (fmap C.Id)       ≈⟨ F-id ⟩ 
+      (fmap f ∘ fmap g) ≈⟨ (F-∘ g f) ⁻¹ ⟩ 
+      (fmap (f `∘ g))  ≈⟨ F-cong linv ⟩ 
+      (fmap `Id)       ≈⟨ F-id ⟩ 
       Id ∎) , 
     (begin 
-      (fmap g ∘ fmap f) ≈⟨ sym-≈ (F-∘ f g) ⟩ 
-      (fmap (g C.∘ f))  ≈⟨ F-cong rinv ⟩ 
-      (fmap C.Id)       ≈⟨ F-id ⟩ 
+      (fmap g ∘ fmap f) ≈⟨ (F-∘ f g) ⁻¹ ⟩ 
+      (fmap (g `∘ f))  ≈⟨ F-cong rinv ⟩ 
+      (fmap `Id)       ≈⟨ F-id ⟩ 
       Id ∎) 
 
   --------------------------------------------------------------------------------
@@ -170,14 +176,14 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 
   
   -- F is injective on hom-sets
   Faithful : Set _
-  Faithful = ∀ {A B : C.Obj} → (f : A C.⇒ B) (g : A C.⇒ B) → 
+  Faithful = ∀ {A B : `Obj} (f : A `⇒ B) (g : A `⇒ B) → 
                fmap f ≈ fmap g → 
-               f C.≈ g 
+               f `≈ g 
 
 -- F is surjective on hom-sets
   Full : Set _
-  Full = ∀ {A B : C.Obj} → (g : F₀ A ⇒ F₀ B) → 
-               Σ[ f ∈ (A C.⇒ B) ] (fmap f ≈ g)
+  Full = ∀ {A B : `Obj} (g : F₀ A ⇒ F₀ B) → 
+          Σ[ f ∈ (A `⇒ B) ] (fmap f ≈ g)
   
   FullyFaithful = Faithful * Full
 
@@ -186,11 +192,12 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 
 
   -- F is injective on objects (up to isomorphism)
   EssentiallyInjective : Set _
-  EssentiallyInjective = ∀ {A B : C.Obj} → F₀ A Dᵢ.≃ F₀ B → A Cᵢ.≃ B
+  EssentiallyInjective = ∀ {A B : `Obj} → 
+                         F₀ A ≃ F₀ B → A `≃ B
 
   -- F is surjective on objects (up to isomorphism)
   EssentiallySurjective : Set _
-  EssentiallySurjective = (d : Obj) → Σ[ c ∈ C.Obj ] (F₀ c Dᵢ.≃ d)
+  EssentiallySurjective = (B : Obj) → Σ[ A ∈ `Obj ] (F₀ A ≃ B)
 
   -- Full and faithful functors are injective on objects up to isomorphism
   injectiveOnObjects : FullyFaithful → EssentiallyInjective 

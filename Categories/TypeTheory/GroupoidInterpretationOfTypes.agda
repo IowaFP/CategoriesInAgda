@@ -97,7 +97,7 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
   where 
     open Functor 
     F : ∀ (𝒞 : GroupoidCategory o o o) → 
-           Functor {o₂ = o} {e₂ = o} (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)
+           (𝒞 .category) ⇛ (Δ[ ≡-setoid {A = ⊤} ] .category)
     F 𝒞 .F₀ _ =  tt 
     F 𝒞 .fmap _ = refl 
     F 𝒞 .F-id = tt 
@@ -105,7 +105,7 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
     F 𝒞 .F-cong _ = tt 
 
     unique : ∀ {𝒞 : GroupoidCategory o o o} → 
-                (G : Functor (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)) → 
+                (G : (𝒞 .category) ⇛ (Δ[ ≡-setoid {A = ⊤} ] .category)) → 
                 G ≃ₙ (F 𝒞)
     unique G = (refl , λ _ → tt) , refl , tt , tt 
 
@@ -127,7 +127,7 @@ module _ {o} where
     where 
       open Category (𝒞 .category)
       open Isomorphism (𝒞 .category) using (obj-setoid ; refl-≃)
-      F : Functor (𝒞 .category) (Δ[ obj-setoid ] .category)
+      F : (𝒞 .category) ⇛ (Δ[ obj-setoid ] .category)
       F .F₀            = id
       F .fmap f .morph = f
       F .fmap f .iso   = 𝒞 .groupoid .allIso f
@@ -135,7 +135,7 @@ module _ {o} where
       F .F-∘ _ _       = tt
       F .F-cong _      = tt 
 
-      F⁻¹ :  Functor (Δ[ obj-setoid ] .category) (𝒞 .category)
+      F⁻¹ :  (Δ[ obj-setoid ] .category) ⇛ (𝒞 .category)
       F⁻¹ .F₀             = id
       F⁻¹ .fmap (f , iso) = f
       F⁻¹ .F-id           = refl-≈

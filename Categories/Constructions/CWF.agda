@@ -125,7 +125,7 @@ record CWF {ℓ} (Con : Category o a e) : Set (lsuc (lsuc o) ⊔ e ⊔ a ⊔ lsu
   Conᵒᵖ = op 
 
   field 
-    Ty : Functor Conᵒᵖ (𝐅𝐚𝐦 o ℓ)
+    Ty : Conᵒᵖ ⇛ (𝐅𝐚𝐦 o ℓ)
     ⟨⟩ : Obj 
     ⟨⟩-terminal : isTerminal Con ⟨⟩ 
   open Functor Ty 
@@ -239,15 +239,15 @@ module _ {𝒞 𝒟 : Category o a e} where
   record CWFMorphism {ℓ} (𝒜 : CWF {ℓ = ℓ} 𝒞) (ℬ : CWF {ℓ = ℓ} 𝒟) :  Set {!   !} where
     private 
       module A = CWF 𝒜 ; module B = CWF ℬ
-    Ty₁ : Functor C.op (𝐅𝐚𝐦 o ℓ)
+    Ty₁ : C.op ⇛ (𝐅𝐚𝐦 o ℓ)
     Ty₁ = A.Ty 
 
-    Ty₂ : Functor D.op (𝐅𝐚𝐦 o ℓ)
+    Ty₂ : D.op ⇛ (𝐅𝐚𝐦 o ℓ)
     Ty₂ = B.Ty 
 
     field 
-      F : Functor 𝒞 𝒟
-      η : NaturalTransformation Ty₁ (Ty₂ ∘F (opF F))
+      F : 𝒞 ⇛ 𝒟
+      η : Ty₁ ⇒ₙ (Ty₂ ∘F (opF F))
       preserves-terminal : F .F₀ (A.⟨⟩) ≡ B.⟨⟩ 
       preserves-comprehension : ∀ (Γ : C.Obj) (τ : A.Type Γ) → {!   !} -- F .F₀ (Γ A.▷ τ) ≃ ((F .F₀ Γ) B.▷ (F .F₀ τ))
 

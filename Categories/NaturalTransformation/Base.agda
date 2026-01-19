@@ -13,7 +13,7 @@ open import Categories.Reasoning.Hom
 
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
-    (F G : Functor 𝒞 𝒟) where 
+    (F G : 𝒞 ⇛ 𝒟) where 
 
   open Category 𝒞 ; open `Category 𝒟
   open Functor F ; open Gunctor G 
@@ -29,13 +29,17 @@ module _ {𝒞 : Category o₁ a₁ e₁}
       η : ∀ {A : Obj} → F₀ A `⇒ G₀ A
       naturality : Natural η
 
+  -- Infix notation for natural transformations
+  infixr 7 _⇒ₙ_
+  _⇒ₙ_ = NaturalTransformation
+
   open NaturalTransformation public 
 --------------------------------------------------------------------------------
 -- Vertical composition of natural transformations
 
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
-    {F G H : Functor 𝒞 𝒟} where 
+    {F G H : 𝒞 ⇛ 𝒟} where 
   open HomReasoning 𝒟
   open Functor F ; open Gunctor G ; open Hunctor H
   private 
@@ -43,7 +47,7 @@ module _ {𝒞 : Category o₁ a₁ e₁}
     
 
   -- Vertical composition
-  _∘V_ : NaturalTransformation G H → NaturalTransformation F G → NaturalTransformation F H 
+  _∘V_ : G ⇒ₙ H → F ⇒ₙ G → F ⇒ₙ H 
   (η₁ , nat₁) ∘V (η₂ , nat₂) = (η₁ ∘ η₂) , λ f → 
     begin 
       hmap f ∘ (η₁ ∘ η₂) ≈⟨ assₗ ⟩ 
@@ -61,17 +65,16 @@ module _ {𝒞 : Category o₁ a₁ e₁}
 module _ {𝒞 : Category o₁ a₁ e₁} 
     {𝒟 : Category o₂ a₂ e₂}
     {ℰ : Category o₃ a₃ e₃}
-    {F G : Functor 𝒞 𝒟}
-    {J K : Functor 𝒟 ℰ} where
+    {F G : 𝒞 ⇛ 𝒟}
+    {J K : 𝒟 ⇛ ℰ} where
   open Functor F ; open Gunctor G
   open Junctor J ; open Kunctor K    
   open Category ℰ ; open `Category 𝒟
     
-  
   open HomReasoning ℰ
 
   -- Horizontal composition
-  _∘H_ : NaturalTransformation J K → NaturalTransformation F G → NaturalTransformation (J ∘F F) (K ∘F G)
+  _∘H_ : J ⇒ₙ K → F ⇒ₙ G → (J ∘F F) ⇒ₙ (K ∘F G)
   (ε , nat₁) ∘H (η , nat₂) = (λ {A} → kmap η ∘ ε {F₀ A}) , λ f →
     -- surely this proof could be simpler
     begin 

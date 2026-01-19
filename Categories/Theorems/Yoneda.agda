@@ -37,7 +37,7 @@ open import Categories.Functor.Hom
 
 module CovariantYoneda {ℓ} 
       (𝒞 : Category a o e) 
-      (F : Functor 𝒞 (Setoids ℓ)) where
+      (F : 𝒞 ⇛ (Setoids ℓ)) where
 
 -------------------------------------------------------------------------------
 -- The contravariant Yoneda lemma:
@@ -51,6 +51,6 @@ module CovariantYoneda {ℓ}
 
 module ContravariantYoneda {ℓ}
       (𝒞 : Category a o e) (
-       F : Functor (𝒞 .op) (Setoids ℓ)) where
+       F : (𝒞 .op) ⇛ (Setoids ℓ)) where
 
 

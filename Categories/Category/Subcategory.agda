@@ -92,25 +92,25 @@ module _ (𝒟 : Category o a e) where
 record isSubcategory (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
        Set ((lsuc o₁) ⊔ a₁ ⊔ e₁ ⊔ (lsuc o₂) ⊔ a₂ ⊔ e₂) where 
   field 
-    ι : Functor 𝒞 𝒟 
+    ι : 𝒞 ⇛ 𝒟 
     faithful : Faithful ι 
     injective : EssentiallyInjective ι 
 
 open isSubcategory public 
 
-_⊆_ : (𝒞 𝒟 : Category o a e) → Set (lsuc o ⊔ a ⊔ e) 
-𝒞 ⊆ 𝒟 = isSubcategory 𝒞 𝒟 
+infixr 7 _⊆_
+_⊆_ = isSubcategory
 
 record isFullSubcategory (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
        Set ((lsuc o₁) ⊔ a₁ ⊔ e₁ ⊔ (lsuc o₂) ⊔ a₂ ⊔ e₂) where 
   field 
-    ι : Functor 𝒞 𝒟 
+    ι : 𝒞 ⇛ 𝒟 
     faithful : Faithful ι 
     injective : EssentiallyInjective ι 
     full : Full ι 
 
-_⊆F_ : (𝒞 𝒟 : Category o a e) → Set (lsuc o ⊔ a ⊔ e) 
-_⊆F_ = isFullSubcategory
+infixr 7 _⊑_
+_⊑_ = isFullSubcategory
 
 
 -- --------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ module _ (𝒟 : Category o a e) where
 
   -- Every subcategory definition yields an inclusion functor
   ι-Sub : ∀ {ℓ₂} {I : Set ℓ₁} → (ι : Inclusion 𝒟 I {ℓ₂}) → 
-                    Functor (Subcategory 𝒟 I ι) 𝒟
+                    (Subcategory 𝒟 I ι) ⇛ 𝒟
   ι-Sub inc .F₀ = inc .U
   ι-Sub inc .fmap = fst 
   ι-Sub inc .F-id = refl-≈
@@ -136,7 +136,7 @@ module _ (𝒟 : Category o a e) where
   -- This inclusion functor is faithful & injective on objects (up to
   -- isomorphism).
   Subcategory⇒isSubcategory : ∀ {I : Set ℓ₁} → (ι : Inclusion 𝒟 I {ℓ₂}) → 
-                                isSubcategory (Subcategory 𝒟 I ι) 𝒟
+                                (Subcategory 𝒟 I ι) ⊆ 𝒟
   Subcategory⇒isSubcategory ι .ι = ι-Sub ι
   Subcategory⇒isSubcategory ι .faithful f g eq = eq 
   Subcategory⇒isSubcategory (inclusion U₁ R₁ R-id₁ _∘R_ U-injective) 
@@ -147,7 +147,7 @@ module _ (𝒟 : Category o a e) where
 
   -- Every full subcategory definition yields a full inclusion functor
   ι-Full : ∀ {I : Set ℓ₁} → (U : I → Obj) → 
-                     Functor (FullSubcategory 𝒟 I U) 𝒟
+                     (FullSubcategory 𝒟 I U) ⇛ 𝒟
   ι-Full U .F₀ = U
   ι-Full U .fmap = id 
   ι-Full U .F-id = refl-≈
@@ -155,7 +155,7 @@ module _ (𝒟 : Category o a e) where
   ι-Full U .F-cong eq = eq   
 
   FullSubcategory⇒isFullSubcategory : ∀ {I : Set ℓ₁} → (U : I → Obj) → 
-                                        isFullSubcategory (FullSubcategory 𝒟 I U) 𝒟
+                                        (FullSubcategory 𝒟 I U) ⊑ 𝒟
   FullSubcategory⇒isFullSubcategory U .ι = ι-Full U
   FullSubcategory⇒isFullSubcategory U .faithful f g eq = eq 
   FullSubcategory⇒isFullSubcategory U .injective (f , f⁻¹ , linv , rinv) = f Isomorphism., (f⁻¹ , linv , rinv)
