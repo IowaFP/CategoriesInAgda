@@ -19,7 +19,7 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   open _≃ₙ_
 
   [_,_] : Category _ _ _
-  [_,_] .Obj = {! Functor 𝒞 𝒟  !}
+  [_,_] .Obj = Functor 𝒞 𝒟 
   [_,_] ._⇒_ = NaturalTransformation
   [_,_] ._∘_ {A = F} {G} {H} = _∘V_
   [_,_] .Id = IdN .nat 

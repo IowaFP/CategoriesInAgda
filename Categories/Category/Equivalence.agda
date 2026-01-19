@@ -39,7 +39,7 @@ module Definition2 (𝒞 𝒟 : Category o a e) where
 module _ (𝒞 𝒟 : Category o a e) where
     
   Def1⇒Def2 : Definition1.areEquivalent 𝒞 𝒟 → Definition2.areEquivalent 𝒞 𝒟
-  Def1⇒Def2 eqv = {!   !} 
+  Def1⇒Def2 eqv = TODO _  
 
   Def2⇒Def1 : Definition2.areEquivalent 𝒞 𝒟 → Definition1.areEquivalent 𝒞 𝒟
-  Def2⇒Def1 eqv = {!   !} 
+  Def2⇒Def1 eqv = TODO _  

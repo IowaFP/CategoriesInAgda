@@ -17,7 +17,7 @@ module _  where
   open Category 
   open GroupoidCategory
   
-  𝐆𝐩𝐝 : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (lsuc o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
+  𝐆𝐩𝐝 : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
   𝐆𝐩𝐝 o a e  .Obj = GroupoidCategory o a e
   𝐆𝐩𝐝 o a e ._⇒_ 𝒞 𝒟 =  Functor (𝒞 .category) (𝒟 .category)
   𝐆𝐩𝐝 o a e ._∘_ = _∘F_

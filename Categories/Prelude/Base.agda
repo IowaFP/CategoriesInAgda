@@ -23,6 +23,7 @@ open import Data.Empty.Polymorphic using (⊥ ; ⊥-elim) public
 open import Data.Unit.Polymorphic using (⊤ ; tt) public
 open import Data.List using 
   (List ; _∷_ ; [] ; map ; reverse) public
+open import Data.String using (String) public
 
 open import Function renaming (_∘_ to _○_) using (id ; const ; flip ; _⇔_ ; Equivalence ) public
 open import Relation.Binary.Definitions using (Decidable ; DecidableEquality) public
@@ -47,6 +48,7 @@ private
 cross : (A → C) → (B → D) → A * B → C * D 
 cross f g (a , b) = (f a , g b) 
 
+-- The universal morphism
 <_,_> : (A → B) → (A → C) → A → B * C 
 < f , g > a = f a , g a 
 

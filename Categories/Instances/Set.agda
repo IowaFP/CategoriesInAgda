@@ -11,6 +11,7 @@ open import Categories.Functor
 open import Categories.Constructions.Product
 open import Categories.Constructions.Exponential
 open import Categories.Constructions.Initial
+open import Categories.Constructions.Terminal
 
 open PropositionalEquality
 

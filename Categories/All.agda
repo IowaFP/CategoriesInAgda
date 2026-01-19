@@ -17,9 +17,11 @@ open import Categories.Functor.Hom public
 open import Categories.NaturalTransformation public 
 
 open import Categories.Constructions.Initial public 
+open import Categories.Constructions.Terminal public 
 open import Categories.Constructions.FAlgebra public 
 open import Categories.Constructions.CWF public 
 open import Categories.Constructions.Product public 
+open import Categories.Constructions.Coproduct public 
 open import Categories.Constructions.Exponential public
 open import Categories.Constructions.Pullback public 
 

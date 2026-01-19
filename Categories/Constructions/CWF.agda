@@ -25,13 +25,6 @@ open HeterogeneousEquality
 --   - The groupoid interpretation of type theory. Martin Hofmann and Thomas Streicher. 1996
 --     - https://ncatlab.org/nlab/files/HofmannStreicherGroupoidInterpretation.pdf
 -- ------------------------------------------------------------------------------
--- Can't be bothered with proving certain extensional equivalence properties of
--- families of sets. It seems I really do need functional extensionality, 
--- which means we lose computational properties, anyway.
-
-postulate sorry : ∀ {ℓ} {A : Set ℓ} → A 
-
--- ------------------------------------------------------------------------------
 -- The category of families of sets (type-theoretically)
 
 module _ where 
@@ -68,15 +61,12 @@ module _ where
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.sym x≈y i = cross sym (λ a y → sym-≅ (a y)) (x≈y i) 
   -- There must be a cleverer way of writing this
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.trans x≈y y≈z i = (cross (trans (x≈y i .fst)) (λ a y → trans-≅ (x≈y i .snd y) (a y)) (y≈z i)) 
-  𝐅𝐚𝐦 ℓ₁ ℓ₂ .cong-∘ {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = sorry 
-    -- cong-both (λ y → eq₁ y .fst) (eq₂ x .fst) , λ y → 
-    -- cong-app-≅ {x = g x y} {j x y} 
-    --   (subst (λ X → (λ _ → C .B (i₁ (i₃ x))) ≅ (λ _ → C .B X)) (cong-both (λ y → eq₁ y .fst) (eq₂ x .fst)) {! refl     !}) 
-    --   (f (i₃ x)) 
-    --   (h (i₄ x)) 
-    --   (cong-app-≅ 
-    --     {! subst (λ X → (λ z → B₁ .B z → C .B (i₁ z)) ≅ (λ z → B₁ .B z → C .B (i₂ z)))   !} f h 
-    --     {!   !} (≡-to-≅ (eq₂ x .fst))) (eq₂ x .snd y) 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ .cong-∘ {A = A} {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = 
+    Won'tProve 
+      (i₁ (i₃ x) ≡ i₂ (i₄ x) *
+      ((y : A .elements x) → 
+        f (i₃ x) (g x y) ≅ h (i₄ x) (j x y))) 
+    Because "Proof is boring and requires extensionality" 
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .idᵣ x = refl , λ _ → refl
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .idₗ x = refl , λ _ → refl
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .assₗ x = refl , λ _ → refl
