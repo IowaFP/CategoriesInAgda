@@ -83,26 +83,7 @@ module _ o a e where
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
   -- We build: Functor ([ 𝒟 , 𝒞 ] × 𝒟) 𝒞
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.F₀ (F , A) = F₀ A
-    where open Functor F 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.fmap 
-    {A = F , A} {B = G , B} ((η , naturality) , f) = gmap f ∘ η
-    where open Category 𝒞 ; open Gunctor G 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
-    where open Category 𝒞 ; open Functor F 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.F-∘ 
-    {A = F , A} {B = G , B} {C = H , C} 
-    ((η , nat-η) , f) ((ε , nat-ε) , g) = begin
-      hmap (g `∘ f) ∘ (ε ∘ η)   ≈⟨ H-∘ f g ⋆ₗ (ε ∘ η) ⟩ 
-      hmap g ∘ hmap f ∘ (ε ∘ η) ≈⟨ assₗ ⨾ assᵣ ⋆ₗ η ⟩ 
-      hmap g ∘ (hmap f ∘ ε) ∘ η ≈⟨ hmap g ⋆ᵣ (nat-ε f) ⋆ₗ η ⟩ 
-      hmap g ∘ (ε ∘ gmap f) ∘ η ≈⟨ assₗ ⋆ₗ η ⨾ assᵣ ⟩ 
-      hmap g ∘ ε ∘ (gmap f ∘ η) ∎ 
-    where 
-      open HomReasoning 𝒞 
-      open Category 𝒞 ; open `Category 𝒟 
-      open Functor F ; open Gunctor G ; open Hunctor H 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval .Functor.F-cong = {!   !} 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_] {X = X}  = TODO ((X × 𝒟) ⇛ 𝒞 → X ⇛ ([ 𝒟 , 𝒞 ]))
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = evalF 𝒟 𝒞
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λF[_] 𝒟 𝒞
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO _ 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO _ 
