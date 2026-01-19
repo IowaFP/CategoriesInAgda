@@ -12,13 +12,21 @@ open import Categories.Constructions.Product
   if for any object X and morphism g : X × Y → Z there is a unique
   morphism λg : X → Zʸ (called the *tranpose* of g) such that the following
   diagram commutes:
-
+  
          X × Y                X
           |   \               |
   λg × id |    \ g            | λg
           v      v            v
         Zʸ × Y --> Z          Zʸ 
               eval
+  This is the categorical analogue to *currying*:
+    λ[_]   : (X × Y → Z) → (X → Y → Z)
+    λ[ g ] = (λ x y → g (x , y))
+  Here, g (what we have) expects a tuple input X * Y, and 
+  λ[g] gives the curried version at type X → Y → Z. Commutativity
+  of the above diagram asserts, in essence, that
+    λ[ g ] x y ≡ g(x , y)
+  for all x : X , y : Y.
 -}     
 
 

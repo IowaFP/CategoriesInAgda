@@ -34,6 +34,43 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   [_,_] .assₗ = assₗ
 
 module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where 
-  -- The "evaluation" functor, viewing [ 𝒟 , 𝒞 ] as an exponential in the category 𝐂𝐚𝐭.
-  eval : ([ 𝒟 , 𝒞 ] × 𝒟) ⇛ 𝒞  
-  eval = {!   !}  
+  open HomReasoning 𝒞 
+  open Category 𝒞 ; open `Category 𝒟 
+
+  -- The "evaluation" functor, viewing [ 𝒟 , 𝒞 ] as an 
+  -- exponential Dᶜ in the category 𝐂𝐚𝐭.                                         
+  --        X × D                X
+  --         |   \               |
+  -- λg × id |    \ g            | λg
+  --         v      v            v
+  -- [D , C] × D --> C          [D , C] 
+  --             eval
+
+  evalF : ([ 𝒟 , 𝒞 ] × 𝒟) ⇛ 𝒞  
+  evalF .Functor.F₀ (F , A) = F₀ A
+    where open Functor F 
+  evalF .Functor.fmap 
+    {A = F , A} {B = G , B} ((η , naturality) , f) = gmap f ∘ η
+    where open Gunctor G 
+  evalF .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
+    where open Functor F 
+  evalF .Functor.F-∘ 
+    {A = F , A} {B = G , B} {C = H , C} 
+    ((η , nat-η) , f) ((ε , nat-ε) , g) = begin
+      hmap (g `∘ f) ∘ (ε ∘ η)   ≈⟨ H-∘ f g ⋆ₗ (ε ∘ η) ⟩ 
+      hmap g ∘ hmap f ∘ (ε ∘ η) ≈⟨ assₗ ⨾ assᵣ ⋆ₗ η ⟩ 
+      hmap g ∘ (hmap f ∘ ε) ∘ η ≈⟨ hmap g ⋆ᵣ (nat-ε f) ⋆ₗ η ⟩ 
+      hmap g ∘ (ε ∘ gmap f) ∘ η ≈⟨ assₗ ⋆ₗ η ⨾ assᵣ ⟩ 
+      hmap g ∘ ε ∘ (gmap f ∘ η) ∎ 
+    where open Functor F ; open Gunctor G ; open Hunctor H 
+  evalF .Functor.F-cong 
+    {F , A} {G , B} 
+    {(η , nat-η) , f} {(ε , nat-ε) , g} 
+    (η≈ε , f≈g) = (G-cong f≈g) ⋆ η≈ε       
+    where open Gunctor G
+
+  -- Currying
+  λF[_] : ∀ {X : Category o₃ a₃ e₃} → 
+           (X × 𝒟) ⇛ 𝒞 → 
+           X ⇛ [ 𝒟 , 𝒞 ]
+  λF[ g ] = {!   !} 
