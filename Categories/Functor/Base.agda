@@ -10,24 +10,34 @@ open import Categories.Reasoning.Hom
 --------------------------------------------------------------------------------
 -- Functors
 
-record Functor (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
-                Set (lsuc o₁ ⊔ lsuc o₂ ⊔ a₁ ⊔ a₂ ⊔ e₁ ⊔ e₂) where
-  open Category 
+module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where 
+  open Category 𝒞 
+  open `Category 𝒟
+  
+  private 
+    variable 
+      A B C D : Obj
+      f g h : A ⇒ B
 
-  field 
-    F₀ : 𝒞 .Obj → 𝒟 .Obj
-    fmap : ∀ {A B : 𝒞 .Obj} → 𝒞 [ A , B ] → 𝒟 [ (F₀ A) , (F₀ B) ] 
-    F-id : ∀ {A : 𝒞 .Obj} → 𝒟 [ (fmap (𝒞 .Id)) ≈ (𝒟 .Id {A = F₀ A}) ]
-    F-∘ : ∀ {A B C : 𝒞 .Obj} → (f : 𝒞 [ A , B ]) (g : 𝒞 [ B , C ]) → 
-          𝒟 [ fmap (𝒞 [ g ∘ f ]) ≈ (𝒟 [ (fmap g) ∘  (fmap f) ]) ]
-    F-cong : ∀ {A B} {f g : 𝒞 [ A , B ]} → 𝒞 [ f ≈ g ] → 𝒟 [ fmap f ≈ fmap g ]          
+  record Functor : Set (o₁ ⊔ o₂ ⊔ a₁ ⊔ a₂ ⊔ e₁ ⊔ e₂) where
+    field 
+      -- Set (o₁ ⊔ o₂)
+      F₀ : Obj → `Obj 
+      -- Set (o₁ ⊔ a₁ ⊔ a₂)
+      fmap : A ⇒ B → F₀ A `⇒ F₀ B 
+      -- o₁ ⊔ e₂
+      F-id : fmap {A} Id `≈ `Id 
+      -- o₁ ⊔ a₁ ⊔ e₂ 
+      F-∘ : (f : A ⇒ B) (g : B ⇒ C) → fmap (g ∘ f) `≈ fmap g `∘ fmap f
+      -- Set (o₁ ⊔ a₁ ⊔ e₁ ⊔ e₂)
+      F-cong : f ≈ g → fmap f `≈ fmap g
 
-  infixl 5 _$_ 
-  _$_ = fmap
-  ₀ = F₀ 
-  ₁ = fmap
+    infixl 5 _$_ 
+    _$_ = fmap
+    ₀ = F₀ 
+    ₁ = fmap
 
-Endofunctor : Category o a e → Set (lsuc o ⊔ a ⊔ e) 
+Endofunctor : Category o a e → Set (o ⊔ a ⊔ e) 
 Endofunctor 𝒞 = Functor 𝒞 𝒞 
 
 --------------------------------------------------------------------------------

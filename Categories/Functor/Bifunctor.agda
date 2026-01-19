@@ -12,18 +12,14 @@ open import Categories.Category.Product
 
 
 Bifunctor : Category o₁ a₁ e₁ → Category o₂ a₂ e₂ → Category o₃ a₃ e₃ → 
-            Set (lsuc o₁ ⊔ a₁ ⊔ e₁ ⊔ lsuc o₂ ⊔ a₂ ⊔ e₂ ⊔ lsuc o₃ ⊔ a₃ ⊔ e₃)
+            Set (o₁ ⊔ a₁ ⊔ e₁ ⊔ o₂ ⊔ a₂ ⊔ e₂ ⊔ o₃ ⊔ a₃ ⊔ e₃)
 Bifunctor 𝒞 𝒟 ℰ = Functor (𝒞 × 𝒟) ℰ
 
 module _ {𝒞 : Category o₁ a₁ e₁} 
          {𝒟 : Category o₂ a₂ e₂} 
          {ℰ : Category o₃ a₃ e₃} 
          (F : Bifunctor 𝒞 𝒟 ℰ) where 
-  open Category {{...}}
-  instance 
-    _ : Category o₂ a₂ e₂ 
-    _ = 𝒟
-
+  open Category 
   open Functor F   
 
   -- Projecting a unary functor from a bifunctor

@@ -4,15 +4,20 @@ module Categories.Instances.Cat where
 
 open import Categories.Prelude
 open import Categories.Category
+open import Categories.Category.Product renaming (_×_ to _⊗_ ; ⟨_,_⟩ to ⟨_∶_⟩)
 open import Categories.Functor 
 open import Categories.NaturalTransformation
+
+open import Categories.Constructions.Product 
+open import Categories.Constructions.Exponential
+open import Categories.Instances.Functor
 
 --------------------------------------------------------------------------------
 -- The Category of Categories  
 module _ where 
   open Category  
-  𝐂𝐚𝐭 : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (lsuc o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
-  𝐂𝐚𝐭 o a e .Obj = Category o a e
+  𝐂𝐚𝐭 : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
+  𝐂𝐚𝐭 o a e .Obj = Category o a e 
   𝐂𝐚𝐭 o a e ._⇒_ 𝒞 𝒟 =  Functor 𝒞 𝒟
   𝐂𝐚𝐭 o a e ._∘_ = _∘F_
   𝐂𝐚𝐭 o a e .Id = IdF 
@@ -24,11 +29,9 @@ module _ where
   𝐂𝐚𝐭 o a e .assₗ {f = F} {G} {H} = Functor-assₗ F G H 
  
 --------------------------------------------------------------------------------
--- 𝐂𝐚𝐭 admits products
+-- The product of categories are products in 𝐂𝐚𝐭
 
-module _ {o a e} where 
-  open import Categories.Category.Product renaming (_×_ to _⊗_ ; ⟨_,_⟩ to ⟨_∶_⟩)
-  open import Categories.Constructions.Product 
+module _ o a e where 
   open hasProduct  
   open AdmitsProducts 
   
@@ -48,3 +51,18 @@ module _ {o a e} where
   𝐂𝐚𝐭Products .products X Y .unique {f = F} {G} {H} π₁∘f π₂∘f = ⟨⟩-unique G H F π₁∘f π₂∘f
     where 
       module X = Category X ; module Y = Category Y
+
+-------------------------------------------------------------------------
+-- Functor categories are exponentials in 𝐂𝐚𝐭
+
+module _ o a e where 
+  open AdmitsProducts (𝐂𝐚𝐭Products o a e)
+  open hasExponential
+  open AdmitsExponentials
+  
+  𝐂𝐚𝐭Exponentials : AdmitsExponentials (𝐂𝐚𝐭 o a e) (𝐂𝐚𝐭Products o a e)
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = {! [ 𝒞 , 𝒟 ]   !}
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {!   !} 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = {!   !} 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = {!   !} 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = {!   !} 

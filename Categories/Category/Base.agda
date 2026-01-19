@@ -111,6 +111,6 @@ module _ (𝒞 : Category o a e) where
 -- --------------------------------------------------------------------------------
 -- -- Alternative infix syntax (To use e.g. when one has two categorys 𝒞 and 𝒟 in scope)
 
-module `-Syntax (𝒞 : Category o a e) where
-  open Category 𝒞 renaming (_⇒_ to _`⇒_ ; _∘_ to _`∘_ ; Id to `Id ; _≈_ to _`≈_) public
+module `Category (𝒞 : Category o a e) where
+  open Category 𝒞 renaming (Obj to `Obj ; _⇒_ to _`⇒_ ; _∘_ to _`∘_ ; Id to `Id ; _≈_ to _`≈_) public
       
