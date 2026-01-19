@@ -30,7 +30,7 @@ module _ (ℓ : Level) where
   𝐒𝐞𝐭 .Id = id 
   𝐒𝐞𝐭 ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
   𝐒𝐞𝐭 .eqv {A} {B} = ~-equiv (≡-setoid {_} {B})
-  𝐒𝐞𝐭 .cong-∘ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
+  𝐒𝐞𝐭 ._⋆_ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
   𝐒𝐞𝐭 .idᵣ _ = refl 
   𝐒𝐞𝐭 .idₗ _ = refl 
   𝐒𝐞𝐭 .assₗ _ = refl 

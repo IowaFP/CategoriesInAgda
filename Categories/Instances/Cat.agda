@@ -26,13 +26,14 @@ module _ o a e where
   𝐂𝐚𝐭 .Id = IdF 
   𝐂𝐚𝐭 ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
   𝐂𝐚𝐭 .eqv  = nat-setoid .Setoid.isEquivalence
-  𝐂𝐚𝐭 .cong-∘ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
+  𝐂𝐚𝐭 ._⋆_ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
   𝐂𝐚𝐭 .idᵣ =  IdF-idᵣ  
   𝐂𝐚𝐭 .idₗ = IdF-idₗ   
   𝐂𝐚𝐭 .assₗ {f = F} {G} {H} = Functor-assₗ F G H 
  
 --------------------------------------------------------------------------------
 -- The product of categories are products in 𝐂𝐚𝐭
+module _ o a e where 
 
   open hasProduct  
   open AdmitsProducts 
@@ -79,8 +80,7 @@ module _ o a e where
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
-  -- Goal: Functor ([ 𝒟 , 𝒞 ] ⊗ 𝒟) 𝒞 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {! 𝒞 × 𝒟   !} 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = {!   !} 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = {!   !} 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = {!   !} 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = TODO Functor ([ 𝒟 , 𝒞 ] ⊗ 𝒟) 𝒞
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_] {X = X}  = TODO (Functor (X ⊗ 𝒟) 𝒞 → Functor X ([ 𝒟 , 𝒞 ]))
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO _ 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO _ 

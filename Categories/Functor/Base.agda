@@ -21,15 +21,10 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
 
   record Functor : Set (o₁ ⊔ o₂ ⊔ a₁ ⊔ a₂ ⊔ e₁ ⊔ e₂) where
     field 
-      -- Set (o₁ ⊔ o₂)
       F₀ : Obj → `Obj 
-      -- Set (o₁ ⊔ a₁ ⊔ a₂)
       fmap : A ⇒ B → F₀ A `⇒ F₀ B 
-      -- o₁ ⊔ e₂
       F-id : fmap {A} Id `≈ `Id 
-      -- o₁ ⊔ a₁ ⊔ e₂ 
       F-∘ : (f : A ⇒ B) (g : B ⇒ C) → fmap (g ∘ f) `≈ fmap g `∘ fmap f
-      -- Set (o₁ ⊔ a₁ ⊔ e₁ ⊔ e₂)
       F-cong : f ≈ g → fmap f `≈ fmap g
 
     infixl 5 _$_ 
@@ -59,6 +54,22 @@ module Hunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂}
              F-∘ to H-∘ ; 
           F-cong to H-cong) public
 
+module Junctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (J : Functor 𝒞 𝒟) where 
+  open Functor J 
+    renaming (F₀ to J₀ ; 
+            fmap to jmap ; 
+            F-id to J-id ; 
+             F-∘ to J-∘ ; 
+          F-cong to J-cong) public
+
+module Kunctor {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (K : Functor 𝒞 𝒟) where 
+  open Functor K 
+    renaming (F₀ to K₀ ; 
+            fmap to kmap ; 
+            F-id to K-id ; 
+             F-∘ to K-∘ ; 
+          F-cong to K-cong) public
+
 --------------------------------------------------------------------------------
 -- Functor composition
 
@@ -66,8 +77,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
   open Category ℰ 
   open HomReasoning ℰ 
 
-  open Functor F 
-  open Functor G renaming (F₀ to G₀ ; fmap to gmap ; F-id to G-id ; F-∘ to G-∘ ; F-cong to G-cong)
+  open Functor F ; open Gunctor G 
 
   _∘F_ : Functor 𝒞 ℰ 
   _∘F_ .Functor.F₀ = (F₀ ○ G₀)
@@ -75,7 +85,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
   _∘F_ .Functor.F-id {A} = 
     begin 
       (fmap (gmap (Category.Id 𝒞)) ≈⟨ F-cong G-id ⟩ 
-      fmap (Category.Id 𝒟) ≈⟨ F-id ⟩ 
+      fmap (Category.Id 𝒟)         ≈⟨ F-id ⟩ 
       Id ∎)
   _∘F_ .Functor.F-∘ f g = 
     begin 

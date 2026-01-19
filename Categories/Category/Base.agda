@@ -32,7 +32,9 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
       idₗ : ∀ {A B} {f : A ⇒ B} → Id ∘ f ≈ f 
       assₗ : ∀ {A B C D} {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D} →  
               h ∘ (g ∘ f) ≈ (h ∘ g) ∘ f
-      -- congruence
+      -- congruence. The notation is borrowed from HoTT book
+      -- (Ch 2.1) and denotes horizontal composition of 
+      -- arrows (viewing arrow equivalence as paths)
       _⋆_  : ∀ {A B C} {f h : B ⇒ C} {g i : A ⇒ B} → 
                   f ≈ h → g ≈ i → f ∘ g ≈ h ∘ i        
      
@@ -52,7 +54,7 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
       }
     
     -- Infix notation for transitivity; emphasizes that
-    -- transitivity is composition on the groupoid model of identity types.
+    -- transitivity is composition
     infixr 3 _⨾_ 
     _⨾_ : ∀ {A B} {f g h : A ⇒ B} → f ≈ g → g ≈ h → f ≈ h
     _⨾_ = trans-≈ 
@@ -60,12 +62,12 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     _⁻¹ : ∀ {A B} {f g : A ⇒ B} → f ≈ g → g ≈ f
     _⁻¹ = sym-≈ 
 
-    -- congruence on left of a composition
-    infixl 7 _⋆ₗ_
+    -- congruence on left of a composition (Whiskering)
+    infixl 7 _⋆ₗ_ _⋆ᵣ_ 
     _⋆ₗ_ : ∀ {A B C} {f h : B ⇒ C} → f ≈ h → (g : A ⇒ B) → f ∘ g ≈ h ∘ g
     pf ⋆ₗ g = pf ⋆ refl-≈
 
-    -- congruence on right of a composition
+    -- congruence on right of a composition (Whiskering)
     _⋆ᵣ_ : ∀ {A B C} {f h : A ⇒ B} (g : B ⇒ C) → f ≈ h → g ∘ f ≈ g ∘ h
     g ⋆ᵣ pf = refl-≈ ⋆ pf              
     
@@ -85,7 +87,9 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     op .idᵣ = idₗ
     op .idₗ = idᵣ
     op .assₗ = assᵣ
-    op ._⋆_ e₁ e₂ = e₂ ⋆ e₁  
+    op ._⋆_ e₁ e₂ = e₂ ⋆ e₁
+
+    
 
 
     
@@ -98,6 +102,8 @@ module _ (𝒞 : Category o a e) where
     variable 
       A B C : Obj 
   
+  _ᵒᵖ = op 
+
   infixr 5 _[_,_] 
   infixr 5 _[_≈_] 
   infixr 5 _[_∘_] 
@@ -118,5 +124,25 @@ module _ (𝒞 : Category o a e) where
 -- -- Alternative infix syntax (To use e.g. when one has two categorys 𝒞 and 𝒟 in scope)
 
 module `Category (𝒞 : Category o a e) where
-  open Category 𝒞 renaming (Obj to `Obj ; _⇒_ to _`⇒_ ; _∘_ to _`∘_ ; Id to `Id ; _≈_ to _`≈_) public
+  open Category 𝒞 
+    renaming (Obj to `Obj ; 
+              _⇒_ to _`⇒_ ; 
+              _∘_ to _`∘_ ; 
+              Id to `Id ; 
+              _≈_ to _`≈_ ; 
+              eqv to `eqv ;
+              idᵣ to `idᵣ ; 
+              idₗ to `idₗ ; 
+              assₗ to `assₗ ; 
+              _⋆_ to _`⋆_ ; 
+              refl-≈ to `refl-≈ ;
+              sym-≈ to `sym-≈ ;
+              trans-≈ to `trans-≈ ;
+              hom-setoid to `hom-setoid ;
+              _⨾_ to _`⨾_ ; 
+              _⁻¹ to _`⁻¹ ;
+              _⋆ₗ_ to _`⋆ₗ_ ;
+              _⋆ᵣ_ to _`⋆ᵣ_ ;
+              assᵣ to `assᵣ ;
+              op to `op) public
       

@@ -49,7 +49,7 @@ module _ (𝒞 : Category o a e) where
     ×-η = unique idᵣ idᵣ 
 
     ∘-distrib-⟨⟩ : ∀ {q : A ⇒ Y} → ⟨ f ∘ q ⨾ g ∘ q ⟩ ≈ ⟨ f ⨾ g ⟩ ∘ q
-    ∘-distrib-⟨⟩ = unique (assₗ ⨾ cong-∘ₗ project₁) (assₗ ⨾ cong-∘ₗ project₂) 
+    ∘-distrib-⟨⟩ {q = q} = unique (assₗ ⨾ project₁ ⋆ₗ q) (assₗ ⨾ project₂ ⋆ₗ q) 
 
   -- A category admits products if every two objects has a product 
   record AdmitsProducts : Set (o ⊔ e ⊔ a) where 

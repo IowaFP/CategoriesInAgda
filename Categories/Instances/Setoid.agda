@@ -36,7 +36,7 @@ module _ where
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.refl _ = B .Setoid.refl
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.sym  f~g x = B .Setoid.sym (f~g x)
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.trans f~g g~h x = B .Setoid.trans (f~g x) (g~h x)
-  𝐒𝐞𝐭𝐨𝐢𝐝 o e .cong-∘ {C = C} {f = f , _} {h = h , hom-h} {g = g , _} {i = i , _} e₁ e₂ x = 
+  𝐒𝐞𝐭𝐨𝐢𝐝 o e ._⋆_ {C = C} {f = f , _} {h = h , hom-h} {g = g , _} {i = i , _} e₁ e₂ x = 
     C .Setoid.trans (e₁ (g x)) (hom-h (e₂ x))
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .idᵣ {B = B} x = B .Setoid.refl
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .idₗ {B = B} x = B .Setoid.refl

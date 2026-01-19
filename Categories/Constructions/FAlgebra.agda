@@ -69,20 +69,21 @@ module _ {𝒞 : Category o a e}
     field 
       hom : φ .Carrier ⇒ ψ .Carrier 
       commutes : hom ∘ φ .alg ≈ ψ .alg ∘ fmap hom
-
+ 
   _∘FA_ : ∀ {φ ψ ζ} → Hom ψ ζ → Hom φ ψ → Hom φ ζ 
   _∘FA_ {φ = (A , φ)} {ψ = (B , ψ)} {ζ = (C , ζ)} (f , comm-f) (g , comm-g) = 
    f ∘ g , 
    (begin 
-      f ∘ g ∘ φ              ≈⟨ (assᵣ ⨾ cong-∘ᵣ comm-g) ⟩ 
-      f ∘ (ψ ∘ fmap g)       ≈⟨ (assₗ ⨾ cong-∘ₗ comm-f) ⟩ 
-      (ζ ∘ fmap f) ∘ fmap g  ≈⟨ (assᵣ ⨾ cong-∘ᵣ (sym-≈ (F-∘ g f))) ⟩ 
+      f ∘ g ∘ φ              ≈⟨ (assᵣ ⨾ f ⋆ᵣ comm-g) ⟩ 
+      f ∘ (ψ ∘ fmap g)       ≈⟨ (assₗ ⨾ comm-f ⋆ₗ (fmap g)) ⟩ 
+      (ζ ∘ fmap f) ∘ fmap g  ≈⟨ (assᵣ ⨾ ζ ⋆ᵣ (F-∘ g f) ⁻¹) ⟩ 
       ζ ∘ fmap (f ∘ g) ∎)
   
   IdHom : ∀ {φ : FAlg 𝒞 F} → Hom φ φ 
   IdHom {φ = (A , φ)} = Id , (begin 
     Id ∘ φ  ≈⟨ idₗ ⟩
-    φ       ≈⟨ (sym-≈ idᵣ ⨾ cong-∘ᵣ (sym-≈ F-id)) ⟩ 
+    φ       ≈⟨ idᵣ ⁻¹ ⟩ 
+    φ ∘ Id  ≈⟨ φ ⋆ᵣ F-id ⁻¹ ⟩ 
     φ ∘ fmap Id ∎)
 
 -- ------------------------------------------------------------------------------
@@ -105,7 +106,7 @@ module _ (𝒞 : Category o a e)
   FAlgebras .Category.eqv  .refl = refl-≈
   FAlgebras .Category.eqv  .sym = sym-≈
   FAlgebras .Category.eqv  .trans = trans-≈
-  FAlgebras .Category.cong-∘  = cong-∘
+  FAlgebras .Category._⋆_  = _⋆_
   FAlgebras .Category.idᵣ =  idᵣ
   FAlgebras .Category.idₗ = idₗ
   FAlgebras .Category.assₗ = assₗ
@@ -136,19 +137,20 @@ module _ (𝒞 : Category o a e)
     Lambek = 
       φ , Out , 
       (begin 
-        In ∘ Out ≈⟨ !-id  In∘Out ⟩ 
+        In ∘ Out ≈⟨ !-id In∘Out ⟩ 
         Id ∎) , 
       (begin 
-        Out ∘ In ≈⟨ Out-commutes ⟩ 
-        fmap In ∘ fmap Out ≈⟨ sym-≈ (F-∘ Out In) ⟩ 
-        fmap (In ∘ Out) ≈⟨ (F-cong (!-id In∘Out) ⨾ F-id) ⟩ 
+        Out ∘ In           ≈⟨ Out-commutes ⟩ 
+        fmap In ∘ fmap Out ≈⟨ (F-∘ Out In) ⁻¹ ⟩ 
+        fmap (In ∘ Out)    ≈⟨ F-cong (!-id In∘Out) ⟩ 
+        fmap Id            ≈⟨ F-id ⟩ 
         Id ∎)
       where 
         open Hom ⦅ (F₀ μF , fmap In) ⦆ renaming (hom to Out ; commutes to Out-commutes)
         In∘Out : Hom φ φ 
         In∘Out = In ∘ Out , (begin 
-          In ∘ Out ∘ In             ≈⟨ (assᵣ ⨾ cong-∘ᵣ Out-commutes) ⟩ 
-          In ∘ (fmap In ∘ fmap Out) ≈⟨ cong-∘ᵣ (sym-≈ (F-∘ Out In)) ⟩ 
+          In ∘ Out ∘ In             ≈⟨ (assᵣ ⨾ In ⋆ᵣ Out-commutes) ⟩ 
+          In ∘ (fmap In ∘ fmap Out) ≈⟨ In ⋆ᵣ (F-∘ Out In) ⁻¹ ⟩ 
           In ∘ fmap (In ∘ Out) ∎)
 
     -- ------------------------------------------------------------------------------

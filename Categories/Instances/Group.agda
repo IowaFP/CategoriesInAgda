@@ -37,24 +37,24 @@ record Group (A : Set o) : Set o where
 
   inverse-unique : ∀ {a b} → b + a ≡ `0 → b ≡ a ⁻¹ 
   inverse-unique {a} {b} e = begin 
-    b ≡⟨ (sym idᵣ ⨾ cong-+R (sym (right-inv a .snd))) ⟩ 
+    b              ≡⟨ (sym idᵣ ⨾ cong-+R (sym (right-inv a .snd))) ⟩ 
     b + (a + a ⁻¹) ≡⟨ (assₗ ⨾ cong-+L e) ⟩ 
-    `0 + a ⁻¹ ≡⟨ idₗ ⟩ 
+    `0 + a ⁻¹      ≡⟨ idₗ ⟩ 
     a ⁻¹ ∎ 
-   
+    
   inverse-involutive : ∀ {a} → (a ⁻¹) ⁻¹ ≡ a 
   inverse-involutive {a} = sym (inverse-unique (right-inv a .snd)) 
 
   left-inv : ∀ (a : A) → a ⁻¹ + a ≡ `0 
   left-inv a = begin
-    ((a ⁻¹) + a) ≡⟨ cong-+R (sym inverse-involutive) ⟩ 
+    ((a ⁻¹) + a)       ≡⟨ cong-+R (sym inverse-involutive) ⟩ 
     (a ⁻¹ + (a ⁻¹) ⁻¹) ≡⟨ right-inv (a ⁻¹) .snd ⟩ 
     `0 ∎ 
 
   inverse-distribute : ∀ {a b} → (a + b) ⁻¹ ≡ b ⁻¹ + a ⁻¹ 
   inverse-distribute {a} {b} = sym (inverse-unique {a + b} (begin 
     (b ⁻¹) + (a ⁻¹) + (a + b) ≡⟨ (assₗ ⨾ cong-+L (sym assₗ ⨾ (cong-+R (left-inv a) ⨾ idᵣ))) ⟩ 
-    b ⁻¹ + b ≡⟨ left-inv b ⟩ 
+    b ⁻¹ + b                  ≡⟨ left-inv b ⟩ 
     `0 ∎))     
 
 
@@ -63,7 +63,7 @@ record Group (A : Set o) : Set o where
 
 module _ (A : Set o) (G : Group A) where 
   open Group G 
-  open Category 
+  open Category hiding (_⁻¹)
   open GroupoidCategory
 
   GroupGroupoid : GroupoidCategory o o o 
@@ -73,7 +73,7 @@ module _ (A : Set o) (G : Group A) where
   GroupGroupoid .category .Id = `0
   GroupGroupoid .category ._≈_  = _≡_
   GroupGroupoid .category .eqv  = ≡-equiv
-  GroupGroupoid .category .cong-∘ = cong₂ _+_ 
+  GroupGroupoid .category ._⋆_ = cong₂ _+_ 
   GroupGroupoid .category .idᵣ =  G .idᵣ
   GroupGroupoid .category .idₗ = G .idₗ
   GroupGroupoid .category .assₗ = G .assₗ 
@@ -90,7 +90,7 @@ module _ where
   -- 𝐆𝐫𝐩  .Id = `0
   -- 𝐆𝐫𝐩  ._≈_  = _≡_
   -- 𝐆𝐫𝐩  .eqv  = ≡-equiv
-  -- 𝐆𝐫𝐩  .cong-∘ = cong₂ _+_ 
+  -- 𝐆𝐫𝐩  ._⋆_ = cong₂ _+_ 
   -- 𝐆𝐫𝐩  .idᵣ =  G .idᵣ
   -- 𝐆𝐫𝐩  .idₗ = G .idₗ
   -- 𝐆𝐫𝐩  .assₗ = G .assₗ 

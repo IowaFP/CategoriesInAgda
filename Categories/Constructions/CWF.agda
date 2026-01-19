@@ -7,6 +7,7 @@ open import Categories.Category
 open import Categories.Functor
 open import Categories.NaturalTransformation
 open import Categories.Constructions.Initial
+open import Categories.Constructions.Terminal
 open import Categories.Instances.Set
 
 open import Categories.Prelude.Equality.Heterogeneous
@@ -61,7 +62,7 @@ module _ where
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.sym x≈y i = cross sym (λ a y → sym-≅ (a y)) (x≈y i) 
   -- There must be a cleverer way of writing this
   𝐅𝐚𝐦 ℓ₁ ℓ₂ .eqv  .IsEquivalence.trans x≈y y≈z i = (cross (trans (x≈y i .fst)) (λ a y → trans-≅ (x≈y i .snd y) (a y)) (y≈z i)) 
-  𝐅𝐚𝐦 ℓ₁ ℓ₂ .cong-∘ {A = A} {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = 
+  𝐅𝐚𝐦 ℓ₁ ℓ₂ ._⋆_ {A = A} {B = B₁} {C = C} {f = i₁ , f} {i₂ , h} {i₃ , g} {i₄ , j} eq₁ eq₂ x = 
     Won'tProve 
       (i₁ (i₃ x) ≡ i₂ (i₄ x) *
       ((y : A .elements x) → 

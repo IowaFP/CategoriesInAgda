@@ -69,7 +69,7 @@ module _ (𝒟 : Category o a e) where
   Subcategory I _ .Category.idᵣ = idᵣ
   Subcategory I _ .Category.idₗ = idₗ
   Subcategory I _ .Category.assₗ = assₗ
-  Subcategory I _ .Category.cong-∘ = cong-∘ 
+  Subcategory I _ .Category._⋆_ = _⋆_ 
 
   -- A full subcategory has an inclusion functor that is full. Consequently, it is 
   -- sufficient to specify just which objects occur. (As we know that
@@ -84,7 +84,7 @@ module _ (𝒟 : Category o a e) where
   FullSubcategory I U .Category.idᵣ = idᵣ
   FullSubcategory I U .Category.idₗ = idₗ
   FullSubcategory I U .Category.assₗ = assₗ
-  FullSubcategory I U .Category.cong-∘ = cong-∘ 
+  FullSubcategory I U .Category._⋆_ = _⋆_ 
 
 --------------------------------------------------------------------------------
 -- We also specify a subcategory as a relation on categories.
@@ -144,8 +144,6 @@ module _ (𝒟 : Category o a e) where
     -- TODO: don't know why Agda is erroring when I use _,_ instead of the qualified name Isomorphism.,
       (f , U-injective iso .fst) Isomorphism., 
       ((f⁻¹ , U-injective iso .snd) , linv , rinv) 
-    -- (f , U-injective iso .fst) Isomorphism., 
-    -- (f⁻¹ , (U-injective iso .snd)) , linv , rinv
 
   -- Every full subcategory definition yields a full inclusion functor
   ι-Full : ∀ {I : Set ℓ₁} → (U : I → Obj) → 

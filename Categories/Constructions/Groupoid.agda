@@ -16,6 +16,7 @@ module _ (𝒞 : Category o a e) where
     constructor Groupoid
     field 
       allIso : ∀ {A B : Obj} → (f : A ⇒ B) → isIso 𝒞 f 
+  open isGroupoid public
 
 record GroupoidCategory (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where 
     constructor _,_
@@ -23,5 +24,4 @@ record GroupoidCategory (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
         category : Category o a e
         groupoid : isGroupoid category
 
-open isGroupoid public
 open GroupoidCategory public

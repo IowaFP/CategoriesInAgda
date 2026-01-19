@@ -14,6 +14,8 @@ open import Categories.Reasoning.NaturalIsomorphism
 
 module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   open Category
+  private 
+    module C = Category 𝒞 ; module D = Category 𝒟
   _×_ : Category (o₁ ⊔ o₂) (a₁ ⊔ a₂) (e₁ ⊔ e₂)
   _×_  .Obj = 𝒞 .Obj * 𝒟 .Obj
   _×_ ._⇒_ (A , B) (C , D) = (𝒞 [ A , C ])  * (𝒟 [ B , D ])
@@ -26,45 +28,37 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   _×_ .idᵣ = 𝒞 .idᵣ , 𝒟 .idᵣ
   _×_ .idₗ = 𝒞 .idₗ , 𝒟 .idₗ
   _×_ .assₗ = 𝒞 .assₗ , 𝒟 .assₗ
-  _×_ .cong-∘ {f = f₁ , f₂} {h₁ , h₂} {g₁ , g₂} {i₁ , i₂} (f₁≈h₁ , f₂≈h₂) (g₁≈i₁ , g₂≈i₂)  = 
-    (cong-∘ 𝒞 f₁≈h₁ g₁≈i₁) , (cong-∘ 𝒟 f₂≈h₂ g₂≈i₂) 
+  _×_ ._⋆_ {f = f₁ , f₂} {h₁ , h₂} {g₁ , g₂} {i₁ , i₂} (f₁≈h₁ , f₂≈h₂) (g₁≈i₁ , g₂≈i₂)  = 
+    (f₁≈h₁ C.⋆ g₁≈i₁) , (f₂≈h₂ D.⋆ g₂≈i₂) 
 
 
 --------------------------------------------------------------------------------
 -- Canonical projections
 
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
-  open Category
   open Functor 
-  private
-    module C = Category 𝒞
-    module D = Category 𝒟
+  open Category 𝒞 ; open `Category 𝒟
 
   -- Projecting the left category out of a product category
   π¹ : Functor (𝒞 × 𝒟) 𝒞
   π¹ .F₀ = fst
   π¹ .fmap = fst
-  π¹ .F-id = C.refl-≈
-  π¹ .F-∘ _ _ = C.refl-≈
+  π¹ .F-id = refl-≈
+  π¹ .F-∘ _ _ = refl-≈
   π¹ .F-cong = fst 
 
   -- Projecting the right category
   π² : Functor (𝒞 × 𝒟) 𝒟 
   π² .F₀ = snd
   π² .fmap = snd
-  π² .F-id = D.refl-≈
-  π² .F-∘ _ _ = D.refl-≈
+  π² .F-id = `refl-≈
+  π² .F-∘ _ _ = `refl-≈
   π² .F-cong = snd 
 
---------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Universal morphism
 
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} where
-  open Category
-  private
-    module C = Category 𝒞
-    module D = Category 𝒟
-    module E = Category ℰ
 
   -- _×_ forms a product on the category of categories, where 
   -- ⟨ F , G ⟩ is the unique morphism such that 

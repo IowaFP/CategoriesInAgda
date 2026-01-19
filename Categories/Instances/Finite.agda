@@ -32,7 +32,7 @@ module _ where
   𝟘 .idᵣ {f = ()}
   𝟘 .idₗ {f = ()}
   𝟘 .assₗ {h = ()}
-  𝟘 .cong-∘ {f = ()}
+  𝟘 ._⋆_ {f = ()}
 
 module _ {ℓ} where 
   open Category (𝟘 {ℓ})
@@ -64,7 +64,7 @@ module _ where
   𝟙 .idᵣ {f = ↻} = refl 
   𝟙 .idₗ {f = ↻} = refl
   𝟙 .assₗ {A} {D = A} {↻} {↻} {↻} = refl 
-  𝟙 .cong-∘ {A} {C = C} refl refl  = refl
+  𝟙 ._⋆_ {A} {C = C} refl refl  = refl
 
 module _ where 
   open Category 𝟙 
@@ -106,7 +106,7 @@ module _ where
   𝟚 .assₗ {f = ↻ .A} {↻ .A} {A↦B} = refl
   𝟚 .assₗ {f = ↻ .A} {A↦B} {↻ .B} = refl
   𝟚 .assₗ {f = A↦B} {↻ .B} {↻ .B} = refl
-  𝟚 .cong-∘ refl refl = refl
+  𝟚 ._⋆_ refl refl = refl
 
 module _ where 
   open Category 𝟚 
@@ -173,7 +173,7 @@ module _ where
   𝟛 .assₗ {f = A↦B} {B↦C} {↻ .C} = refl
   𝟛 .assₗ {f = B↦C} {↻ .C} {↻ .C} = refl
   𝟛 .assₗ {f = A↦C} {↻ .C} {↻ .C} = refl
-  𝟛 .cong-∘ refl refl = refl 
+  𝟛 ._⋆_ refl refl = refl 
 
 -- --------------------------------------------------------------------------------
 -- Demonstrating a simple functor that is full but not surjective on morphisms

@@ -10,6 +10,7 @@ open import Categories.Constructions.Groupoid
 open import Categories.Constructions.Preorder
 open import Categories.Constructions.Discrete
 open import Categories.Constructions.Initial
+open import Categories.Constructions.Terminal
 
 open import Categories.Instances.Groupoid
 open import Categories.Instances.Cat
@@ -35,7 +36,7 @@ module _ (A : Set o) where
   Types .category .eqv .IsEquivalence.refl = refl
   Types .category .eqv .IsEquivalence.sym  = sym
   Types .category .eqv .IsEquivalence.trans  = trans
-  Types .category .cong-∘  refl refl = refl
+  Types .category ._⋆_  refl refl = refl
   Types .category .idᵣ  = refl 
   Types .category .idₗ {f = refl} = refl 
   Types .category .assₗ {f = refl} {refl} {refl} = refl
@@ -76,11 +77,11 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
   Δ[_] .category .eqv .IsEquivalence.refl = tt
   Δ[_] .category .eqv .IsEquivalence.sym  = λ _ → tt 
   Δ[_] .category .eqv .IsEquivalence.trans  = λ _ _ → tt
-  Δ[_] .category .cong-∘  = λ _ _ → tt
+  Δ[_] .category ._⋆_  = λ _ _ → tt
   Δ[_] .category .idᵣ  = tt 
   Δ[_] .category .idₗ  = tt
   Δ[_] .category .assₗ  = tt
-  Δ[_] .groupoid = Groupoid λ { A∼B → (sym-∼ A∼B) , tt , tt }
+  Δ[_] .groupoid = Groupoid λ { A∼B → sym-∼ A∼B , tt , tt }
 
   Δ[]IsPreorder : ∀ {e} → isPreorder {e = e}  (Δ[_] .category)
   Δ[]IsPreorder = Preorder  (λ _ _ → tt)
@@ -94,37 +95,61 @@ module _ (A : Setoid ℓ₁ ℓ₂) where
 ⊤-terminal : isTerminal (𝐆𝐩𝐝 o o o) (Δ[ ≡-setoid {A = ⊤} ])
 ⊤-terminal {o = o} = term F λ {𝒞} → unique {𝒞}
   where 
-    F : ∀ (𝒞 : GroupoidCategory o o o) → Functor {o₂ = o} {e₂ = o} (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)
-    F 𝒞 .Functor.F₀ _ =  tt 
-    F 𝒞 .Functor.fmap _ = refl 
-    F 𝒞 .Functor.F-id = tt 
-    F 𝒞 .Functor.F-∘ _ _ = tt 
-    F 𝒞 .Functor.F-cong _ = tt 
+    open Functor 
+    F : ∀ (𝒞 : GroupoidCategory o o o) → 
+           Functor {o₂ = o} {e₂ = o} (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)
+    F 𝒞 .F₀ _ =  tt 
+    F 𝒞 .fmap _ = refl 
+    F 𝒞 .F-id = tt 
+    F 𝒞 .F-∘ _ _ = tt 
+    F 𝒞 .F-cong _ = tt 
 
-    unique : ∀ {𝒞 : GroupoidCategory o o o} → (G : Functor (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)) → 
+    unique : ∀ {𝒞 : GroupoidCategory o o o} → 
+                (G : Functor (𝒞 .category) (Δ[ ≡-setoid {A = ⊤} ] .category)) → 
                 G ≃ₙ (F 𝒞)
     unique G = (refl , λ _ → tt) , refl , tt , tt 
 
   
 --------------------------------------------------------------------------------
--- Each discrete groupoid is isomorphic to some Δ[ X ] 
+-- Each discrete groupoid is isomorphic to some Δ[ X ]. Specifically,
+-- A discrete groupoid category 𝒞 is isomorphic to the discrete groupoid with 
+-- the objects of 𝒞 and arrows formed by isomorphism of objects. 
 
 module _ {o} where 
-  open Isomorphism (𝐆𝐩𝐝 o o o) using (_≃_ ; _,_)
+  open Isomorphism (𝐆𝐩𝐝 o o o) using (_≃_ ; _,_ ; morph ; iso)
+  open Functor
 
-  -- This definition really highlights that I need better tooling for notation
-  -- and to possibly reorganize/re-modularize the definitions in Categories.Arrows.
   discreteCanonicity : ∀ (𝒞 : GroupoidCategory o o o) → 
                         isPreorder (𝒞 .category) →  
                         Σ[ X ∈ Setoid o o ] (𝒞 ≃ Δ[ X ])
   discreteCanonicity 𝒞 pre = 
-    obj-setoid , {!   !} 
-    -- (Func id (λ f → f Isomorphism., 𝒞 .groupoid .allIso f) tt (λ _ _ → tt) (λ _ → tt) , 
-    --   IsIso (Func id (λ { (f Isomorphism., iso₁) → f })  refl-≈ (λ _ _ → refl-≈) 
-    --     λ { {f = f Isomorphism., iso₁} {g Isomorphism., iso₂} _ → pre .preorder f g }) , 
-    --     (Inverse (((Id Isomorphism., (IsIso Id (Inverse idₗ idₗ))) , λ _ → tt) , IsIso refl-≃ (Inverse tt tt)) 
-    --     ((Id , λ f → idᵣ ⨾ sym-≈ idₗ) , IsIso Id (Inverse idₗ idₗ))))                        
+    obj-setoid , F , F⁻¹ , right-inverse , left-inverse                 
     where 
       open Category (𝒞 .category)
       open Isomorphism (𝒞 .category) using (obj-setoid ; refl-≃)
+      F : Functor (𝒞 .category) (Δ[ obj-setoid ] .category)
+      F .F₀            = id
+      F .fmap f .morph = f
+      F .fmap f .iso   = 𝒞 .groupoid .allIso f
+      F .F-id          = tt
+      F .F-∘ _ _       = tt
+      F .F-cong _      = tt 
+
+      F⁻¹ :  Functor (Δ[ obj-setoid ] .category) (𝒞 .category)
+      F⁻¹ .F₀             = id
+      F⁻¹ .fmap (f , iso) = f
+      F⁻¹ .F-id           = refl-≈
+      F⁻¹ .F-∘ _ _        = refl-≈
+      F⁻¹ .F-cong 
+        {f = f , iso-f} 
+        {g = g , iso-g} _ = pre .preorder f g 
+
+      right-inverse      : (F ∘F F⁻¹) ≃ₙ IdF
+      right-inverse .nat = refl-≃ , λ _ → tt 
+      right-inverse .iso = refl-≃ , tt , tt 
+
+      left-inverse      : (F⁻¹ ∘F F) ≃ₙ IdF
+      left-inverse .nat = Id , λ _ → idᵣ ⨾ idₗ ⁻¹ 
+      left-inverse .iso = Id , idₗ , idₗ 
+
   

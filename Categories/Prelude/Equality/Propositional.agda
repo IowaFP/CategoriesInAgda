@@ -6,7 +6,7 @@ open import Categories.Prelude.Base
 
 module PropositionalEquality where 
     open import Relation.Binary.PropositionalEquality as Eq 
-        renaming ([_] to [[_]]) hiding (naturality ; cong-∘)  public
+        renaming ([_] to [[_]]) hiding (naturality)  public
 
     private 
         variable 

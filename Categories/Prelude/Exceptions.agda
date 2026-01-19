@@ -16,7 +16,7 @@ postulate
 `_  : String → False  
 ` msg = sorry 
 
-TODO : (A : Set ℓ) →  A 
+TODO_ : (A : Set ℓ) →  A 
 TODO A = sorry 
 
 Won'tProve_Because_ : (A : Set ℓ) → String → A 
