@@ -53,16 +53,29 @@ module _ o a e where
       module X = Category X ; module Y = Category Y
 
 -------------------------------------------------------------------------
--- Functor categories are exponentials in 𝐂𝐚𝐭
+-- Functor categories are exponentials in 𝐂𝐚𝐭 
+-- N.b. we have to be a bit careful with what we are asserting because of 
+-- levels. Functor records quantify over objects, arrows, and equivalences,
+-- hence if (𝒞 𝒟 : Category o a e), we have:
+--   Functor 𝒞 𝒟 : Set (o ⊔ a ⊔ e) 
+-- Correspondingly, functor categories have type
+--   [ 𝒞 , 𝒟 ] : Category (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e).
+-- So it is a bit incorrect to assert that "the category of categories admits
+-- exponentials", as we have a stratification of category categories. Explicitly,
+-- we have that the category of categories with objects, arrows, and equivalences
+-- *at level (o ⊔ a ⊔ e)* admits exponentials.
 
 module _ o a e where 
   open AdmitsProducts (𝐂𝐚𝐭Products o a e)
   open hasExponential
   open AdmitsExponentials
   
-  𝐂𝐚𝐭Exponentials : AdmitsExponentials (𝐂𝐚𝐭 o a e) (𝐂𝐚𝐭Products o a e)
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = {! [ 𝒞 , 𝒟 ]   !}
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {!   !} 
+  𝐂𝐚𝐭Exponentials : AdmitsExponentials 
+    (𝐂𝐚𝐭 (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e)) 
+    (𝐂𝐚𝐭Products (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e))
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
+  -- Goal: Functor ([ 𝒟 , 𝒞 ] ⊗ 𝒟) 𝒞 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = {! π¹    !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = {!   !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = {!   !} 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = {!   !} 
