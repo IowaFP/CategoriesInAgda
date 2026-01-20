@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-module Categories.Instances.Functor where 
+module Categories.Category.Exponential where 
 
 open import Categories.Prelude
 open import Categories.Category 
@@ -21,10 +21,10 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
 
   [_,_] : Category _ _ _
   [_,_] .Obj = 𝒞 ⇛ 𝒟 
-  [_,_] ._⇒_ = NaturalTransformation
+  [_,_] ._⇒_ = _⇒ₙ_
   [_,_] ._∘_ {A = F} {G} {H} = _∘V_
   [_,_] .Id = IdN .nat 
-  _≈_ [_,_] {F} {G} = nat-setoid F G .Setoid._≈_
+  [_,_] ._≈_ {F} {G} = nat-setoid F G .Setoid._≈_
   [_,_] .eqv {F} {G} = nat-setoid F G .Setoid.isEquivalence
   [_,_] ._⋆_ {f = f} {h} {g} {i} e₁ e₂ {A} =  e₁ ⋆ e₂
   [_,_] .idᵣ = idᵣ   
@@ -43,16 +43,16 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   --         v      v            v
   -- [C , D] × C --> D          [C , D]
   --             eval
-
-  evalF : ([ 𝒞 , 𝒟 ] × 𝒞) ⇛ 𝒟
-  evalF .Functor.F₀ (F , A) = F₀ A
+  
+  _·[_] : ([ 𝒞 , 𝒟 ] × 𝒞) ⇛ 𝒟
+  _·[_] .Functor.F₀ (F , A) = F₀ A
     where open Functor F 
-  evalF .Functor.fmap 
+  _·[_] .Functor.fmap 
     {A = F , A} {B = G , B} ((η , naturality) , f) = gmap f ∘ η
     where open Functor F ; open Gunctor G 
-  evalF .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
+  _·[_] .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
     where open Functor F  
-  evalF .Functor.F-∘ 
+  _·[_] .Functor.F-∘ 
     {A = F , A} {B = G , B} {C = H , C} 
     ((η , nat-η) , f) ((ε , nat-ε) , g) = begin
       hmap (g `∘ f) ∘ (ε ∘ η)   ≈⟨ H-∘ f g ⋆ₗ (ε ∘ η) ⟩ 
@@ -61,7 +61,7 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
       hmap g ∘ (ε ∘ gmap f) ∘ η ≈⟨ assₗ ⋆ₗ η ⨾ assᵣ ⟩ 
       hmap g ∘ ε ∘ (gmap f ∘ η) ∎ 
     where open Functor F ; open Gunctor G ; open Hunctor H 
-  evalF .Functor.F-cong 
+  _·[_] .Functor.F-cong 
     {F , A} {G , B} 
     {(η , nat-η) , f} {(ε , nat-ε) , g} 
     (η≈ε , f≈g) = (G-cong f≈g) ⋆ η≈ε
@@ -72,25 +72,25 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
   open Category 𝒟 ; open `Category 𝒞
 
   -- Currying
-  λF[_] : ∀ {𝒳 : Category o₃ a₃ e₃} → 
+  λ[_] : ∀ {𝒳 : Category o₃ a₃ e₃} → 
            (𝒳 × 𝒞) ⇛ 𝒟 → 
            𝒳 ⇛ [ 𝒞 , 𝒟 ]
-  λF[ G ] .Functor.F₀ A = Bf-π₂ G A
-  λF[ G ] .Functor.fmap f = TODO 
-  λF[ G ] .Functor.F-id = TODO 
-  λF[ G ] .Functor.F-∘ = TODO 
-  λF[ G ] .Functor.F-cong = TODO
+  λ[ G ] .Functor.F₀ A = Bf-π₂ G A
+  λ[ G ] .Functor.fmap f = TODO 
+  λ[ G ] .Functor.F-id = TODO 
+  λ[ G ] .Functor.F-∘ = TODO 
+  λ[ G ] .Functor.F-cong = TODO
 
   -- If F is full then so is λ[ F ]
   λF-Full : ∀ {𝒳 : Category o₃ a₃ e₃} → 
            (F : (𝒳 × 𝒞) ⇛ 𝒟) → 
            Full F → 
-           Full (λF[ F ])
+           Full (λ[ F ])
   λF-Full = TODO 
 
   -- If F is faithful then so is λ[ F ]
   λF-Faithful : ∀ {𝒳 : Category o₃ a₃ e₃} → 
            (F : (𝒳 × 𝒞) ⇛ 𝒟) → 
            Faithful F → 
-           Faithful (λF[ F ])
+           Faithful (λ[ F ])
   λF-Faithful = TODO            

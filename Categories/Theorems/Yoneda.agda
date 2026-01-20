@@ -21,7 +21,7 @@ open import Categories.NaturalTransformation
 open import Categories.Category.Product
 
 open import Categories.Instances.Setoid
-open import Categories.Instances.Functor 
+open import Categories.Category.Exponential 
 
 open import Categories.Reasoning.Hom 
 
@@ -131,7 +131,7 @@ module YonedaEmbedding where
   -- The Yoneda embedding can be defined simply as the curried form of
   -- the hom-bifunctor Hom[—,—].
   𝓎 : 𝒞ᵒᵖ ⇛ [ 𝒞 , 𝐒𝐞𝐭𝐨𝐢𝐝 o e ]
-  𝓎 = λF[ Hom[—,—] ] 
+  𝓎 = λ[ Hom[—,—] ] 
   
   -- The Yoneda Lemma tells us that 𝓎 is full and faithful
   𝓎-Full : Full 𝓎

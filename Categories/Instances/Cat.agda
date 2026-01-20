@@ -5,12 +5,12 @@ module Categories.Instances.Cat where
 open import Categories.Prelude hiding (ℓ)
 open import Categories.Category
 open import Categories.Category.Product renaming (⟨_,_⟩ to ⟨_∶_⟩)
+open import Categories.Category.Exponential
 open import Categories.Functor 
 open import Categories.NaturalTransformation
 
 open import Categories.Constructions.Product 
 open import Categories.Constructions.Exponential
-open import Categories.Instances.Functor
 open import Categories.Reasoning 
 
 --------------------------------------------------------------------------------
@@ -75,13 +75,13 @@ module _ o a e where
 
   open AdmitsProducts (𝐂𝐚𝐭Products ℓ ℓ ℓ) hiding (_×_)
   open hasExponential
-  open AdmitsExponentials
+  open AdmitsExponentials hiding (λ[_])
   
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = evalF 𝒟 𝒞
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λF[_] 𝒟 𝒞
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = _·[_] 𝒟 𝒞
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λ[_]
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO 

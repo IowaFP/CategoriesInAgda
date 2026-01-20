@@ -26,7 +26,7 @@ open import Categories.Constructions.Exponential public
 open import Categories.Constructions.Pullback public 
 
 open import Categories.Instances.Cat public 
-open import Categories.Instances.Functor public 
+open import Categories.Category.Exponential public 
 open import Categories.Instances.Setoid public 
 open import Categories.Instances.Set public 
 open import Categories.Instances.Groupoid public
