@@ -39,11 +39,11 @@ module _ (ℓ : Level) where
 -- A note on equality:
 
 private module Problem where 
-  -- Because Sets is a *closed category*, the morphisms from A to B can be viewed
-  -- as an object in Sets. Thus, for example, (A ⇒ B) = A → B is both an arrow
-  -- in Sets and an object. This makes defining extensional equivalence of arrows
+  -- Because 𝐒𝐞𝐭 is a *closed category*, the morphisms from A to B can be viewed
+  -- as an object in 𝐒𝐞𝐭. Thus, for example, (A ⇒ B) = A → B is both an arrow
+  -- in 𝐒𝐞𝐭 and an object. This makes defining extensional equivalence of arrows
   -- problematic, as we could have e.g. B = (X → Y) when defining _≈_:
-  --   Sets ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
+  --   𝐒𝐞𝐭 ._≈_ {A = A} {B = B} = _~_ (≡-setoid {_} {B})
   -- in which case pointwise equivalence is not "deep" enough---we will have that 
   --   f ≈ g 
   -- iff 
@@ -52,7 +52,7 @@ private module Problem where
   --   ∀ (x : A) (y : X) → f x y ≡ g x y
   -- (and so forth for arbitrary n-ary functions.)
   -- I'm not sure how to recursively expand the extensional equivalence on 
-  -- arbitrary functions. This is problematic when I want to prove that Sets 
+  -- arbitrary functions. This is problematic when I want to prove that 𝐒𝐞𝐭 
   -- admits exponentials, in which case I need to show that the exponential
   -- object (Zʸ, λg) is unique, where λg : X → Y → Z. So I receive a goal of:
   --   λg x ≡ (λ y → g (x , y)) 
@@ -111,10 +111,10 @@ module _ ℓ where
   open import Categories.Prelude.Equality.Extensionality.Propositional
   
   𝐒𝐞𝐭Exponentials : AdmitsExponentials (𝐒𝐞𝐭 ℓ) (𝐒𝐞𝐭Products ℓ)
-  𝐒𝐞𝐭Exponentials .exponentials Z Y .Zʸ = Y → Z 
-  𝐒𝐞𝐭Exponentials .exponentials Z Y .`eval (f , y) = f y
-  𝐒𝐞𝐭Exponentials .exponentials Z Y .`λ[_]  f x y = f (x , y)
-  𝐒𝐞𝐭Exponentials .exponentials Z Y .`transpose g (x , y) = refl
+  𝐒𝐞𝐭Exponentials .exponentials Y Z .Zʸ = Y → Z 
+  𝐒𝐞𝐭Exponentials .exponentials Y Z .`eval (f , y) = f y
+  𝐒𝐞𝐭Exponentials .exponentials Y Z .`λ[_]  f x y = f (x , y)
+  𝐒𝐞𝐭Exponentials .exponentials Y Z .`transpose g (x , y) = refl
   -- Begrudgingly need extensionality, here. See note above.
-  𝐒𝐞𝐭Exponentials .exponentials Z Y .`unique g λg λg-exponential x = 
+  𝐒𝐞𝐭Exponentials .exponentials Y Z .`unique g λg λg-exponential x = 
     extensionality (λ y → λg-exponential (x , y)) 

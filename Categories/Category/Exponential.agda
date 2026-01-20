@@ -44,15 +44,15 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   -- [C , D] × C --> D          [C , D]
   --             eval
   
-  _·[_] : ([ 𝒞 , 𝒟 ] × 𝒞) ⇛ 𝒟
-  _·[_] .Functor.F₀ (F , A) = F₀ A
+  eval : ([ 𝒞 , 𝒟 ] × 𝒞) ⇛ 𝒟
+  eval .Functor.F₀ (F , A) = F₀ A
     where open Functor F 
-  _·[_] .Functor.fmap 
+  eval .Functor.fmap 
     {A = F , A} {B = G , B} ((η , naturality) , f) = gmap f ∘ η
     where open Functor F ; open Gunctor G 
-  _·[_] .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
+  eval .Functor.F-id {F , A} = F-id ⋆ₗ Id ⨾ idₗ
     where open Functor F  
-  _·[_] .Functor.F-∘ 
+  eval .Functor.F-∘ 
     {A = F , A} {B = G , B} {C = H , C} 
     ((η , nat-η) , f) ((ε , nat-ε) , g) = begin
       hmap (g `∘ f) ∘ (ε ∘ η)   ≈⟨ H-∘ f g ⋆ₗ (ε ∘ η) ⟩ 
@@ -61,7 +61,7 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
       hmap g ∘ (ε ∘ gmap f) ∘ η ≈⟨ assₗ ⋆ₗ η ⨾ assᵣ ⟩ 
       hmap g ∘ ε ∘ (gmap f ∘ η) ∎ 
     where open Functor F ; open Gunctor G ; open Hunctor H 
-  _·[_] .Functor.F-cong 
+  eval .Functor.F-cong 
     {F , A} {G , B} 
     {(η , nat-η) , f} {(ε , nat-ε) , g} 
     (η≈ε , f≈g) = (G-cong f≈g) ⋆ η≈ε

@@ -75,13 +75,13 @@ module _ o a e where
 
   open AdmitsProducts (𝐂𝐚𝐭Products ℓ ℓ ℓ) hiding (_×_)
   open hasExponential
-  open AdmitsExponentials hiding (λ[_])
+  open AdmitsExponentials hiding (λ[_] ; eval)
   
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = _·[_] 𝒟 𝒞
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒞 , 𝒟 ] 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = eval 𝒞 𝒟
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λ[_]
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO 
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO 

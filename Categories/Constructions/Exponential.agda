@@ -44,7 +44,7 @@ module _ (𝒞 : Category o a e) (prods : AdmitsProducts 𝒞) where
       A B C X Y Z : Obj 
       f g h : A ⇒ B 
 
-  record hasExponential (Z Y : Obj)  : Set (o ⊔ e ⊔ a) where 
+  record hasExponential (Y Z : Obj)  : Set (o ⊔ e ⊔ a) where 
     field 
       Zʸ : Obj 
       `eval : Zʸ × Y ⇒ Z 
@@ -59,21 +59,21 @@ module _ (𝒞 : Category o a e) (prods : AdmitsProducts 𝒞) where
     constructor admitsExponentials
     open hasExponential public
     field 
-      exponentials : ∀ (Z Y : Obj) → hasExponential Z Y 
+      exponentials : ∀ (Y Z : Obj) → hasExponential Y Z
 
     -- Re-exporting friendly accessors
     infixl 5 _^_ 
     _^_ : ∀ (Z Y : Obj) → Obj 
-    Z ^ Y = exponentials Z Y .Zʸ
+    Z ^ Y = exponentials Y Z .Zʸ
 
     eval : (Z ^ Y) × Y ⇒ Z
-    eval {Z = Z} {Y = Y} = exponentials Z Y .`eval 
+    eval {Z = Z} {Y = Y} = exponentials Y Z .`eval 
 
     λ[_] : ∀ {X : Obj} (g : X × Y ⇒ Z) → X ⇒ (Z ^ Y)
-    λ[_] {Y = Y} {Z = Z}  g = exponentials Z Y .`λ[_] g 
+    λ[_] {Y = Y} {Z = Z}  g = exponentials Y Z .`λ[_] g 
 
     transpose : ∀ {X : Obj} (g : X × Y ⇒ Z) → eval ∘ ⟪ λ[ g ] , Id ⟫ ≈ g 
-    transpose {Y = Y} {Z = Z} g = exponentials Z Y .`transpose g 
+    transpose {Y = Y} {Z = Z} g = exponentials Y Z .`transpose g 
 
 {- ------------------------------------------------------------------------------ 
   I find it most helpful to demonstrate exponentials in type theory:

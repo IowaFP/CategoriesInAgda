@@ -14,7 +14,7 @@ open import Categories.Reasoning.Hom
 open import Categories.Instances.Set
 
 -- ------------------------------------------------------------------------------
--- The naturals are an initial F-Algebra in the category F-Alg of F-Algebras on Sets.
+-- The naturals are an initial F-Algebra in the category F-Alg of F-Algebras on 𝐒𝐞𝐭.
 
 module NatInitial where 
   open Category (𝐒𝐞𝐭 lzero)
