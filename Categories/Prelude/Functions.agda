@@ -66,7 +66,7 @@ module Functions₁ (S : Setoid ℓ₁ ℓ₂) where
 -- Properties that rely on an equivalence on both the domain and codomain
 -- of a function.
 
-module Functions₂ (S₁ S₂ : Setoid ℓ₁ ℓ₂) where 
+module Functions₂ (S₁ : Setoid ℓ₁ ℓ₂) (S₂ : Setoid ℓ₃ ℓ₄) where 
 
   open Setoid S₁ renaming (_≈_ to _≈₁_)
   open Setoid S₂ renaming (_≈_ to _≈₂_)
@@ -80,6 +80,9 @@ module Functions₂ (S₁ S₂ : Setoid ℓ₁ ℓ₂) where
 
     Isomorphism : (f : ∣ S₁ ∣ → ∣ S₂ ∣) → Set _ 
     Isomorphism f = Σ[ g ∈ (∣ S₂ ∣ → ∣ S₁ ∣) ] (Inverse f g)
+
+  Isomorphic = Σ[ f ∈ (∣ S₁ ∣ → ∣ S₂ ∣) ] Σ[ g ∈ (∣ S₂ ∣ → ∣ S₁ ∣) ] 
+                Inverse f g
 
   Injection : (f : ∣ S₁ ∣ → ∣ S₂ ∣) → Set _ 
   Injection f = ∀ (x y : ∣ S₁ ∣) → f x ≈₂ f y → x ≈₁ y

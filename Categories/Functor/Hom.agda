@@ -33,7 +33,7 @@ open import Categories.Reasoning.Hom
 --   - Hom(f, g)(h : B ⇒ C) = g ∘ h ∘ f
 -------------------------------------------------------------------------------
 
-module _ (𝒞 : Category a o e) where
+module HomFunctor (𝒞 : Category a o e) where
   open Category 𝒞 
   open Functor
   open HomReasoning 𝒞
@@ -41,26 +41,35 @@ module _ (𝒞 : Category a o e) where
   private 
     𝒞ᵒᵖ = op  
 
-  Hom[_][—,—] :  (𝒞ᵒᵖ × 𝒞) ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
-  Hom[_][—,—] .F₀ (A , B) = hom-setoid A B 
-  Hom[_][—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
+  Hom[—,—] :  (𝒞ᵒᵖ × 𝒞) ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[—,—] .F₀ (A , B) = hom-setoid A B 
+  Hom[—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
     (λ h → g ∘ h ∘ f) , (_⋆ₗ f) ○ (g ⋆ᵣ_)
-  Hom[_][—,—] .F-id x =  idᵣ ⨾ idₗ 
-  Hom[_][—,—] .F-∘  (f , g) (h , k) i = begin
+  Hom[—,—] .F-id x =  idᵣ ⨾ idₗ 
+  Hom[—,—] .F-∘  (f , g) (h , k) i = begin
     k ∘ g ∘ i ∘ (f ∘ h)  ≈⟨ assₗ ⟩ 
     k ∘ g ∘ i ∘ f ∘ h    ≈⟨ (assᵣ ⋆ₗ f) ⋆ₗ h ⟩ 
     k ∘ (g ∘ i) ∘ f ∘ h  ≈⟨ (assₗ ⋆ₗ h) ⁻¹ ⟩ 
     k ∘ (g ∘ i ∘ f) ∘ h ∎ 
-  Hom[_][—,—] .F-cong {f = f₁ , f₂} {g = g₁ , g₂} (f₁≈g₁ , f₂≈g₂) h = 
+  Hom[—,—] .F-cong {f = f₁ , f₂} {g = g₁ , g₂} (f₁≈g₁ , f₂≈g₂) h = 
     begin 
       f₂ ∘ h ∘ f₁ ≈⟨ (f₂≈g₂ ⋆ₗ h) ⋆ f₁≈g₁ ⟩ 
       g₂ ∘ h ∘ g₁ ∎ 
 
   -- Covariant hom functor 
-  Hom[_][_,—] : Obj → 𝒞 ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
-  Hom[_][_,—] A = Bf-π₂ Hom[_][—,—] A 
+  Hom[_,—] : Obj → 𝒞 ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[_,—] A = Bf-π₂ Hom[—,—] A 
 
   -- Contravariant hom functor
-  Hom[_][—,_] : Obj → 𝒞ᵒᵖ ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
-  Hom[_][—,_] A = Bf-π₁ Hom[_][—,—] A
+  Hom[—,_] : Obj → 𝒞ᵒᵖ ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[—,_] A = Bf-π₁ Hom[—,—] A
+
+  -- Hom[—,—] is full
+  Hom[—,—]-Full : Full Hom[—,—]
+  Hom[—,—]-Full = TODO 
+
+  -- Hom[—,—] is faithful
+  Hom[—,—]-Faithful : Faithful Hom[—,—]
+  Hom[—,—]-Faithful = TODO
+
   

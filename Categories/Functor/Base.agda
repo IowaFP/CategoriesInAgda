@@ -27,8 +27,8 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
       F-∘ : (f : A ⇒ B) (g : B ⇒ C) → fmap (g ∘ f) `≈ fmap g `∘ fmap f
       F-cong : f ≈ g → fmap f `≈ fmap g
 
-    infixl 5 _$_ 
-    _$_ = fmap
+    infixl 5 _⟨$⟩_ 
+    _⟨$⟩_ = fmap
     ₀ = F₀ 
     ₁ = fmap
 
@@ -201,7 +201,7 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} (F : 
 
   -- Full and faithful functors are injective on objects up to isomorphism
   injectiveOnObjects : FullyFaithful → EssentiallyInjective 
-  injectiveOnObjects ff iso = {!   !} 
+  injectiveOnObjects ff iso = TODO 
 
 
 

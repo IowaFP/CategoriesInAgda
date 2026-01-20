@@ -24,10 +24,8 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   [_,_] ._⇒_ = NaturalTransformation
   [_,_] ._∘_ {A = F} {G} {H} = _∘V_
   [_,_] .Id = IdN .nat 
-  _≈_ [_,_] {A} {B} (η , nat-η) (ε , nat-ε) = ∀ {A : 𝒞 .Category.Obj} → η {A} ≈ ε {A} 
-  [_,_] .eqv .IsEquivalence.refl = refl-≈ 
-  [_,_] .eqv .IsEquivalence.sym x≈y {A} = x≈y ⁻¹
-  [_,_] .eqv .IsEquivalence.trans x≈y y≈z {A} = x≈y ⨾ y≈z
+  _≈_ [_,_] {F} {G} = nat-setoid F G .Setoid._≈_
+  [_,_] .eqv {F} {G} = nat-setoid F G .Setoid.isEquivalence
   [_,_] ._⋆_ {f = f} {h} {g} {i} e₁ e₂ {A} =  e₁ ⋆ e₂
   [_,_] .idᵣ = idᵣ   
   [_,_] .idₗ = idₗ   
@@ -69,12 +67,30 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
     (η≈ε , f≈g) = (G-cong f≈g) ⋆ η≈ε
     where open Gunctor G
 
+module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where 
+  open HomReasoning 𝒟 
+  open Category 𝒟 ; open `Category 𝒞
+
   -- Currying
   λF[_] : ∀ {𝒳 : Category o₃ a₃ e₃} → 
            (𝒳 × 𝒞) ⇛ 𝒟 → 
            𝒳 ⇛ [ 𝒞 , 𝒟 ]
   λF[ G ] .Functor.F₀ A = Bf-π₂ G A
-  λF[ G ] .Functor.fmap f = {!   !}
-  λF[ G ] .Functor.F-id = {!   !}
-  λF[ G ] .Functor.F-∘ = {!   !}
-  λF[ G ] .Functor.F-cong = {!   !} 
+  λF[ G ] .Functor.fmap f = TODO 
+  λF[ G ] .Functor.F-id = TODO 
+  λF[ G ] .Functor.F-∘ = TODO 
+  λF[ G ] .Functor.F-cong = TODO
+
+  -- If F is full then so is λ[ F ]
+  λF-Full : ∀ {𝒳 : Category o₃ a₃ e₃} → 
+           (F : (𝒳 × 𝒞) ⇛ 𝒟) → 
+           Full F → 
+           Full (λF[ F ])
+  λF-Full = TODO 
+
+  -- If F is faithful then so is λ[ F ]
+  λF-Faithful : ∀ {𝒳 : Category o₃ a₃ e₃} → 
+           (F : (𝒳 × 𝒞) ⇛ 𝒟) → 
+           Faithful F → 
+           Faithful (λF[ F ])
+  λF-Faithful = TODO            

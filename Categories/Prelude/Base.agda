@@ -25,7 +25,7 @@ open import Data.List using
   (List ; _∷_ ; [] ; map ; reverse) public
 open import Data.String using (String) public
 
-open import Function renaming (_∘_ to _○_) using (id ; const ; flip ; _⇔_ ; Equivalence ) public
+open import Function renaming (_∘_ to _○_) using (id ; const ; flip ; _⇔_ ; Equivalence ; _$_ ; _|>_ ) public
 open import Relation.Binary.Definitions using (Decidable ; DecidableEquality) public
 open import Relation.Nullary.Negation using (contradiction; contraposition) public
 open import Relation.Nullary using (Dec; yes; no ; map′ ; Irrelevant) public
@@ -57,10 +57,31 @@ cross f g (a , b) = (f a , g b)
 ¬_ {ℓ} A = A → ⊥ {ℓ}
 
 --------------------------------------------------------------------------------
--- Get the carrier from a setoid 
+-- Setoid nonsense
 
+open Setoid using (Carrier)
+
+-- Get the carrier from a setoid 
 ∣_∣ : Setoid ℓ₁ ℓ₂ → Set ℓ₁ 
 ∣ s ∣ = s .Setoid.Carrier
+
+-- Setoid arrows (functions that preserve setoid equivalence)
+record _⇒ₛ_ (𝒜 : Setoid o₁ e₁) (ℬ : Setoid o₂ e₂) : Set (o₁ ⊔ o₂ ⊔ e₁ ⊔ e₂) where 
+  constructor _,_
+  open Setoid 𝒜
+  open Setoid ℬ renaming (_≈_ to _≋_) 
+  field 
+    smap : ∣ 𝒜 ∣ → ∣ ℬ ∣ 
+    hom : ∀ {x y : ∣ 𝒜 ∣} → x ≈ y → smap x ≋ smap y
+open _⇒ₛ_ public 
+
+-- Setoid arrow composition
+_●_ : ∀ {A B C : Setoid o e} → B ⇒ₛ C → A ⇒ₛ B → A ⇒ₛ C 
+(f , hom-f) ● (g , hom-g) = (f ○ g) , hom-f ○ hom-g
+
+-- Application of a setoid-arrow to its argument 
+_·_ : {𝒜 : Setoid o₁ e₁} {ℬ : Setoid o₂ e₂} → 𝒜 ⇒ₛ ℬ → ∣ 𝒜 ∣ → ∣ ℬ ∣ 
+f · x = f .smap x 
 
 --------------------------------------------------------------------------------
 -- Pattern synonyms for common Fin constructors

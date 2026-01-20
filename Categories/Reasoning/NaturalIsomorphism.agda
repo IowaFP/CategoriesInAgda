@@ -15,7 +15,7 @@ module NatIsoReasoning
     (𝒞 : Category o₁ a₁ e₁) 
     (𝒟 : Category o₂ a₂ e₂) where 
 
-  open Setoid (nat-setoid {𝒞 = 𝒞} {𝒟})
+  open Setoid (functor-setoid {𝒞 = 𝒞} {𝒟})
   open import Relation.Binary.Reasoning.Base.Single (_≃ₙ_) refl trans 
     renaming (∼-go to ≃ₙ-go) public
   open ≃-syntax _IsRelatedTo_ _IsRelatedTo_ ≃ₙ-go sym public 

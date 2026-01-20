@@ -106,8 +106,10 @@ module _
     where 
       open Functor F ; open Gunctor G ; open Hunctor H 
  
-  nat-setoid : Setoid _ _
-  nat-setoid = record
+  -- The functors of type 𝒞 ⇛ 𝒟 form a setoid with natural isomorphism
+  -- as equivalence.
+  functor-setoid : Setoid _ _
+  functor-setoid = record
     { Carrier       = 𝒞 ⇛ 𝒟 
     ; _≈_           = _≃ₙ_
     ; isEquivalence = record { refl = refl-≃ₙ ; sym = sym-≃ₙ ; trans = trans-≃ₙ }

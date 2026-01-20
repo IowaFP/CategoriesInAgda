@@ -9,15 +9,18 @@ open import Categories.Prelude.Base
 -- informative or enlightening, which I can't be arsed to prove. This file
 -- attempts to codify the classes of goals that I am skipping.
 
-False = ∀ {ℓ} {A : Set ℓ} → A 
-postulate 
-  sorry : False 
+private 
+  variable 
+    A : Set ℓ 
 
-`_  : String → False  
+postulate 
+  sorry : A
+
+`_  : String → A
 ` msg = sorry 
 
-TODO_ : (A : Set ℓ) →  A 
-TODO A = sorry 
+TODO : A 
+TODO = sorry 
 
 Won'tProve_Because_ : (A : Set ℓ) → String → A 
 Won'tProve goal Because reason = sorry 

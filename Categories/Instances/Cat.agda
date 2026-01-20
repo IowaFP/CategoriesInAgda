@@ -26,7 +26,7 @@ module _ o a e where
   𝐂𝐚𝐭 ._∘_ = _∘F_
   𝐂𝐚𝐭 .Id = IdF 
   𝐂𝐚𝐭 ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
-  𝐂𝐚𝐭 .eqv  = nat-setoid .Setoid.isEquivalence
+  𝐂𝐚𝐭 .eqv  = functor-setoid .Setoid.isEquivalence
   𝐂𝐚𝐭 ._⋆_ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
   𝐂𝐚𝐭 .idᵣ =  IdF-idᵣ  
   𝐂𝐚𝐭 .idₗ = IdF-idₗ   
@@ -77,13 +77,11 @@ module _ o a e where
   open hasExponential
   open AdmitsExponentials
   
-
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒟 , 𝒞 ] 
-  -- We build: Functor ([ 𝒟 , 𝒞 ] × 𝒟) 𝒞
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = evalF 𝒟 𝒞
   𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λF[_] 𝒟 𝒞
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO _ 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO _ 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO 
+  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO 

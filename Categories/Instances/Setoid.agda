@@ -12,21 +12,8 @@ open import Categories.Category
 module _ where
   open Category 
   open Setoid using (Carrier)
-
-  record _⇒ₛ_ (𝒜 : Setoid o₁ e₁) (ℬ : Setoid o₂ e₂) : Set (lsuc o₁ ⊔ lsuc o₂ ⊔ e₁ ⊔ e₂) where 
-    constructor _,_
-    private module A = Setoid 𝒜 
-    private module B = Setoid ℬ
-    field 
-      f : A.Carrier → B.Carrier 
-      hom : ∀ {x y : A.Carrier} → x A.≈ y → f x B.≈ f y
-
-  -- Setoid arrow composition
-  _●_ : ∀ {A B C : Setoid o e} → B ⇒ₛ C → A ⇒ₛ B → A ⇒ₛ C 
-  (f , hom-f) ● (g , hom-g) = (f ○ g) , hom-f ○ hom-g
-
    
-  𝐒𝐞𝐭𝐨𝐢𝐝 : ∀ (o e : Level) → Category (lsuc o ⊔ lsuc e) (lsuc o ⊔ e) (o ⊔ e)
+  𝐒𝐞𝐭𝐨𝐢𝐝 : ∀ (o e : Level) → Category (lsuc (o ⊔ e)) (o ⊔ e) (o ⊔ e)
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .Obj = Setoid o e 
   𝐒𝐞𝐭𝐨𝐢𝐝 o e ._⇒_ =  _⇒ₛ_ 
   𝐒𝐞𝐭𝐨𝐢𝐝 o e ._∘_ = _●_
