@@ -105,15 +105,16 @@ module _
         Id ∎)
     where 
       open Functor F ; open Gunctor G ; open Hunctor H 
- 
+
+
   -- The functors of type 𝒞 ⇛ 𝒟 form a setoid with natural isomorphism
   -- as equivalence.
-  functor-setoid : Setoid _ _
-  functor-setoid = record
-    { Carrier       = 𝒞 ⇛ 𝒟 
-    ; _≈_           = _≃ₙ_
-    ; isEquivalence = record { refl = refl-≃ₙ ; sym = sym-≃ₙ ; trans = trans-≃ₙ }
-    }
+Fun : Category o₁ a₁ e₁ * Category o₂ a₂ e₂ → Setoid _ _
+Fun (𝒞 , 𝒟) = record
+  { Carrier       = 𝒞 ⇛ 𝒟 
+  ; _≈_           = _≃ₙ_
+  ; isEquivalence = record { refl = refl-≃ₙ ; sym = sym-≃ₙ ; trans = trans-≃ₙ }
+  }
 
 
 --------------------------------------------------------------------------------

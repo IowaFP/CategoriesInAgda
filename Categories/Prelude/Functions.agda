@@ -81,7 +81,8 @@ module Functions₂ (S₁ : Setoid ℓ₁ ℓ₂) (S₂ : Setoid ℓ₃ ℓ₄) 
     Isomorphism : (f : ∣ S₁ ∣ → ∣ S₂ ∣) → Set _ 
     Isomorphism f = Σ[ g ∈ (∣ S₂ ∣ → ∣ S₁ ∣) ] (Inverse f g)
 
-  Isomorphic = Σ[ f ∈ (∣ S₁ ∣ → ∣ S₂ ∣) ] Σ[ g ∈ (∣ S₂ ∣ → ∣ S₁ ∣) ] 
+  infixr 0 _≅_ 
+  _≅_ = Σ[ f ∈ (∣ S₁ ∣ → ∣ S₂ ∣) ] Σ[ g ∈ (∣ S₂ ∣ → ∣ S₁ ∣) ] 
                 Inverse f g
 
   Injection : (f : ∣ S₁ ∣ → ∣ S₂ ∣) → Set _ 

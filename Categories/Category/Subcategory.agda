@@ -89,28 +89,24 @@ module _ (𝒟 : Category o a e) where
 --------------------------------------------------------------------------------
 -- We also specify a subcategory as a relation on categories.
 
-record isSubcategory (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
+infixr 7 _⊆_
+record _⊆_ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
        Set ((lsuc o₁) ⊔ a₁ ⊔ e₁ ⊔ (lsuc o₂) ⊔ a₂ ⊔ e₂) where 
   field 
     ι : 𝒞 ⇛ 𝒟 
     faithful : Faithful ι 
     injective : EssentiallyInjective ι 
 
-open isSubcategory public 
+open _⊆_ public 
 
-infixr 7 _⊆_
-_⊆_ = isSubcategory
-
-record isFullSubcategory (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
+infixr 7 _↪_
+record _↪_ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) : 
        Set ((lsuc o₁) ⊔ a₁ ⊔ e₁ ⊔ (lsuc o₂) ⊔ a₂ ⊔ e₂) where 
   field 
     ι : 𝒞 ⇛ 𝒟 
     faithful : Faithful ι 
     injective : EssentiallyInjective ι 
     full : Full ι 
-
-infixr 7 _⊑_
-_⊑_ = isFullSubcategory
 
 
 -- --------------------------------------------------------------------------------
@@ -122,7 +118,7 @@ module _ (𝒟 : Category o a e) where
   open Functor 
   open Inclusion 
   open Isomorphism 𝒟 
-  open isFullSubcategory
+  open _↪_ 
 
   -- Every subcategory definition yields an inclusion functor
   ι-Sub : ∀ {ℓ₂} {I : Set ℓ₁} → (ι : Inclusion 𝒟 I {ℓ₂}) → 
@@ -135,11 +131,11 @@ module _ (𝒟 : Category o a e) where
 
   -- This inclusion functor is faithful & injective on objects (up to
   -- isomorphism).
-  Subcategory⇒isSubcategory : ∀ {I : Set ℓ₁} → (ι : Inclusion 𝒟 I {ℓ₂}) → 
+  Subcategory⊆ : ∀ {I : Set ℓ₁} → (ι : Inclusion 𝒟 I {ℓ₂}) → 
                                 (Subcategory 𝒟 I ι) ⊆ 𝒟
-  Subcategory⇒isSubcategory ι .ι = ι-Sub ι
-  Subcategory⇒isSubcategory ι .faithful f g eq = eq 
-  Subcategory⇒isSubcategory (inclusion U₁ R₁ R-id₁ _∘R_ U-injective) 
+  Subcategory⊆ ι .ι = ι-Sub ι
+  Subcategory⊆ ι .faithful f g eq = eq 
+  Subcategory⊆ (inclusion U₁ R₁ R-id₁ _∘R_ U-injective) 
     .injective iso@(f , f⁻¹ , linv , rinv) = 
     -- TODO: don't know why Agda is erroring when I use _,_ instead of the qualified name Isomorphism.,
       (f , U-injective iso .fst) Isomorphism., 
@@ -154,9 +150,9 @@ module _ (𝒟 : Category o a e) where
   ι-Full U .F-∘ f g = refl-≈
   ι-Full U .F-cong eq = eq   
 
-  FullSubcategory⇒isFullSubcategory : ∀ {I : Set ℓ₁} → (U : I → Obj) → 
-                                        (FullSubcategory 𝒟 I U) ⊑ 𝒟
-  FullSubcategory⇒isFullSubcategory U .ι = ι-Full U
-  FullSubcategory⇒isFullSubcategory U .faithful f g eq = eq 
-  FullSubcategory⇒isFullSubcategory U .injective (f , f⁻¹ , linv , rinv) = f Isomorphism., (f⁻¹ , linv , rinv)
-  FullSubcategory⇒isFullSubcategory U .full g = g , refl-≈
+  Subcategory↪ : ∀ {I : Set ℓ₁} → (U : I → Obj) → 
+                                        (FullSubcategory 𝒟 I U) ↪ 𝒟
+  Subcategory↪ U .ι = ι-Full U
+  Subcategory↪ U .faithful f g eq = eq 
+  Subcategory↪ U .injective (f , f⁻¹ , linv , rinv) = f Isomorphism., (f⁻¹ , linv , rinv)
+  Subcategory↪ U .full g = g , refl-≈

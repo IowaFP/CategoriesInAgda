@@ -9,4 +9,4 @@ open import Categories.Category.Base
 
 module HomReasoning (𝒞 : Category a e o) {A B : 𝒞 .Category.Obj} where
   open Category 𝒞 
-  open import Relation.Binary.Reasoning.Setoid (hom-setoid A B) public
+  open import Relation.Binary.Reasoning.Setoid (Hom(A , B)) public

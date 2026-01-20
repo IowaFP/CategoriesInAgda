@@ -77,7 +77,7 @@ module _ (A : Set o) (G : Group A) where
   GroupGroupoid .category .idᵣ =  G .idᵣ
   GroupGroupoid .category .idₗ = G .idₗ
   GroupGroupoid .category .assₗ = G .assₗ 
-  GroupGroupoid .groupoid = Groupoid (λ a → a ⁻¹ , (right-inv a .snd) , left-inv a)
+  GroupGroupoid .groupoid a = a ⁻¹ , right-inv a .snd , left-inv a
 
 --------------------------------------------------------------------------------
 -- Groups form a category

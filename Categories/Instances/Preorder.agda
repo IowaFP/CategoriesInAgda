@@ -1,12 +1,11 @@
 {-# OPTIONS --without-K #-}
-module Categories.Instances.Groupoid where
+module Categories.Instances.Preorder where
 
 open import Categories.Prelude
 open import Categories.Category
 open import Categories.Category.Subcategory
 open import Categories.Functor 
 open import Categories.NaturalTransformation
-open import Categories.Constructions.Groupoid
 open import Categories.Constructions.Preorder
 
 open import Categories.Instances.Cat
@@ -17,19 +16,19 @@ open PropositionalEquality hiding (isPreorder)
 -- The category of groupoids
 
 module _ (o a e : Level) where
-  open GroupoidCategory
+  open PreorderCategory
   
-  -- 𝐆𝐩𝐝 is a full subcategory of 𝐂𝐚𝐭
-  𝐆𝐩𝐝 : Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
-  𝐆𝐩𝐝 = FullSubcategory (𝐂𝐚𝐭 o a e) (GroupoidCategory o a e) category 
+  -- 𝐏𝐫𝐞 is a full subcategory of 𝐂𝐚𝐭
+  𝐏𝐫𝐞 : Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (o ⊔ a ⊔ e) 
+  𝐏𝐫𝐞 = FullSubcategory (𝐂𝐚𝐭 o a e) (PreorderCategory o a e) category 
 
   open Category (𝐂𝐚𝐭 o a e)
   open _↪_  
 
   -- Full subcategory witness
-  𝐆𝐩𝐝↪𝐂𝐚𝐭 : 𝐆𝐩𝐝 ↪ 𝐂𝐚𝐭 o a e
-  𝐆𝐩𝐝↪𝐂𝐚𝐭 = Subcategory↪ (𝐂𝐚𝐭 o a e) category 
+  𝐏𝐫𝐞↪𝐂𝐚𝐭 : 𝐏𝐫𝐞 ↪ 𝐂𝐚𝐭 o a e
+  𝐏𝐫𝐞↪𝐂𝐚𝐭 = Subcategory↪ (𝐂𝐚𝐭 o a e) category 
 
   -- Inclusion functor
-  𝐆𝐩𝐝-ι : 𝐆𝐩𝐝 ⇛ 𝐂𝐚𝐭 o a e 
-  𝐆𝐩𝐝-ι = 𝐆𝐩𝐝↪𝐂𝐚𝐭 .ι
+  𝐏𝐫𝐞-ι : 𝐏𝐫𝐞 ⇛ 𝐂𝐚𝐭 o a e 
+  𝐏𝐫𝐞-ι = 𝐏𝐫𝐞↪𝐂𝐚𝐭 .ι

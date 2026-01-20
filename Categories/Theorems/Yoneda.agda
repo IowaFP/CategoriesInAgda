@@ -47,15 +47,15 @@ module CovariantYoneda (F : 𝒞 ⇛ 𝐒𝐞𝐭𝐨𝐢𝐝 o e) where
   open Functor F ; open _⇒ₛ_ 
   import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
-  -- Mapping natural transformations to objects in F₀ A 
+  -- Mapping natural transformations to terms in F A 
   Yoneda→ : ∀ A → Hom[ A ,—] ⇒ₙ F → ∣ F₀ A ∣
   Yoneda→ A (η , η-nat) = η {A} · Id
 
-  -- Mapping objects in F A to natural transformations
+  -- Mapping terms in F A to natural transformations
   ←Yoneda : ∀ A → ∣ F₀ A ∣ → Hom[ A ,—] ⇒ₙ F
   ←Yoneda A X = ε , natural 
     where    
-      ε : ∀ {B} → hom-setoid A B ⇒ₛ F₀ B 
+      ε : ∀ {B} → Hom(A , B) ⇒ₛ F₀ B 
       ε = (_· X) ○ fmap  , (_$ X) ○ F-cong
       natural : Natural Hom[ A ,—] F ε
       natural {A = B} {C} f g = begin 
@@ -76,10 +76,10 @@ module CovariantYoneda (F : 𝒞 ⇛ 𝐒𝐞𝐭𝐨𝐢𝐝 o e) where
   --   𝐒𝐞𝐭𝐨𝐢𝐝 o e, 
   -- whereas Nat(Hom(A, —), F) is an object in 
   --   𝐒𝐞𝐭𝐨𝐢𝐝 (a ⊔ lsuc o ⊔ lsuc e) (a ⊔ o ⊔ e).
-  Yoneda : ∀ A → Isomorphic (nat-setoid Hom[ A ,—] F) (F₀ A)
+  Yoneda : ∀ A → Nat(Hom[ A ,—] , F) ≅ F₀ A
   Yoneda A = Yoneda→ A , ←Yoneda A , Yoneda→-section , ←Yoneda-section 
     where 
-      open Functions₁ (nat-setoid Hom[ A ,—] F)  renaming (_~_ to _`~_)
+      open Functions₁ (Nat(Hom[ A ,—] , F))  renaming (_~_ to _`~_)
       open Functions₁ (F₀ A) using (_~_)
       
       Yoneda→-section : ←Yoneda A ○ Yoneda→ A `~ id
@@ -114,7 +114,7 @@ module ContravariantYoneda (F : 𝒞ᵒᵖ ⇛ 𝐒𝐞𝐭𝐨𝐢𝐝 o e) whe
   ←Yonedaᵒᵖ : ∀ A → ∣ F₀ A ∣ → (Hom[—, A ] ⇒ₙ F)
   ←Yonedaᵒᵖ = TODO 
 
-  Yonedaᵒᵖ : ∀ A → Isomorphic (nat-setoid Hom[—, A ] F) (F₀ A)
+  Yonedaᵒᵖ : ∀ A → (Nat(Hom[—, A ] , F)) ≅ (F₀ A)
   Yonedaᵒᵖ A = Yonedaᵒᵖ→ A , ←Yonedaᵒᵖ A , TODO , TODO
 
 

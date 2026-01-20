@@ -95,13 +95,12 @@ module _ {𝒞 : Category o₁ a₁ e₁}
 -- where two natural transformations are deemed equivalent if they are 
 -- extensionally equivalent w.r.t. the underlying category's setoid on arrows.
 module _ {𝒞 : Category o₁ a₁ e₁} 
-    {𝒟 : Category o₂ a₂ e₂}
-    (F G : 𝒞 ⇛ 𝒟) where
+    {𝒟 : Category o₂ a₂ e₂} where
 
   open Category 𝒟
-  nat-setoid : Setoid _ _ 
-  nat-setoid .Setoid.Carrier = F ⇒ₙ G
-  nat-setoid .Setoid._≈_ (η , _) (ε , _) = ∀ {A} → η {A} ≈ ε {A} 
-  nat-setoid .Setoid.isEquivalence .IsEquivalence.refl = refl-≈
-  nat-setoid .Setoid.isEquivalence .IsEquivalence.sym f {A} = sym-≈ (f {A})
-  nat-setoid .Setoid.isEquivalence .IsEquivalence.trans f g {A} = trans-≈ (f {A}) (g {A}) 
+  Nat :  𝒞 ⇛ 𝒟 * 𝒞 ⇛ 𝒟 → Setoid _ _ 
+  Nat (F , G) .Setoid.Carrier = F ⇒ₙ G
+  Nat (F , G) .Setoid._≈_ (η , _) (ε , _) = ∀ {A} → η {A} ≈ ε {A} 
+  Nat (F , G) .Setoid.isEquivalence .IsEquivalence.refl = refl-≈
+  Nat (F , G) .Setoid.isEquivalence .IsEquivalence.sym f {A} = sym-≈ (f {A})
+  Nat (F , G) .Setoid.isEquivalence .IsEquivalence.trans f g {A} = trans-≈ (f {A}) (g {A}) 

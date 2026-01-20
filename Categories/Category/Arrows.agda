@@ -144,12 +144,15 @@ module Isomorphism (𝒞 : Category o a e) where
           (g ∘ f) ≈⟨ rinv-f ⟩ 
           Id ∎) 
   
-  obj-setoid : Setoid o (o ⊔ a ⊔ e)
-  obj-setoid = record
+  Objs : Setoid o (o ⊔ a ⊔ e)
+  Objs = record
     { Carrier       = Obj
     ; _≈_           = _≃_
     ; isEquivalence = record { refl = refl-≃ ; sym = sym-≃ ; trans = trans-≃ }
     }
+
+--------------------------------------------------------------------------------
+-- ` Syntax (when you want to open two instantiations of Isomorphism)
 
 module `Isomorphism (𝒞 : Category o a e) where 
   open Isomorphism 𝒞 
@@ -157,7 +160,7 @@ module `Isomorphism (𝒞 : Category o a e) where
               refl-≃ to `refl-≃ ; 
               sym-≃ to `sym-≃ ; 
               trans-≃ to `trans-≃ ; 
-              obj-setoid to `obj-setoid) public 
+              Objs to `Objs) public 
 
 -- Accessor for isomorphism when category is unopened
 _[_≃_] : (𝒞 : Category o a e) → (A B : 𝒞 .Category.Obj) → Set (o ⊔ a ⊔ e)

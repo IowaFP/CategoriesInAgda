@@ -16,9 +16,6 @@ private
 postulate 
   sorry : A
 
-`_  : String → A
-` msg = sorry 
-
 TODO : A 
 TODO = sorry 
 

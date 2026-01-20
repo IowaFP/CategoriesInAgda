@@ -12,15 +12,12 @@ module _ (𝒞 : Category o a e) where
   open Category 𝒞
   open Isomorphism 𝒞
 
-  record isPreorder : Set (a ⊔ o ⊔ e) where 
-    constructor Preorder
-    field 
-       preorder : ∀ {A B : Obj} → (f g : A ⇒ B) → f ≈ g
+  isPreorder : Set (a ⊔ o ⊔ e)
+  isPreorder = ∀ {A B : Obj} → (f g : A ⇒ B) → f ≈ g
 
-record PreorderCategory : Set (lsuc (o ⊔ a ⊔ e)) where 
+record PreorderCategory o a e : Set (lsuc (o ⊔ a ⊔ e)) where 
     field 
         category : Category o a e
         preorder : isPreorder category
 
-open isPreorder public
 open PreorderCategory public

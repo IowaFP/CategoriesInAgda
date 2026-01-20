@@ -14,7 +14,7 @@ open import Relation.Binary.Reasoning.Syntax using (module ≃-syntax ; module �
 module IsoReasoning  
     (𝒞 : Category o₁ a₁ e₁) where 
   open Isomorphism 𝒞 
-  open Setoid obj-setoid
+  open Setoid Objs
 
   open import Relation.Binary.Reasoning.Base.Single (_≃_) refl trans 
     renaming (∼-go to ≃-go) public

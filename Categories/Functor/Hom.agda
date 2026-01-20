@@ -42,7 +42,7 @@ module HomFunctor (𝒞 : Category a o e) where
     𝒞ᵒᵖ = op  
 
   Hom[—,—] :  (𝒞ᵒᵖ × 𝒞) ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
-  Hom[—,—] .F₀ (A , B) = hom-setoid A B 
+  Hom[—,—] .F₀ (A , B) = Hom(A , B)
   Hom[—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
     (λ h → g ∘ h ∘ f) , (_⋆ₗ f) ○ (g ⋆ᵣ_)
   Hom[—,—] .F-id x =  idᵣ ⨾ idₗ 

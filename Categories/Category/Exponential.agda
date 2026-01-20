@@ -24,8 +24,8 @@ module _ (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
   [_,_] ._⇒_ = _⇒ₙ_
   [_,_] ._∘_ {A = F} {G} {H} = _∘V_
   [_,_] .Id = IdN .nat 
-  [_,_] ._≈_ {F} {G} = nat-setoid F G .Setoid._≈_
-  [_,_] .eqv {F} {G} = nat-setoid F G .Setoid.isEquivalence
+  [_,_] ._≈_ {F} {G} = Nat(F , G) .Setoid._≈_
+  [_,_] .eqv {F} {G} = Nat(F , G) .Setoid.isEquivalence
   [_,_] ._⋆_ {f = f} {h} {g} {i} e₁ e₂ {A} =  e₁ ⋆ e₂
   [_,_] .idᵣ = idᵣ   
   [_,_] .idₗ = idₗ   

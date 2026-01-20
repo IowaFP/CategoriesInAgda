@@ -21,7 +21,7 @@ module NatInitial where
   open PropositionalEquality
   open FAlg 
   open Isomorphism (𝐒𝐞𝐭 lzero) 
-  open Hom 
+  open AlgHom 
 
   NatF : Endofunctor (𝐒𝐞𝐭 lzero)
   NatF .Functor.F₀ = λ X → ⊤ {lzero} or X
@@ -39,50 +39,47 @@ module NatInitial where
   AlgCat : Category (lsuc lzero) lzero lzero 
   AlgCat = FAlgebras (𝐒𝐞𝐭 lzero) NatF 
 
-  -- We need to leverage Agda data types to construct fixed-points
-  data Nat : Set where 
-    zero : Nat 
-    suc  : Nat → Nat 
-  
-  -- Likewise we need Agda's recursion to define an initial algebra
-  NatIn : FAlg (𝐒𝐞𝐭 lzero) NatF
-  NatIn = Nat , (λ { (left x) → zero
+  -- We need to leverage Agda data types to construct fixed-points,
+  -- and to leverage Agda's recursion to define an initial algebra
+  ℕIn : FAlg (𝐒𝐞𝐭 lzero) NatF
+  ℕIn = ℕ , (λ { (left x) → zero
                    ; (right y) → suc y }) 
 
   -- Were it not for termination checking, we could instead
   -- write that 
-  --   cata (A , φ) n = φ ○ (fmap (cata φ)) ○ NatOut
-  -- Instead we'll describe NatOut in terms of cata.
-  cata : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → Nat → φ .Carrier 
+  --   cata (A , φ) n = φ ○ (fmap (cata φ)) ○ ℕOut
+  -- Instead we'll describe ℕOut in terms of cata.
+  cata : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → ℕ → φ .Carrier 
   cata (A , φ) zero = φ (left tt)
   cata (A , φ) (suc n) = φ (right (cata (A , φ) n))  
 
-  NatOut : Nat → F₀ Nat 
-  NatOut = cata (F₀ Nat , fmap (NatIn .alg))
+  ℕOut : ℕ → F₀ ℕ 
+  ℕOut = cata (F₀ ℕ , fmap (ℕIn .alg))
 
-  -- We confirm that Nat is a fixed-point of F(X) = 1 + X 
-  NatIso : (F₀ Nat) ≃ Nat 
-  NatIso = φ , NatOut , inv₁ , inv₂
+  -- We confirm that ℕ is a fixed-point of F(X) = 1 + X 
+  ℕIso : (F₀ ℕ) ≃ ℕ 
+  ℕIso = φ , ℕOut , inv₁ , inv₂
       where 
-        open FAlg NatIn renaming (Carrier to A ; alg to φ)
-        inv₁ : ∀ (n : Nat) → φ (NatOut n) ≡ n 
+        open FAlg ℕIn renaming (Carrier to A ; alg to φ)
+        inv₁ : ∀ (n : ℕ) → φ (ℕOut n) ≡ n 
         inv₁ zero = refl
         inv₁ (suc n) = cong suc (inv₁ n) 
-        inv₂ : ∀ (a : F₀ Nat) → NatOut (φ a) ≡ a 
+        inv₂ : ∀ (a : F₀ ℕ) → ℕOut (φ a) ≡ a 
         inv₂ (left x) = refl
         inv₂ (right y) = cong right (inv₁ y) 
 
   -- The catamorphism indeed commutes
-  ⦅_⦆ : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → Hom NatIn φ
+  ⦅_⦆ : (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → AlgHom ℕIn φ
   ⦅ (A , φ) ⦆ = cata (A , φ) , λ { (left x) → refl
                                  ; (right y) → refl } 
                                   
-  -- (Nat , NatIn) is initial in the category of (1 + X)-Algebras
-  NatInitial : isInitial AlgCat NatIn 
-  NatInitial = init (λ φ → ⦅ φ ⦆) λ { {φ} f → unique φ f }
+  -- (ℕ , ℕIn) is initial in the category of (1 + X)-Algebras
+  ℕInitial : isInitial AlgCat ℕIn 
+  ℕInitial = init (λ φ → ⦅ φ ⦆) λ { {φ} f → unique φ f }
     where 
       open ≡-Reasoning 
-      unique : ∀ (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → (h : Hom NatIn φ) → (n : Nat) → h .hom n ≡ cata φ n
+      unique : ∀ (φ : FAlg (𝐒𝐞𝐭 lzero) NatF) → (h : AlgHom ℕIn φ) → 
+                 (n : ℕ) → h .hom n ≡ cata φ n
       unique (A , φ) (f , commutes) zero = commutes (left tt)
       unique (A , φ) (f , commutes) (suc n) = begin 
         f (suc n)                  ≡⟨ commutes (right n) ⟩ 

@@ -38,12 +38,13 @@ module _ (𝒞 : Category o a e) where
   open Isomorphism 𝒞
 
   record isDiscrete : Set (a ⊔ o ⊔ e) where 
-    constructor Discrete
+    constructor _,_
     field 
       groupoid : isGroupoid 𝒞 
       preorder : isPreorder 𝒞
 
-record DiscreteCategory : Set (lsuc (o ⊔ a ⊔ e)) where 
+record DiscreteCategory o a e : Set (lsuc (o ⊔ a ⊔ e)) where 
+    constructor _,_
     field 
         category : Category o a e
         discrete : isDiscrete category

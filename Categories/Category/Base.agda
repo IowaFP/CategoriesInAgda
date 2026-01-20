@@ -45,9 +45,9 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
          trans to trans-≈ ; 
          reflexive to respects) public 
 
-    -- The setoid of morphisms and their equality types
-    hom-setoid : Obj → Obj → Setoid _ _
-    hom-setoid A B = record
+    -- The setoid of morphisms and morphism equivalence
+    Hom : Obj * Obj → Setoid _ _
+    Hom (A , B) = record
       { Carrier       = A ⇒ B
       ; _≈_           = _≈_
       ; isEquivalence = eqv {A} {B} 
@@ -138,7 +138,7 @@ module `Category (𝒞 : Category o a e) where
               refl-≈ to `refl-≈ ;
               sym-≈ to `sym-≈ ;
               trans-≈ to `trans-≈ ;
-              hom-setoid to `hom-setoid ;
+              Hom to `Hom ;
               _⨾_ to _`⨾_ ; 
               _⁻¹ to _`⁻¹ ;
               _⋆ₗ_ to _`⋆ₗ_ ;

@@ -15,7 +15,7 @@ module PropositionalEquality where
             C : Set ℓ₃
 
     _⨾_ = trans 
-
+    
     --------------------------------------------------------------------------------
     -- (A , _≡_) forms a setoid
 
@@ -24,10 +24,10 @@ module PropositionalEquality where
     ≡-equiv .IsEquivalence.sym = sym
     ≡-equiv .IsEquivalence.trans = trans
 
-    ≡-setoid : ∀ {A : Set ℓ} → Setoid _ _ 
-    ≡-setoid {A = A} .Setoid.Carrier = A 
-    ≡-setoid .Setoid._≈_ = _≡_
-    ≡-setoid .Setoid.isEquivalence = ≡-equiv 
+    `_ : ∀ (A : Set ℓ) → Setoid _ _ 
+    `_ A .Setoid.Carrier = A 
+    `_ A .Setoid._≈_ = _≡_
+    `_ A .Setoid.isEquivalence = ≡-equiv 
 
     --------------------------------------------------------------------------------
     -- Common functions not defined in the standard library

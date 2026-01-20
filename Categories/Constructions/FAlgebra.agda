@@ -7,7 +7,7 @@ open import Categories.Category
 open import Categories.Functor 
 open import Categories.NaturalTransformation 
 open import Categories.Constructions.Initial
-open import Categories.Reasoning.Hom 
+open import Categories.Reasoning.Hom
 open import Categories.Category.Subcategory
 
 --------------------------------------------------------------------------------
@@ -64,13 +64,13 @@ module _ {𝒞 : Category o a e}
   open HomReasoning 𝒞 
 
   open FAlg 
-  record Hom (φ ψ : FAlg 𝒞 F) : Set (a ⊔ e) where 
+  record AlgHom (φ ψ : FAlg 𝒞 F) : Set (a ⊔ e) where 
     constructor _,_ 
     field 
       hom : φ .Carrier ⇒ ψ .Carrier 
       commutes : hom ∘ φ .alg ≈ ψ .alg ∘ fmap hom
  
-  _∘FA_ : ∀ {φ ψ ζ} → Hom ψ ζ → Hom φ ψ → Hom φ ζ 
+  _∘FA_ : ∀ {φ ψ ζ} → AlgHom ψ ζ → AlgHom φ ψ → AlgHom φ ζ 
   _∘FA_ {φ = (A , φ)} {ψ = (B , ψ)} {ζ = (C , ζ)} (f , comm-f) (g , comm-g) = 
    f ∘ g , 
    (begin 
@@ -79,7 +79,7 @@ module _ {𝒞 : Category o a e}
       (ζ ∘ fmap f) ∘ fmap g  ≈⟨ (assᵣ ⨾ ζ ⋆ᵣ (F-∘ g f) ⁻¹) ⟩ 
       ζ ∘ fmap (f ∘ g) ∎)
   
-  IdHom : ∀ {φ : FAlg 𝒞 F} → Hom φ φ 
+  IdHom : ∀ {φ : FAlg 𝒞 F} → AlgHom φ φ 
   IdHom {φ = (A , φ)} = Id , (begin 
     Id ∘ φ  ≈⟨ idₗ ⟩
     φ       ≈⟨ idᵣ ⁻¹ ⟩ 
@@ -94,12 +94,12 @@ module _ (𝒞 : Category o a e)
   open Category 𝒞
   open Functor F 
   open IsEquivalence
-  open Hom
+  open AlgHom
   open HomReasoning 𝒞 
 
   FAlgebras : Category (o ⊔ a) (a ⊔ e) e 
   FAlgebras .Category.Obj = FAlg 𝒞 F 
-  FAlgebras .Category._⇒_ =  Hom
+  FAlgebras .Category._⇒_ =  AlgHom
   FAlgebras .Category._∘_ = _∘FA_
   FAlgebras .Category.Id = IdHom
   FAlgebras .Category._≈_ (f , _) (g , _) =  f ≈ g
@@ -127,7 +127,7 @@ module _ (𝒞 : Category o a e)
     open FAlg φ renaming (Carrier to μF ; alg to In)
 
     -- The catamorphism
-    ⦅_⦆ : (ψ : FAlg 𝒞 F) → Hom φ ψ 
+    ⦅_⦆ : (ψ : FAlg 𝒞 F) → AlgHom φ ψ 
     ⦅ ψ ⦆ = ! ψ
 
     -- ------------------------------------------------------------------------------
@@ -146,8 +146,8 @@ module _ (𝒞 : Category o a e)
         fmap Id            ≈⟨ F-id ⟩ 
         Id ∎)
       where 
-        open Hom ⦅ (F₀ μF , fmap In) ⦆ renaming (hom to Out ; commutes to Out-commutes)
-        In∘Out : Hom φ φ 
+        open AlgHom ⦅ (F₀ μF , fmap In) ⦆ renaming (hom to Out ; commutes to Out-commutes)
+        In∘Out : AlgHom φ φ 
         In∘Out = In ∘ Out , (begin 
           In ∘ Out ∘ In             ≈⟨ (assᵣ ⨾ In ⋆ᵣ Out-commutes) ⟩ 
           In ∘ (fmap In ∘ fmap Out) ≈⟨ In ⋆ᵣ (F-∘ Out In) ⁻¹ ⟩ 

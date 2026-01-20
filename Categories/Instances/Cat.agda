@@ -26,7 +26,7 @@ module _ o a e where
   𝐂𝐚𝐭 ._∘_ = _∘F_
   𝐂𝐚𝐭 .Id = IdF 
   𝐂𝐚𝐭 ._≈_ {𝒞} {𝒟} F G =  F ≃ₙ G
-  𝐂𝐚𝐭 .eqv  = functor-setoid .Setoid.isEquivalence
+  𝐂𝐚𝐭 .eqv {A = 𝒞} {B = 𝒟}  = Fun(𝒞 , 𝒟) .Setoid.isEquivalence
   𝐂𝐚𝐭 ._⋆_ {A = A} {B} {C} {f = F} {H} {G} {I} η₁ η₂ = H-iso η₂ η₁
   𝐂𝐚𝐭 .idᵣ =  IdF-idᵣ  
   𝐂𝐚𝐭 .idₗ = IdF-idₗ   
