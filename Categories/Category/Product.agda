@@ -74,7 +74,6 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ 
     }
     where 
       open Functor F ; open Gunctor G
-
   
   module _ (F : 𝒞 ⇛ 𝒟) (G : 𝒞 ⇛ ℰ) (H : 𝒞 ⇛ (𝒟 × ℰ)) where 
     open Functor F ; open Gunctor G ; open Hunctor H 

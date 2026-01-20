@@ -76,7 +76,13 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
            (𝒳 × 𝒞) ⇛ 𝒟 → 
            𝒳 ⇛ [ 𝒞 , 𝒟 ]
   λ[ G ] .Functor.F₀ A = Bf-π₂ G A
-  λ[ G ] .Functor.fmap f = TODO 
+  λ[_] {𝒳 = 𝒳} G .Functor.fmap {A = A} {B}  f = 
+    _∘H_ {𝒞 = 𝒞} {𝒳 × 𝒞} {𝒟} 
+         {⟨ Const A , IdF ⟩} {⟨ Const B , IdF ⟩} 
+         -- I feel there is an opportunity to be clever here.
+         -- What about the product of two natural transformations? 
+         -- That's akin to asking if [ 𝒞 , 𝒟 ] admits products...
+         {G} {G} (IdN .nat) ((f , `Id) , {! (λ f₁ → ?) !}) 
   λ[ G ] .Functor.F-id = TODO 
   λ[ G ] .Functor.F-∘ = TODO 
   λ[ G ] .Functor.F-cong = TODO
