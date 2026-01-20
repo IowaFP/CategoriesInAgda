@@ -72,7 +72,7 @@ module CovariantYoneda (F : 𝒞 ⇛ 𝐒𝐞𝐭𝐨𝐢𝐝 o e) where
   -- An aside: it would be neat if we could express
   -- this instead as "Nat(Hom(A, —), F) and F A are isomorphic
   -- objects in the category 𝐒𝐞𝐭𝐨𝐢𝐝", but the two setoids' levels
-  -- are incompatible (F₀ A is an object in 
+  -- are incompatible: (F₀ A) is an object in 
   --   𝐒𝐞𝐭𝐨𝐢𝐝 o e, 
   -- whereas Nat(Hom(A, —), F) is an object in 
   --   𝐒𝐞𝐭𝐨𝐢𝐝 (a ⊔ lsuc o ⊔ lsuc e) (a ⊔ o ⊔ e).
