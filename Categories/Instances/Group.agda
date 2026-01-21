@@ -72,7 +72,7 @@ module _ (A : Set o) (G : Group A) where
   GroupGroupoid .category ._∘_ = _+_
   GroupGroupoid .category .Id = `0
   GroupGroupoid .category ._≈_  = _≡_
-  GroupGroupoid .category .eqv  = ≡-equiv
+  GroupGroupoid .category .eqv  = ≡-equiv A 
   GroupGroupoid .category ._⋆_ = cong₂ _+_ 
   GroupGroupoid .category .idᵣ =  G .idᵣ
   GroupGroupoid .category .idₗ = G .idₗ

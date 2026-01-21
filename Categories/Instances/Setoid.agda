@@ -15,7 +15,7 @@ module _ where
    
   𝐒𝐞𝐭𝐨𝐢𝐝 : ∀ (o e : Level) → Category (lsuc (o ⊔ e)) (o ⊔ e) (o ⊔ e)
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .Obj = Setoid o e 
-  𝐒𝐞𝐭𝐨𝐢𝐝 o e ._⇒_ =  _⇒ₛ_ 
+  𝐒𝐞𝐭𝐨𝐢𝐝 o e ._⇒_ =  _⇉_ 
   𝐒𝐞𝐭𝐨𝐢𝐝 o e ._∘_ = _●_
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .Id = id , id 
   _≈_ (𝐒𝐞𝐭𝐨𝐢𝐝 o e) {A} {B} (f , _) (g , _) =  ∀ (x : A.Carrier) → f x B.≈ g x

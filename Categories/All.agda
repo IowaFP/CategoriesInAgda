@@ -35,4 +35,6 @@ open import Categories.Instances.NatFAlgebra public
 
 open import Categories.TypeTheory.GroupoidInterpretationOfTypes public 
 
+open import Categories.Theorems.Yoneda public 
+
 open import Categories.Reasoning public

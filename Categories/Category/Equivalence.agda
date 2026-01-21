@@ -24,9 +24,9 @@ module Definition1 (𝒞 𝒟 : Category o a e) where
 -- Definition 2: 𝒞 and 𝒟 are equivalent if there exists an essentially
 -- surjective and fully faithful functor F : 𝒞 → 𝒟.
 
-module Definition2 (𝒞 𝒟 : Category o a e) where
+module Definition2 (𝒞 : Category o₁ a₁ e₁) (𝒟 : Category o₂ a₂ e₂) where
 
-  record areEquivalent : Set (lsuc (o ⊔ a ⊔ e)) where 
+  record areEquivalent : Set (lsuc (o₁ ⊔ a₁ ⊔ e₁ ⊔ o₂ ⊔ a₂ ⊔ e₂)) where 
     field 
         F : 𝒞 ⇛ 𝒟
         essentiallySurjective : EssentiallySurjective F 

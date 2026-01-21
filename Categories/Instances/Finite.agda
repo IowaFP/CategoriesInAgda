@@ -60,7 +60,7 @@ module _ where
   𝟙 ._∘_ {X} {Y} {Z} ↻ ↻ = ↻ 
   𝟙 .Id {A} = ↻ 
   𝟙 ._≈_ = _≡_ 
-  𝟙 .eqv = ≡-equiv 
+  𝟙 .eqv {`A} {B} = ≡-equiv (`A ⇒₁ B) 
   𝟙 .idᵣ {f = ↻} = refl 
   𝟙 .idₗ {f = ↻} = refl
   𝟙 .assₗ {A} {D = A} {↻} {↻} {↻} = refl 
@@ -97,7 +97,7 @@ module _ where
   _∘_ 𝟚 {X} {Y} {Z} A↦B (↻ .A) = A↦B
   𝟚 .Id {X} = ↻ X  
   𝟚 ._≈_ = _≡_ 
-  𝟚 .eqv = ≡-equiv 
+  𝟚 .eqv {`A} {`B} = ≡-equiv (`A ⇒₂ `B)
   𝟚 .idᵣ {f = ↻ _} = refl
   𝟚 .idᵣ {f = A↦B} = refl
   𝟚 .idₗ {f = ↻ _} = refl
@@ -153,7 +153,7 @@ module _ where
   𝟛 ._∘_ B↦C A↦B = A↦C
   𝟛 .Id = ↻ _
   𝟛 ._≈_ = _≡_
-  𝟛 .eqv = ≡-equiv
+  𝟛 .eqv  {`A} {`B} = ≡-equiv (`A ⇒₃ `B)
   -- Not sure why Agda can't infer that f ∘ (↻ _) ≡ f until f is destructed.
   𝟛 .idᵣ {f = ↻ _} = refl
   𝟛 .idᵣ {f = A↦B} = refl

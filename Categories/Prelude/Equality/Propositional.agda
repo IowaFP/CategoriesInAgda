@@ -17,19 +17,6 @@ module PropositionalEquality where
     _⨾_ = trans 
     
     --------------------------------------------------------------------------------
-    -- (A , _≡_) forms a setoid
-
-    ≡-equiv : IsEquivalence (_≡_ {_} {A})
-    ≡-equiv .IsEquivalence.refl = refl 
-    ≡-equiv .IsEquivalence.sym = sym
-    ≡-equiv .IsEquivalence.trans = trans
-
-    `_ : ∀ (A : Set ℓ) → Setoid _ _ 
-    `_ A .Setoid.Carrier = A 
-    `_ A .Setoid._≈_ = _≡_
-    `_ A .Setoid.isEquivalence = ≡-equiv 
-
-    --------------------------------------------------------------------------------
     -- Common functions not defined in the standard library
 
     cong-both : ∀ {f g : A → B} {x y : A} → 

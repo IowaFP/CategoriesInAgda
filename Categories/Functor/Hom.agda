@@ -33,7 +33,7 @@ open import Categories.Reasoning.Hom
 --   - Hom(f, g)(h : B ⇒ C) = g ∘ h ∘ f
 -------------------------------------------------------------------------------
 
-module HomFunctor (𝒞 : Category a o e) where
+module HomFunctor (𝒞 : Category o a e) where
   open Category 𝒞 
   open Functor
   open HomReasoning 𝒞
@@ -41,7 +41,7 @@ module HomFunctor (𝒞 : Category a o e) where
   private 
     𝒞ᵒᵖ = op  
 
-  Hom[—,—] :  (𝒞ᵒᵖ × 𝒞) ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[—,—] :  (𝒞ᵒᵖ × 𝒞) ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 a e)
   Hom[—,—] .F₀ (A , B) = Hom(A , B)
   Hom[—,—] .fmap {A = A , B} {B = C , D} (f , g) =  
     (λ h → g ∘ h ∘ f) , (_⋆ₗ f) ○ (g ⋆ᵣ_)
@@ -57,11 +57,11 @@ module HomFunctor (𝒞 : Category a o e) where
       g₂ ∘ h ∘ g₁ ∎ 
 
   -- Covariant hom functor 
-  Hom[_,—] : Obj → 𝒞 ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[_,—] : Obj → 𝒞 ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 a e)
   Hom[_,—] A = Bf-π₂ Hom[—,—] A 
 
   -- Contravariant hom functor
-  Hom[—,_] : Obj → 𝒞ᵒᵖ ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 o e)
+  Hom[—,_] : Obj → 𝒞ᵒᵖ ⇛ (𝐒𝐞𝐭𝐨𝐢𝐝 a e)
   Hom[—,_] A = Bf-π₁ Hom[—,—] A
 
   -- Hom[—,—] is full
