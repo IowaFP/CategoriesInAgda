@@ -122,7 +122,7 @@ module YonedaLemma (𝒞 : Category o a e) where
   -------------------------------------------------------------------------------
   -- The Yoneda embedding:
   -- 
-  -- The Yoneda Embedding, y, is a functor y : 𝒞ᵒᵖ → [ 𝒞 , 𝐒𝐞𝐭𝐨𝐢𝐝 ],
+  -- The Yoneda Embedding, 𝓎, is a functor 𝓎 : 𝒞ᵒᵖ → [ 𝒞 , 𝐒𝐞𝐭𝐨𝐢𝐝 ],
   -- that sends an object A ∈ 𝒞 to its corresponding Hom functor Hom[A ,—],
   -- and sends each morphism f : B ⇒ A to the natural transformation
   -- Hom[f ,—].
@@ -148,7 +148,7 @@ module YonedaLemma (𝒞 : Category o a e) where
 
   module YonedaEmbedding₂ where 
 
-    -- We can also describe the Yoneda embedding can be defined 
+    -- We can also describe the Yoneda embedding
     -- as the curried form of the hom-bifunctor Hom[—,—].
     𝓎 : 𝒞ᵒᵖ ⇛ [ 𝒞 , 𝐒𝐞𝐭𝐨𝐢𝐝 a e ]
     𝓎 = λ[ Hom[—,—] ] 
