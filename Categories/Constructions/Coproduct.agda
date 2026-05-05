@@ -17,21 +17,23 @@ module _ (𝒞 : Category o a e) where
       A B C Y : Obj 
       f g h : A ⇒ B 
 
+  
   record hasCoproduct (X₁ X₂ : Obj) : Set (o ⊔ e ⊔ a) where 
+    infixr 4 _▿_
     field 
       X₁+X₂ : Obj 
       ι₁ : X₁ ⇒ X₁+X₂
       ι₂ : X₂ ⇒ X₁+X₂
-      [_,_] : X₁ ⇒ Y → X₂ ⇒ Y → X₁+X₂ ⇒ Y
+      _▿_ : X₁ ⇒ Y → X₂ ⇒ Y → X₁+X₂ ⇒ Y
 
-      inject₁ : [ f , g ] ∘ ι₁ ≈ f 
-      inject₂ : [ f , g ] ∘ ι₂ ≈ g 
-      unique : f ∘ ι₁ ≈ g → f ∘ ι₂ ≈ h → [ g , h ] ≈ f  
+      inject₁ : (f ▿ g) ∘ ι₁ ≈ f 
+      inject₂ : (f ▿ g) ∘ ι₂ ≈ g 
+      unique : f ∘ ι₁ ≈ g → f ∘ ι₂ ≈ h → (g ▿ h) ≈ f  
   
-    +-g-η : [ f ∘ ι₁ , f ∘ ι₂ ] ≈ f 
+    +-g-η : (f ∘ ι₁ ▿ f ∘ ι₂) ≈ f 
     +-g-η = unique refl-≈ refl-≈ 
 
-    +-η : [ ι₁ , ι₂ ] ≈ Id
+    +-η : (ι₁ ▿ ι₂) ≈ Id
     +-η = unique idₗ idₗ 
 
   -- A category admits coproducts if every two objects has a coproduct
@@ -56,7 +58,7 @@ module _ (𝒞 : Category o a e) where
     { X₁+X₂ = X × Y
     ; ι₁ = `π₁
     ; ι₂ = `π₂
-    ; [_,_] = ⟨_⨾_⟩
+    ; _▿_ = ⟨_⨾_⟩
     ; inject₁ = project₁
     ; inject₂ = project₂
     ; unique = unique
