@@ -1,5 +1,5 @@
 {-# OPTIONS --without-K #-}
-module Categories.TypeTheory.GroupoidInterpretationOfTypes where
+module Categories.TypeTheory.Notes.GroupoidInterpretationOfTypes where
 
 open import Categories.Prelude
 open import Categories.Category

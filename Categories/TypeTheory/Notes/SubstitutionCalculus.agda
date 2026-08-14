@@ -1,4 +1,4 @@
-module Categories.TypeTheory.SubstitutionCalculus where 
+module Categories.TypeTheory.Notes.SubstitutionCalculus where 
 
 open import Prelude
 open import Categories 

@@ -1,7 +1,7 @@
 {- 
 Thorsten Altenkirch's CWF demo, from https://fplunchnott.wordpress.com/2023/05/12/categories-with-families-for-simple-types/
 -} 
-module cwf-dep where
+module Categories.TypeTheory.Notes.Altenkirch where
 
 open import Relation.Binary.PropositionalEquality hiding ([_])
 open ≡-Reasoning

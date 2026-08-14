@@ -1,4 +1,4 @@
-module Categories.TypeTheory.TTinTTStrict where 
+module Categories.TypeTheory.Notes.TTinTTStrict where 
 
 -- Type Theory in Type Theory using a Strictified Synta
 -- Ambrus Kaposi, Loic Pujet, ICFP 2025. 

@@ -1,4 +1,4 @@
-module Categories.TypeTheory.Monad where 
+module Categories.TypeTheory.Notes.Monad where 
 
 open import Prelude hiding (_>>=_)
 open import Categories.Prelude 

@@ -1,4 +1,4 @@
-module Categories.TypeTheory.Initial where 
+module Categories.TypeTheory.Notes.Initial where 
 
 open import Prelude renaming (_>>=_ to _>>=ₘ_)
 open import Categories.Papers.Monad 

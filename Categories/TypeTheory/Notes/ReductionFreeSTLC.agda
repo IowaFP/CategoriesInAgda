@@ -1,4 +1,4 @@
-module Categories.TypeTheory.ReductionFreeSTLC where 
+module Categories.TypeTheory.Notes.ReductionFreeSTLC where 
 
 --------------------------------------------------------------------------------
 -- - Categorical reconstruction of a *reduction free* normalization proof.
