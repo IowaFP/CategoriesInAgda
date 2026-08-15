@@ -21,20 +21,14 @@ open import Categories.TypeTheory.STLC.Syntax
 ⟦ `0 ⟧v = π₂ 
 ⟦ `S x ⟧v = ⟦ x ⟧v ∘ π₁
 
-_,,_ : ∀ {ℓ}{A B C : Set ℓ} → 
-          (A → B) → 
-          (A → C) → 
-          A → B × C
-(f ,, g) a = (f a , g a) 
-
 ε : ∀ {A B : Set} → (A → B) × A → B 
 ε (f , x) = f x 
 
 ⟦_⟧ : Term Γ τ → ⟦ Γ ⟧ctx → ⟦ τ ⟧t 
 ⟦ ` x ⟧ = ⟦ x ⟧v
 ⟦ `λ {τ = τ} M ⟧ = curry ⟦ M ⟧ 
-⟦ M · N ⟧  = ε ∘ (⟦ M ⟧ ,, ⟦ N ⟧)
+⟦ M · N ⟧  = ε ∘ < ⟦ M ⟧ , ⟦ N ⟧ > 
 ⟦ fst M ⟧ = π₁ ∘ ⟦ M ⟧
 ⟦ snd M ⟧ = π₂ ∘ ⟦ M ⟧
 ⟦ ⋆ ⟧ = const tt 
-⟦ M , N ⟧ = ⟦ M ⟧ ,, ⟦ N ⟧ 
+⟦ M , N ⟧ = < ⟦ M ⟧ , ⟦ N ⟧ > 
