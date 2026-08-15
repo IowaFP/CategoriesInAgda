@@ -20,7 +20,7 @@ open import Categories.Constructions.Product
         Zʸ × Y --> Z          Zʸ 
               eval
   This is the categorical analogue to *currying*:
-    λ[_]   : (X × Y → Z) → (X → Y → Z)
+    curry   : (X × Y → Z) → (X → Y → Z)
     λ[ g ] = (λ x y → g (x , y))
   Here, g (what we have) expects a tuple input X * Y, and 
   λ[g] gives the curried version at type X → Y → Z. Commutativity
@@ -48,33 +48,26 @@ module _ (𝒞 : Category o a e) (prods : AdmitsProducts 𝒞) where
     field 
       Zʸ : Obj 
       `eval : Zʸ × Y ⇒ Z 
-      `λ[_] : ∀ {X : Obj} (g : X × Y ⇒ Z) → X ⇒ Zʸ
-      `transpose : ∀ {X : Obj} (g : X × Y ⇒ Z) → `eval ∘ ⟪ `λ[ g ] , Id ⟫ ≈ g 
+      `curry : ∀ {X : Obj} (g : X × Y ⇒ Z) → X ⇒ Zʸ
+      `transpose : ∀ {X : Obj} (g : X × Y ⇒ Z) → `eval ∘ ⟪ `curry g , Id ⟫ ≈ g 
       `unique : (g : X × Y ⇒ Z) (λg : X ⇒ Zʸ) → 
                 `eval ∘ ⟪ λg , Id ⟫ ≈ g → 
-                λg ≈ `λ[ g ] 
+                λg ≈ `curry g
 
 
   record AdmitsExponentials : Set (o ⊔ e ⊔ a) where 
     constructor admitsExponentials
-    open hasExponential public
+
+    infixr 10 _^_     
     field 
-      exponentials : ∀ (Y Z : Obj) → hasExponential Y Z
-
-    -- Re-exporting friendly accessors
-    infixl 5 _^_ 
-    _^_ : ∀ (Z Y : Obj) → Obj 
-    Z ^ Y = exponentials Y Z .Zʸ
-
-    eval : (Z ^ Y) × Y ⇒ Z
-    eval {Z = Z} {Y = Y} = exponentials Y Z .`eval 
-
-    λ[_] : ∀ {X : Obj} (g : X × Y ⇒ Z) → X ⇒ (Z ^ Y)
-    λ[_] {Y = Y} {Z = Z}  g = exponentials Y Z .`λ[_] g 
-
-    transpose : ∀ {X : Obj} (g : X × Y ⇒ Z) → eval ∘ ⟪ λ[ g ] , Id ⟫ ≈ g 
-    transpose {Y = Y} {Z = Z} g = exponentials Y Z .`transpose g 
-
+      _^_ : Obj → Obj → Obj 
+      `eval : (Z ^ Y) × Y ⇒ Z 
+      `curry : ∀ {X : Obj} (g : X × Y ⇒ Z) → X ⇒ (Z ^ Y)
+      `transpose : ∀ {X : Obj} (g : X × Y ⇒ Z) → `eval ∘ ⟪ `curry g , Id ⟫ ≈ g 
+      `unique : (g : X × Y ⇒ Z) (λg : X ⇒ Z ^ Y) → 
+                `eval ∘ ⟪ λg , Id ⟫ ≈ g → 
+                λg ≈ `curry g
+                
 {- ------------------------------------------------------------------------------ 
   I find it most helpful to demonstrate exponentials in type theory:
   The universal property is simply saying that we can curry the function

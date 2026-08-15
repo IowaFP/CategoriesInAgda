@@ -36,33 +36,43 @@ module _ (𝒞 : Category o a e) where
     +-η : (ι₁ ▿ ι₂) ≈ Id
     +-η = unique idₗ idₗ 
 
+  -- ------------------------------------------------------------------------------
   -- A category admits coproducts if every two objects has a coproduct
   record AdmitsCoproducts : Set (o ⊔ e ⊔ a) where 
-    constructor admitsCoproducts
-    open hasCoproduct public
+    infixr 8 _+_ 
+    infixr 4 _▿_
     field 
-      coproducts : ∀ (X Y : Obj) → hasCoproduct X Y 
+      _+_  : Obj → Obj → Obj 
+      ι₁ : A ⇒ A + B 
+      ι₂ : B ⇒ A + B 
+      _▿_ : A ⇒ C → B ⇒ C → A + B ⇒ C
 
-    _+_ : ∀ (A B : Obj) → Obj 
-    A + B = coproducts A B .X₁+X₂
+      inject₁ : (f ▿ g) ∘ ι₁ ≈ f 
+      inject₂ : (f ▿ g) ∘ ι₂ ≈ g 
+      unique : f ∘ ι₁ ≈ g → f ∘ ι₂ ≈ h → (g ▿ h) ≈ f  
+  
+    +-g-η : (f ∘ ι₁ ▿ f ∘ ι₂) ≈ f 
+    +-g-η = unique refl-≈ refl-≈ 
+
+    +-η : (ι₁ {A} {B} ▿ ι₂) ≈ Id
+    +-η = unique idₗ idₗ 
+
 
 -- ------------------------------------------------------------------------------
 -- Products and coproducts are dual
 
 module _ (𝒞 : Category o a e) where 
   open Category 𝒞 ; private Cᵒᵖ = op 
-  open AdmitsCoproducts using (coproducts)
 
-  -- Productsᵒᵖ≡Coproducts : AdmitsProducts 𝒞 → AdmitsCoproducts Cᵒᵖ 
-  -- Productsᵒᵖ≡Coproducts (admitsProducts products) .coproducts X Y = record
-  --   { X₁+X₂ = X × Y
-  --   ; ι₁ = `π₁
-  --   ; ι₂ = `π₂
-  --   ; _▿_ = ⟨_,_⟩
-  --   ; inject₁ = project₁
-  --   ; inject₂ = project₂
-  --   ; unique = unique
-  --   }
-  --   where 
-  --     open AdmitsProducts (admitsProducts products) using (_×_)
-  --     open hasProduct (products X Y)
+  Productsᵒᵖ≡Coproducts : AdmitsProducts 𝒞 → AdmitsCoproducts Cᵒᵖ 
+  Productsᵒᵖ≡Coproducts P = record
+    { _+_ = _×_
+    ; ι₁ = `π₁
+    ; ι₂ = `π₂
+    ; _▿_ = ⟨_,_⟩
+    ; inject₁ = project₁
+    ; inject₂ = project₂
+    ; unique = unique
+    }
+    where 
+      open AdmitsProducts P 

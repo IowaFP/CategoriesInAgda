@@ -9,6 +9,7 @@ open import Categories.Category
 open import Categories.Functor
 
 open import Categories.Constructions.Product
+open import Categories.Constructions.Coproduct
 open import Categories.Constructions.Exponential
 open import Categories.Constructions.Initial
 open import Categories.Constructions.Terminal
@@ -89,7 +90,6 @@ SetInitial = init (λ _ ()) λ { _ () }
 -------------------------------------------------------------------------
 -- _*_ forms products on 𝐒𝐞𝐭
 
-open hasProduct  
 open AdmitsProducts 
 
 𝐒𝐞𝐭Products : ∀ ℓ → AdmitsProducts (𝐒𝐞𝐭 ℓ) 
@@ -103,19 +103,32 @@ open AdmitsProducts
   cong₂ _,_ (sym (eq₁ x)) (sym (eq₂ x)) 
 
 -------------------------------------------------------------------------
+-- _*_ forms products on 𝐒𝐞𝐭
+
+open AdmitsCoproducts
+open import Data.Sum using ([_,_])
+𝐒𝐞𝐭Coproducts : ∀ ℓ → AdmitsCoproducts (𝐒𝐞𝐭 ℓ) 
+𝐒𝐞𝐭Coproducts _ ._+_ = _or_
+𝐒𝐞𝐭Coproducts _ .ι₁ = left
+𝐒𝐞𝐭Coproducts _ .ι₂ = right
+𝐒𝐞𝐭Coproducts _ ._▿_ = [_,_]
+𝐒𝐞𝐭Coproducts _ .inject₁ = Refl 
+𝐒𝐞𝐭Coproducts _ .inject₂ = Refl
+𝐒𝐞𝐭Coproducts _ .unique f∘left∼g f∘right∼h (left x) = f∘left∼g x ⁻¹
+𝐒𝐞𝐭Coproducts _ .unique f∘left∼g f∘right∼h (right x) = f∘right∼h x ⁻¹
+
+-------------------------------------------------------------------------
 -- _→_ forms exponentials on 𝐒𝐞𝐭
 
 module _ ℓ where 
   open AdmitsProducts (𝐒𝐞𝐭Products ℓ) 
-  open hasExponential
   open AdmitsExponentials
   open import Categories.Prelude.Equality.Extensionality.Propositional
   
   𝐒𝐞𝐭Exponentials : AdmitsExponentials (𝐒𝐞𝐭 ℓ) (𝐒𝐞𝐭Products ℓ)
-  𝐒𝐞𝐭Exponentials .exponentials Y Z .Zʸ = Y → Z 
-  𝐒𝐞𝐭Exponentials .exponentials Y Z .`eval (f , y) = f y
-  𝐒𝐞𝐭Exponentials .exponentials Y Z .`λ[_]  f x y = f (x , y)
-  𝐒𝐞𝐭Exponentials .exponentials Y Z .`transpose g (x , y) = refl
+  𝐒𝐞𝐭Exponentials ._^_ X Y = Y → X
+  𝐒𝐞𝐭Exponentials .`eval (f , y) = f y 
+  𝐒𝐞𝐭Exponentials .`curry f x y = f (x , y)
+  𝐒𝐞𝐭Exponentials .`transpose g (x , y) = refl
   -- Begrudgingly need extensionality, here. See note above.
-  𝐒𝐞𝐭Exponentials .exponentials Y Z .`unique g λg λg-exponential x = 
-    extensionality (λ y → λg-exponential (x , y)) 
+  𝐒𝐞𝐭Exponentials .`unique g λg exp x = extensionality (λ y → exp (x , y)) 

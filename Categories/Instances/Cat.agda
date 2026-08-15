@@ -51,7 +51,7 @@ module _ o a e where
   𝐂𝐚𝐭Products .AdmitsProducts.project₂ {A} {B} {C} {f = F} .iso = Id , Id⁻¹ C
     where open Category C 
   𝐂𝐚𝐭Products .AdmitsProducts.unique {f = F} {G} {H} π₁∘f π₂∘f = ⟨⟩-unique G H F π₁∘f π₂∘f
-  
+
 -------------------------------------------------------------------------
 -- Functor categories are exponentials in 𝐂𝐚𝐭 
 -- N.b. we have to be a bit careful with what we are asserting because of 
@@ -70,14 +70,12 @@ module _ o a e where
     ℓ = o ⊔ a ⊔ e 
 
   open AdmitsProducts (𝐂𝐚𝐭Products ℓ ℓ ℓ) hiding (_×_)
-  open hasExponential
-  open AdmitsExponentials hiding (λ[_] ; eval)
   
   𝐂𝐚𝐭Exponentials : AdmitsExponentials 
     (𝐂𝐚𝐭 ℓ ℓ ℓ) 
     (𝐂𝐚𝐭Products ℓ ℓ ℓ)
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .Zʸ = [ 𝒞 , 𝒟 ] 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`eval = eval 𝒞 𝒟
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`λ[_]  = λ[_]
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`transpose = TODO 
-  𝐂𝐚𝐭Exponentials .exponentials 𝒞 𝒟 .`unique = TODO 
+  𝐂𝐚𝐭Exponentials .AdmitsExponentials._^_ X Y = [ Y , X ]
+  𝐂𝐚𝐭Exponentials .AdmitsExponentials.`eval {Z} {Y} = eval Y Z
+  𝐂𝐚𝐭Exponentials .AdmitsExponentials.`curry = λ[_]
+  𝐂𝐚𝐭Exponentials .AdmitsExponentials.`transpose = TODO 
+  𝐂𝐚𝐭Exponentials .AdmitsExponentials.`unique = TODO 
