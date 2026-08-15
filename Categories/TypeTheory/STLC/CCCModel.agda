@@ -2,67 +2,89 @@
 module Categories.TypeTheory.STLC.CCCModel where
 
 open import Categories.Prelude
+open import Categories.Category
+open import Categories.Constructions.Exponential 
+open import Categories.Constructions.Product
+open import Categories.Constructions.Terminal
 open import Categories.TypeTheory.STLC.Syntax
 
--- TODO!
+-------------------------------------------------------------------------------
+-- Modeling the STLC into CCC's
 
--- module CCC where 
---   private
---     variable
---       ℓ ℓ₁ ℓ₂ : Level 
+module CCC {a o e} 
+  (𝒞 : Category o a e) 
+  (products : AdmitsProducts 𝒞) 
+  (exponentials : AdmitsExponentials 𝒞 products)
+  (⊤ : 𝒞 .Category.Obj) 
+  (term : isTerminal 𝒞 ⊤)  where 
 
---   record CCC : Set (lsuc ℓ) where 
---     -- Category attributes
---     infixr 4 _⇒_
---     field 
---       Obj : Set ℓ 
---       _⇒_ : Obj → Obj → Set ℓ
---       _○_ : ∀ {A B C : Obj} → B ⇒ C → A ⇒ B → A ⇒ C 
---       -- The identity arrow on object A
---       Id : ∀ {A}  → A ⇒ A
-  
---     -- Terminal object 
---     field 
---       ⊤ : Obj 
---       ! : ∀ (A : Obj) → A ⇒ ⊤ 
+  open Category 𝒞 
+  open AdmitsProducts products 
+  open AdmitsExponentials exponentials
+  open isTerminal term 
 
---     -- Products  
---     infixr 5 _×_ 
---     field
---       _×_ : Obj → Obj → Obj
---       π₁ : {A B : Obj} → A × B ⇒ A 
---       π₂ : {A B : Obj} → A × B ⇒ B
---       ⟨_,_⟩ : {A B C : Obj} → A ⇒ B → A ⇒ C → A ⇒ B × C 
-    
---     -- exponentials
---     infixr 3 _—→_ 
---     field 
---       _—→_ : (Z Y : Obj) → Obj 
---       `eval : ∀ {Z Y : Obj} → (Y —→ Z) × Y ⇒ Z 
---       `curry : ∀ {X Y Z : Obj} → X × Y ⇒ Z → X ⇒ (Y —→ Z) 
-
---   module CCCModel {ℓ} (𝒞 : CCC {ℓ}) where 
---     open CCC 𝒞 
---     open Syntax 
-
---     ⟦_⟧t : Type → Obj 
---     ⟦ τ₁ `→ τ₂ ⟧t = ⟦ τ₁ ⟧t —→ ⟦ τ₂ ⟧t
---     ⟦ `⊤ ⟧t = ⊤
---     ⟦ τ₁ `× τ₂ ⟧t = ⟦ τ₁ ⟧t × ⟦ τ₂ ⟧t   
+  ⟦_⟧t : Type → Obj 
+  ⟦ τ₁ `→ τ₂ ⟧t = ⟦ τ₂ ⟧t ^ ⟦ τ₁ ⟧t 
+  ⟦ `⊤ ⟧t = ⊤
+  ⟦ τ₁ `× τ₂ ⟧t = ⟦ τ₁ ⟧t × ⟦ τ₂ ⟧t   
  
---     ⟦_⟧ctx : Context → Obj 
---     ⟦ ∅ ⟧ctx = ⊤
---     ⟦ Γ , x ⟧ctx = ⟦ Γ ⟧ctx × ⟦ x ⟧t
+  ⟦_⟧ctx : Context → Obj 
+  ⟦ ∅ ⟧ctx = ⊤
+  ⟦ Γ , x ⟧ctx = ⟦ Γ ⟧ctx × ⟦ x ⟧t
 
---     ⟦_⟧v : Var Γ τ → ⟦ Γ ⟧ctx ⇒ ⟦ τ ⟧t
---     ⟦ `0 ⟧v = π₂ 
---     ⟦ `S x ⟧v = ⟦ x ⟧v ○ π₁
+  ⟦_⟧v : Var Γ τ → ⟦ Γ ⟧ctx ⇒ ⟦ τ ⟧t
+  ⟦ `0 ⟧v = `π₂ 
+  ⟦ `S x ⟧v = ⟦ x ⟧v ∘ `π₁
 
---     ⟦_⟧ : Term Γ τ → ⟦ Γ ⟧ctx ⇒ ⟦ τ ⟧t 
---     ⟦ ` x ⟧ = ⟦ x ⟧v
---     ⟦ `λ {τ = τ} M ⟧ = `curry ⟦ M ⟧ 
---     ⟦ M · N ⟧  = `eval ○ ⟨ ⟦ M ⟧ , ⟦ N ⟧ ⟩ 
---     ⟦ fst M ⟧ = π₁ ○ ⟦ M ⟧
---     ⟦ snd M ⟧ = π₂ ○ ⟦ M ⟧
---     ⟦_⟧ {Γ = Γ} ⋆ = ! ⟦ Γ ⟧ctx 
---     ⟦ M , N ⟧ = ⟨ ⟦ M ⟧ , ⟦ N ⟧ ⟩ 
+  ⟦_⟧ : Term Γ τ → ⟦ Γ ⟧ctx ⇒ ⟦ τ ⟧t 
+  ⟦ ` x ⟧ = ⟦ x ⟧v
+  ⟦ `λ {τ = τ} M ⟧ = `curry ⟦ M ⟧ 
+  ⟦ M · N ⟧  = `eval ∘ ⟨ ⟦ M ⟧ , ⟦ N ⟧ ⟩ 
+  ⟦ fst M ⟧ = `π₁ ∘ ⟦ M ⟧
+  ⟦ snd M ⟧ = `π₂ ∘ ⟦ M ⟧
+  ⟦_⟧ {Γ = Γ} ⋆ = ! ⟦ Γ ⟧ctx 
+  ⟦ M , N ⟧ = ⟨ ⟦ M ⟧ , ⟦ N ⟧ ⟩ 
+
+-------------------------------------------------------------------------------
+-- Recovering the Set model! 
+
+module SetModel (ℓ : Level) where 
+  open import Categories.Instances.Set 
+  open import Data.Unit renaming (⊤ to ⊤′ ; tt to tt′) 
+  open PropositionalEquality
+  open import Categories.Prelude.Equality.Heterogeneous
+  open HeterogeneousEquality
+
+  open Category (𝐒𝐞𝐭 lzero)
+  open AdmitsProducts  (𝐒𝐞𝐭Products lzero)
+  open AdmitsExponentials (𝐒𝐞𝐭Exponentials lzero)
+  open isTerminal {a = lzero} SetTerminal
+
+  open CCC (𝐒𝐞𝐭 lzero) (𝐒𝐞𝐭Products lzero) (𝐒𝐞𝐭Exponentials lzero) ⊤ SetTerminal
+    renaming 
+      (⟦_⟧t to ⟦_⟧₀t ; 
+       ⟦_⟧v to ⟦_⟧₀v ; 
+       ⟦_⟧ctx to ⟦_⟧₀ctx ; 
+       ⟦_⟧ to ⟦_⟧₀) 
+
+
+  open import Categories.TypeTheory.STLC.SetModel 
+    renaming 
+      (⟦_⟧t to ⟦_⟧₁t ; 
+       ⟦_⟧v to ⟦_⟧₁v ; 
+       ⟦_⟧ctx to ⟦_⟧₁ctx ; 
+       ⟦_⟧ to ⟦_⟧₁)   
+
+  -- Asserting that the construction in STLC.SetModel is identical.
+  same-types : ∀ (τ : Type) → ⟦ τ ⟧₀t ≡ ⟦ τ ⟧₁t 
+  same-types (τ `→ τ₁) = {! ⟦_⟧₀  !}
+  same-types `⊤ = {! refl  !}
+  same-types (τ `× τ₁) = {!   !} 
+  
+  same-terms : ∀ (M : Term Γ τ) 
+           (H₀ : ⟦ Γ ⟧₀ctx)
+           (H₁ : ⟦ Γ ⟧₁ctx) → 
+           ((x : Var Γ τ) → ⟦ x ⟧₀v H₀ ≅ ⟦ x ⟧₁v H₁) → 
+           ⟦ M ⟧₀ H₀ ≅ ⟦ M ⟧₁ H₁ 
+  same-terms = {!   !} 
+
