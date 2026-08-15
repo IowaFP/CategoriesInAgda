@@ -1,3 +1,5 @@
+# Category Theory
+
 ## Online resources
 - nLab. https://ncatlab.org/nlab/show/HomePage
 
@@ -12,20 +14,32 @@
   - https://arxiv.org/abs/1612.09375
 - Category Theory in Context. Emily Riehl.
   - https://emilyriehl.github.io/files/context.pdf
-- Notes on Type Theory. Steve Awodey. 
-  - https://awodey.github.io/typetheory/notes/typetheory.pdf
   
 ## Cheat sheets / short texts
 - Basic Concepts in Category Theory. Emily Riehl. 
   - https://math.jhu.edu/~eriehl/266x/basic.pdf
 - Introduction to Category Theory and the Yoneda Lemma. Alex Stern.
   - https://math.uchicago.edu/~may/REU2022/REUPapers/Stern.pdf
+
+# Categorical Semantics of Type Theory
+
+## Texts & Notes
+- Notes on Type Theory. Steve Awodey. 
+  - https://awodey.github.io/typetheory/notes/typetheory.pdf
+- Basic Category Theory for Computer Scientists. Benjamin Pierce.
+  - https://pages.jh.edu/rrynasi1/NewFoundations4Math/Literature/Textbooks/Pierce1991BasicCategoryTheoryForComputerScientists.pdf
+- Bart Jacobs, Categorical Logic and Type Theory (Studies in Logic and the Foundations of Mathematics, Vol 141, Elsevier, 1999).
 - A Type Theoretical Yoneda Lemma. Egbert Rijke, 2012.
   - https://homotopytypetheory.org/2012/05/02/a-type-theoretical-yoneda-lemma/
 
-# Papers 
+## the STLC
+Both Awodey and Pierce describe CCCs. 
 
-## Category theoretic models of dependent types
+## System F, Fω, and other ends of the λ-cube
+- R. A. G. Seely, "Categorical semantics for higher order polymorphic lambda calculus", The Journal of Symbolic Logic 52(4), 1987.
+ 
+
+## Dependent Type Theory / MLTT
 - Towards Formalizing Categorical Models
 of Type Theory in Type Theory. Alexandre Buisse and Peter Dybjer. 
   - https://www.cse.chalmers.se/~peterd/papers/Bremen2007.pdf
@@ -60,7 +74,7 @@ Types.
   - https://bartoszmilewski.com/2017/07/07/profunctor-optics-the-categorical-view/
 - https://www.cas.mcmaster.ca/~carette/publications/OpticsAndTypeEquivalences.pdf
 
-## Reduction free normalization of lambda calculi
+## Normalization By Evaluation
 - Categorical reconstruction of a *reduction free* normalization proof.
   Thorsten Altenkirch, Martin Hofmann, Thomas Streicher. 1995
   - https://people.cs.nott.ac.uk/psztxa/publ/ctcs95.pdf 
