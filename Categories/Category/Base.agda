@@ -49,18 +49,15 @@ record Category (o a e : Level) : Set (lsuc (o ⊔ a ⊔ e)) where
     Hom : Obj * Obj → Setoid _ _
     Hom (A , B) = record
       { Carrier       = A ⇒ B
-      ; _≈_           = _≈_
+      ; _≈_           = _≈_ 
       ; isEquivalence = eqv {A} {B} 
-      }
+      } 
     
     -- Infix notation for transitivity; emphasizes that
     -- transitivity is composition
-    infixr 3 _⨾_ 
-    _⨾_ : ∀ {A B} {f g h : A ⇒ B} → f ≈ g → g ≈ h → f ≈ h
-    _⨾_ = trans-≈ 
-
-    _⁻¹ : ∀ {A B} {f g : A ⇒ B} → f ≈ g → g ≈ f
-    _⁻¹ = sym-≈ 
+    instance 
+      gpd : ∀ {A B : Obj} → GroupoidSyntax (_≈_ {A} {B})
+      gpd = Groupoid refl-≈ sym-≈ trans-≈ 
 
     -- congruence on left of a composition (Whiskering)
     infixl 7 _⋆ₗ_ _⋆ᵣ_ 
@@ -139,8 +136,6 @@ module `Category (𝒞 : Category o a e) where
               sym-≈ to `sym-≈ ;
               trans-≈ to `trans-≈ ;
               Hom to `Hom ;
-              _⨾_ to _`⨾_ ; 
-              _⁻¹ to _`⁻¹ ;
               _⋆ₗ_ to _`⋆ₗ_ ;
               _⋆ᵣ_ to _`⋆ᵣ_ ;
               assᵣ to `assᵣ ;

@@ -4,7 +4,7 @@ module Categories.Instances.Cat where
 
 open import Categories.Prelude hiding (ℓ)
 open import Categories.Category
-open import Categories.Category.Product renaming (⟨_,_⟩ to ⟨_∶_⟩)
+open import Categories.Category.Product
 open import Categories.Category.Exponential
 open import Categories.Functor 
 open import Categories.NaturalTransformation
@@ -36,26 +36,22 @@ module _ o a e where
 -- The product of categories are products in 𝐂𝐚𝐭
 module _ o a e where 
 
-  open hasProduct 
-  open AdmitsProducts hiding (_×_)
   
   𝐂𝐚𝐭Products : AdmitsProducts (𝐂𝐚𝐭 o a e) 
-  𝐂𝐚𝐭Products .products X Y .X₁×X₂ = X × Y
-  𝐂𝐚𝐭Products .products X Y .`π₁ = π¹
-  𝐂𝐚𝐭Products .products X Y .`π₂ = π²
-  𝐂𝐚𝐭Products .products X Y .⟨_⨾_⟩ = ⟨_∶_⟩
-  𝐂𝐚𝐭Products .products X Y .project₁ .nat = Id , λ _ → idᵣ ⨾ sym-≈ idₗ
-    where open Category X 
-  𝐂𝐚𝐭Products .products X Y .project₁ .iso = Id , idₗ , idₗ
-    where open Category X 
-  𝐂𝐚𝐭Products .products X Y .project₂ .nat = Id , λ _ → idᵣ ⨾ sym-≈ idₗ
-    where open Category Y 
-  𝐂𝐚𝐭Products .products X Y .project₂ .iso = Id , idₗ , idₗ
-    where open Category Y 
-  𝐂𝐚𝐭Products .products X Y .unique {f = F} {G} {H} π₁∘f π₂∘f = ⟨⟩-unique G H F π₁∘f π₂∘f
-    where 
-      module X = Category X ; module Y = Category Y
-
+  𝐂𝐚𝐭Products .AdmitsProducts._×_ = _×_
+  𝐂𝐚𝐭Products .AdmitsProducts.`π₁ = π¹
+  𝐂𝐚𝐭Products .AdmitsProducts.`π₂ = π²
+  𝐂𝐚𝐭Products .AdmitsProducts.⟨_,_⟩ = ⟨_,_⟩
+  𝐂𝐚𝐭Products .AdmitsProducts.project₁ {A} {B} {f = F} {g = G} .nat = Id , λ _ → idᵣ ⨾ idₗ ⁻¹
+    where open Category B
+  𝐂𝐚𝐭Products .AdmitsProducts.project₁ {A} {B} {f = F} .iso = Id , Id⁻¹ B
+    where open Category B 
+  𝐂𝐚𝐭Products .AdmitsProducts.project₂ {A} {B} {C} {f = F} {g = G} .nat = Id , λ _ → idᵣ ⨾ idₗ ⁻¹
+    where open Category C 
+  𝐂𝐚𝐭Products .AdmitsProducts.project₂ {A} {B} {C} {f = F} .iso = Id , Id⁻¹ C
+    where open Category C 
+  𝐂𝐚𝐭Products .AdmitsProducts.unique {f = F} {G} {H} π₁∘f π₂∘f = ⟨⟩-unique G H F π₁∘f π₂∘f
+  
 -------------------------------------------------------------------------
 -- Functor categories are exponentials in 𝐂𝐚𝐭 
 -- N.b. we have to be a bit careful with what we are asserting because of 

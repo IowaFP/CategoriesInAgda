@@ -19,7 +19,7 @@ module _ where
   𝐒𝐞𝐭𝐨𝐢𝐝 o e ._∘_ = _●_
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .Id = id , id 
   _≈_ (𝐒𝐞𝐭𝐨𝐢𝐝 o e) {A} {B} (f , _) (g , _) =  ∀ (x : A.Carrier) → f x B.≈ g x
-    where private module A = Setoid A ; private module B = Setoid B 
+    where module A = Setoid A ; module B = Setoid B 
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.refl _ = B .Setoid.refl
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.sym  f~g x = B .Setoid.sym (f~g x)
   𝐒𝐞𝐭𝐨𝐢𝐝 o e .eqv {A} {B} .IsEquivalence.trans f~g g~h x = B .Setoid.trans (f~g x) (g~h x)

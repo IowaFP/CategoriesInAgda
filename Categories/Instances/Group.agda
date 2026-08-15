@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 module Categories.Instances.Group where
 
-open import Categories.Prelude
+open import Categories.Prelude hiding (_⁻¹)
 open import Categories.Category
 open import Categories.Functor 
 open import Categories.NaturalTransformation
@@ -63,7 +63,7 @@ record Group (A : Set o) : Set o where
 
 module _ (A : Set o) (G : Group A) where 
   open Group G 
-  open Category hiding (_⁻¹)
+  open Category
   open GroupoidCategory
 
   GroupGroupoid : GroupoidCategory o o o 

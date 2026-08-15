@@ -33,7 +33,7 @@ open import Categories.Instances.Groupoid public
 open import Categories.Instances.Group public
 open import Categories.Instances.NatFAlgebra public
 
-open import Categories.TypeTheory.GroupoidInterpretationOfTypes public 
+-- open import Categories.TypeTheory.Notes.GroupoidInterpretationOfTypes public 
 
 open import Categories.Theorems.Yoneda public 
 

@@ -28,8 +28,8 @@ module _ (ℓ : Level) where
   𝐒𝐞𝐭 ._⇒_ A B =  A → B 
   𝐒𝐞𝐭 ._∘_ f g = f ○ g 
   𝐒𝐞𝐭 .Id = id 
-  𝐒𝐞𝐭 ._≈_ {A = A} {B = B} = _~_ (` B)
-  𝐒𝐞𝐭 .eqv {A} {B} = ~-equiv (` B)
+  𝐒𝐞𝐭 ._≈_ {A = A} {B = B} = _∼_
+  𝐒𝐞𝐭 .eqv {A} {B} = ∼-equiv
   𝐒𝐞𝐭 ._⋆_ {f = f} {g = g} {i} e₁ e₂ a = trans (cong f (e₂ a)) (e₁ (i a))
   𝐒𝐞𝐭 .idᵣ _ = refl 
   𝐒𝐞𝐭 .idₗ _ = refl 
@@ -93,13 +93,14 @@ open hasProduct
 open AdmitsProducts 
 
 𝐒𝐞𝐭Products : ∀ ℓ → AdmitsProducts (𝐒𝐞𝐭 ℓ) 
-𝐒𝐞𝐭Products _ .products X Y .X₁×X₂ = X * Y
-𝐒𝐞𝐭Products _ .products X Y .`π₁ = fst
-𝐒𝐞𝐭Products _ .products X Y .`π₂ = snd
-𝐒𝐞𝐭Products _ .products X Y .⟨_⨾_⟩ f g x = (f x , g x)
-𝐒𝐞𝐭Products _ .products X Y .project₁ _ = refl 
-𝐒𝐞𝐭Products _ .products X Y .project₂ _ = refl 
-𝐒𝐞𝐭Products _ .products X Y .unique eq₁ eq₂ x = cong₂ _,_ (sym (eq₁ x)) (sym (eq₂ x)) 
+𝐒𝐞𝐭Products _ ._×_ = _*_
+𝐒𝐞𝐭Products _ .`π₁ = fst
+𝐒𝐞𝐭Products _ .`π₂ = snd
+𝐒𝐞𝐭Products _ .⟨_,_⟩ f g x = (f x , g x)
+𝐒𝐞𝐭Products _ .project₁ _ = refl 
+𝐒𝐞𝐭Products _ .project₂ _ = refl 
+𝐒𝐞𝐭Products ℓ  .unique eq₁ eq₂ x = 
+  cong₂ _,_ (sym (eq₁ x)) (sym (eq₂ x)) 
 
 -------------------------------------------------------------------------
 -- _→_ forms exponentials on 𝐒𝐞𝐭

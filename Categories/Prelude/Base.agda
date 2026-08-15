@@ -59,3 +59,18 @@ cross f g (a , b) = (f a , g b)
 
 ¬_ : (A : Set ℓ) → Set ℓ
 ¬_ {ℓ} A = A → ⊥ {ℓ}
+
+--------------------------------------------------------------------------------
+-- Syntax for groupoids 
+
+record GroupoidSyntax {ℓ₁ ℓ₂} {A : Set ℓ₁} (_≈_ : A → A → Set ℓ₂)  : Set (ℓ₁ ⊔ lsuc ℓ₂)  where
+  constructor Groupoid
+
+  infixl 30 _⁻¹
+  infixl 5 _⨾_
+  field
+    Refl : ∀ {x : A} → x ≈ x
+    _⁻¹ : {x y : A} → x ≈ y → y ≈ x
+    _⨾_ : {x y z : A} → x ≈ y → y ≈ z → x ≈ z
+
+open GroupoidSyntax {{...}} public 

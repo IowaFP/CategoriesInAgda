@@ -77,6 +77,14 @@ module _ (𝒞 : Category o a e) where
 --------------------------------------------------------------------------------
 -- Some basic results on arrows
 
+  -- The identity is its own inverse.
+  -- N.b., we can prove this with idₗ or idᵣ,
+  -- so the identity as its own inverse is not contractible.
+  -- This can cause problems e.g. when equating natural isomorphisms.
+  Id⁻¹ : areInverse (Id {A}) Id 
+  Id⁻¹ = idₗ , idₗ 
+
+
   -- Every section is a monomorphism
   section⇒mono : (f : A ⇒ B) → isSection f → isMono f 
   section⇒mono f (g , rinv) = Mono (λ g₁ g₂ eq → begin 

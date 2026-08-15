@@ -53,16 +53,16 @@ module _ (𝒞 : Category o a e) where
   open Category 𝒞 ; private Cᵒᵖ = op 
   open AdmitsCoproducts using (coproducts)
 
-  Productsᵒᵖ≡Coproducts : AdmitsProducts 𝒞 → AdmitsCoproducts Cᵒᵖ 
-  Productsᵒᵖ≡Coproducts (admitsProducts products) .coproducts X Y = record
-    { X₁+X₂ = X × Y
-    ; ι₁ = `π₁
-    ; ι₂ = `π₂
-    ; _▿_ = ⟨_⨾_⟩
-    ; inject₁ = project₁
-    ; inject₂ = project₂
-    ; unique = unique
-    }
-    where 
-      open AdmitsProducts (admitsProducts products) using (_×_)
-      open hasProduct (products X Y)
+  -- Productsᵒᵖ≡Coproducts : AdmitsProducts 𝒞 → AdmitsCoproducts Cᵒᵖ 
+  -- Productsᵒᵖ≡Coproducts (admitsProducts products) .coproducts X Y = record
+  --   { X₁+X₂ = X × Y
+  --   ; ι₁ = `π₁
+  --   ; ι₂ = `π₂
+  --   ; _▿_ = ⟨_,_⟩
+  --   ; inject₁ = project₁
+  --   ; inject₂ = project₂
+  --   ; unique = unique
+  --   }
+  --   where 
+  --     open AdmitsProducts (admitsProducts products) using (_×_)
+  --     open hasProduct (products X Y)

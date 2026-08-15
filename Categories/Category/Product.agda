@@ -60,6 +60,9 @@ module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} where
 
 module _ {𝒞 : Category o₁ a₁ e₁} {𝒟 : Category o₂ a₂ e₂} {ℰ : Category o₃ a₃ e₃} where
 
+  -- TODO:
+  -- - Rephrase this as an instance of AdmitsProducts record.
+  
   -- _×_ forms a product on the category of categories, where 
   -- ⟨ F , G ⟩ is the unique morphism such that 
   -- F ≃ π¹ ∘ ⟨ F , G ⟩ and G ≃  π² ∘ ⟨ F , G ⟩. 
