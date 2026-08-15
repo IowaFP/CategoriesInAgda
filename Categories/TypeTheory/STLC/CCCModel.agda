@@ -50,7 +50,6 @@ module CCC {a o e}
 
 module SetModel (ℓ : Level) where 
   open import Categories.Instances.Set 
-  open import Data.Unit renaming (⊤ to ⊤′ ; tt to tt′) 
   open PropositionalEquality
   open import Categories.Prelude.Equality.Heterogeneous
   open HeterogeneousEquality
@@ -76,8 +75,15 @@ module SetModel (ℓ : Level) where
        ⟦_⟧ to ⟦_⟧₁)   
 
   -- Asserting that the construction in STLC.SetModel is identical.
+  -- AH> Don't understand why normalizing the term 
+  --       ⟦ τ ⟧₀t 
+  --     affixes all the CCC nonsense:
+  --       (CCC.⟦ 𝐒𝐞𝐭 lzero ⟧t (𝐒𝐞𝐭Products lzero)
+  --       (𝐒𝐞𝐭Exponentials lzero) (Level.Lift lzero Agda.Builtin.Unit.⊤)
+  --       (term (λ _ _ → Level.lift Agda.Builtin.Unit.tt) (λ f a → refl)) τ
+  -- I want it to normalize to ⟦ τ ⟧₀t!!!
   same-types : ∀ (τ : Type) → ⟦ τ ⟧₀t ≡ ⟦ τ ⟧₁t 
-  same-types (τ `→ τ₁) = {! ⟦_⟧₀  !}
+  same-types (τ `→ τ₁) = {! same-types τ   !}
   same-types `⊤ = {! refl  !}
   same-types (τ `× τ₁) = {!   !} 
   
