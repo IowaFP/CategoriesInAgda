@@ -12,7 +12,9 @@
   - https://arxiv.org/abs/1612.09375
 - Category Theory in Context. Emily Riehl.
   - https://emilyriehl.github.io/files/context.pdf
-
+- Notes on Type Theory. Steve Awodey. 
+  - https://awodey.github.io/typetheory/notes/typetheory.pdf
+  
 ## Cheat sheets / short texts
 - Basic Concepts in Category Theory. Emily Riehl. 
   - https://math.jhu.edu/~eriehl/266x/basic.pdf
