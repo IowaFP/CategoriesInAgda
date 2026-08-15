@@ -2,16 +2,11 @@
 module Categories.TypeTheory.STLC.SetModel where
 
 open import Agda.Primitive
-open import Function
-open import Relation.Binary.PropositionalEquality hiding (J)
-
+open import Categories.Prelude renaming (_○_ to _∘_ ; fst to π₁ ; snd to π₂ ; _*_ to _×_)
 open import Categories.TypeTheory.STLC.Syntax
 
 -------------------------------------------------------------------------------
 -- The model in Set, which is a CCC
-
-open import Data.Unit 
-open import Data.Product renaming (proj₁ to π₁ ; proj₂ to π₂)
 
 ⟦_⟧t : Type → Set 
 ⟦ τ₁ `→ τ₂ ⟧t = ⟦ τ₁ ⟧t → ⟦ τ₂ ⟧t
