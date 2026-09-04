@@ -1,9 +1,12 @@
 # Categorical Reconstruction of a reduction free normalization proof 
 
 The following is some scratch paper, in essence, for working through
-Altenkirch et al.'s *Categorical Reconstruction of a reduction free normalization proof*.
-
-https://people.cs.nott.ac.uk/psztxa/publ/ctcs95.pdf
+- Altenkirch et al. **Categorical Reconstruction of a reduction free normalization proof**.
+  - https://people.cs.nott.ac.uk/psztxa/publ/ctcs95.pdf
+This paper is a *baby step* towards:
+- THORSTEN ALTENKIRCH AND AMBRUS KAPOSI 2017. **Normalization By Evaluation For Type Theory In Type Theory**. 
+   - https://arxiv.org/pdf/1612.02462
+ 
 
 The intent of this file is to better understand the presheaf model of intrinsically well-typed
 syntax. 
