@@ -27,6 +27,56 @@ private
     A B C D S V T : Set
 ``` 
 
+# High level summary
+I will put the following on the board.
+
+The **contribution** of this paper is the following:
+The profunctor optics encoding of optics may be derived via the double Yoneda Lema. 
+
+Let's consider one type of optics: lenses. Lenses are a language-theoretic solution to the View-Update problem: given a source table S and view table V, what changes to V can be propagated back to S? Traditionally, a lens is a tuple of functions:
+- get : S → V 
+- put : S → V → S
+subject to the round-trip laws:
+- (GetPut) ∀ s ∈ S. get ∘ set s ∼ id 
+- (PutGet) ∀ s ∈ S. (set s) (get s) ≡ s
+
+The profunctor encoding instead defines a lens as:
+```no
+type lens a b s t = ∀ p. Profunctor p, Cartesian p ⇒ p a b → p s t
+```
+
+Where
+
+
+```no
+class Profunctor p where
+  dimap :: (c → a) → (b → d) → p a b → p c d
+
+class Profunctor p ⇒ Cartesian p where
+  second :: p a b → p (c × a) (c × b)
+```
+
+Surprisingly, these two definitions are equivalent, which follows from (among other things) the Yoneda Lemma. I will define the Yoneda lemma using more straightforward notation.
+
+**Theorem (Yoneda Lemma, á la Alex)**: For 𝒞 a locally-small category, A ∈ Obj(𝒞) and F : 𝒞 → Set:
+  Nat(Hom(A, —), F) ≃ F(A) 
+
+The paper spends a lot of its giving other examples of the Yoneda lemma at play, including:
+- indirect inequality:
+  - b ≤ a ⇔ ∀ c. (a ≤ c ⇒ b ≤ c)
+- indirect inequality
+  ```no
+  ⇔ (∀ c. a ≤ c ⇔ b ≤ c)
+  ⇔ a = b
+  ⇔ (∀ c. c ≤ a ⇔ c ≤ b)
+  ```
+- currying
+- Distributivity law on products/coproducts
+- Cayley's theorem
+
+I did all of the examples except, sadly, the chief contributions of the paper (the derivation of profunctor optics), but from what I could skim, Gibbons does a great job making sure we don't need any machinery outside of what's covered in the paper. (Which is commendable, as I believe he hides some complexity concerning ends/co-ends.)
+
+
 # Motivation and Background
 What you needa know about this paper is that it's a clever framing of a body of work on **optics** (lenses, prisms, and traversals). There is a world in which this paper is simply called "Categorical Semantics of Profunctor Optics". The Yoneda business is charm thrown in. 
 
