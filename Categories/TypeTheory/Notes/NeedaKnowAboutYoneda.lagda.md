@@ -714,7 +714,7 @@ where function composition is the group operation. How does Yoneda imply Cayley'
 
 What we want to argue is that (1) φ : G → Perm(G) is a group homomorphism and (2) φ is injective, which immediately implies G ≃ Im(φ) and, as Im(φ) ≤ Perm(G), we have Cayley's theorem: every group is isomorphic to a subgroup of permutations on G. 
 
-We view φ as the arrow action of Hom(★, —). That this is a homomorphism follows from the functor properties: Unfolding F(a′ ∘ x′) = F(a′) ∘ F(x′) states φ­ₐₓ = φₐ ∘ φₓ---precisely the homomorphic property. Moreover, each φₓ is invertible via φₓ₋₁, so Im(φ) ≤ Perm(G): each φₓ is a permutation.
+We view φ as the arrow action of Hom(★, —). That this is a homomorphism follows from the functor properties: Unfolding F(a′ ∘ x′) = F(a′) ∘ F(x′) states φₐₓ = φₐ ∘ φₓ---precisely the homomorphic property. Moreover, each φₓ is invertible via φₓ₋₁, so Im(φ) ≤ Perm(G): each φₓ is a permutation.
 
 Here, the Yoneda embedding maps the object ★ to the functor Hom(★, —) (an object (functor) in [𝔾, Set]) and each arrow x′ ∈ Hom(𝔾) to a natural transformation between Hom(★, —) and itself. But this natural transformation is in fact just the permutation φₓ. That 𝕪 is faithful implies, for any a, x ∈ Hom(𝔾), that
 ```no 
