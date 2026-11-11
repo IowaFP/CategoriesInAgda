@@ -2,7 +2,8 @@
 module Categories.TypeTheory.STLC.SetModel where
 
 open import Agda.Primitive
-open import Categories.Prelude renaming (_○_ to _∘_ ; fst to π₁ ; snd to π₂ ; _*_ to _×_)
+open import Categories.Prelude renaming 
+  (_○_ to _∘_ ; fst to π₁ ; snd to π₂ ; _*_ to _×_)
 open import Categories.TypeTheory.STLC.Syntax
 
 -------------------------------------------------------------------------------
@@ -14,21 +15,24 @@ open import Categories.TypeTheory.STLC.Syntax
 ⟦ τ₁ `× τ₂ ⟧t = ⟦ τ₁ ⟧t × ⟦ τ₂ ⟧t 
 
 ⟦_⟧ctx : Context → Set 
-⟦ ∅ ⟧ctx = ⊤
-⟦ Γ , x ⟧ctx = ⟦ Γ ⟧ctx × ⟦ x ⟧t 
+⟦ ∅ ⟧ctx    = ⊤
+⟦ Γ , τ ⟧ctx = ⟦ Γ ⟧ctx × ⟦ τ ⟧t 
 
 ⟦_⟧v : Var Γ τ → ⟦ Γ ⟧ctx → ⟦ τ ⟧t 
-⟦ `0 ⟧v = π₂ 
+⟦ `0 ⟧v   = π₂
 ⟦ `S x ⟧v = ⟦ x ⟧v ∘ π₁
 
 eval : ∀ {A B : Set} → (A → B) × A → B 
 eval (f , x) = f x 
 
-⟦_⟧ : Term Γ τ → ⟦ Γ ⟧ctx → ⟦ τ ⟧t 
-⟦ ` x ⟧ = ⟦ x ⟧v
-⟦ `λ {τ = τ} M ⟧ = curry ⟦ M ⟧ 
-⟦ M · N ⟧  = eval ∘ < ⟦ M ⟧ , ⟦ N ⟧ > 
-⟦ fst M ⟧ = π₁ ∘ ⟦ M ⟧
-⟦ snd M ⟧ = π₂ ∘ ⟦ M ⟧
-⟦ ⋆ ⟧ = const tt 
-⟦ M , N ⟧ = < ⟦ M ⟧ , ⟦ N ⟧ > 
+_⊢_ : Context → Type → Set 
+_⊢_ = Term
+
+⟦_⟧ : Γ ⊢ τ → ⟦ Γ ⟧ctx → ⟦ τ ⟧t 
+⟦ ` v ⟧          = ⟦ v ⟧v
+⟦ `λ {τ = τ} M ⟧ = curry ⟦ M ⟧
+⟦ M · N ⟧        = eval ∘ < ⟦ M ⟧ , ⟦ N ⟧ > 
+⟦ fst M ⟧        = π₁   ∘ ⟦ M ⟧
+⟦ snd M ⟧        = π₂   ∘ ⟦ M ⟧
+⟦ ⋆ ⟧            = const tt 
+⟦ M , N ⟧        = < ⟦ M ⟧ , ⟦ N ⟧ > 

@@ -15,6 +15,9 @@ data Type : Set where
 variable 
   τ υ : Type 
 
+--------------------------------------------------------------------------------
+-- Contexts 
+
 data Context : Set where 
   ∅ : Context 
   _,_ : Context → Type → Context
@@ -22,9 +25,15 @@ data Context : Set where
 variable 
   Γ Δ : Context
 
+--------------------------------------------------------------------------------
+-- Variables
+
 data Var : Context → Type → Set where 
   `0 : Var (Γ , τ) τ 
   `S_ : Var Γ υ → Var (Γ , τ) υ
+
+--------------------------------------------------------------------------------
+--  Terms
 
 data Term : Context → Type → Set where 
   ` : Var Γ τ → Term Γ τ 
@@ -33,11 +42,12 @@ data Term : Context → Type → Set where
   fst : Term Γ (τ `× υ) → Term Γ τ 
   snd : Term Γ (τ `× υ) → Term Γ υ 
   _,_ : Term Γ τ → Term Γ υ → Term Γ (τ `× υ) 
-  ⋆ : Term Γ `⊤
+  ⋆ : Term Γ `⊤ 
 
 -------------------------------------------------------------------------------
 -- Renaming
 
+-- f x [f ↦ g , x ↦ y] = g y
 Renaming : ∀ (Γ Δ : Context) → Set 
 Renaming Γ Δ = ∀ {τ} → Var Γ τ → Var Δ τ 
 

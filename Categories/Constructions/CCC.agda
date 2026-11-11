@@ -17,10 +17,10 @@ record IsCCC {a o e} (𝒞 : Category o a e) : Set (lsuc a ⊔ lsuc o ⊔ lsuc e
   open Category 𝒞 
 
   field 
-    products : AdmitsProducts 𝒞
+    products     : AdmitsProducts 𝒞
     exponentials : AdmitsExponentials 𝒞 products
-    𝕋 : Obj
-    isTerm : isTerminal 𝒞 𝕋
+    𝕋            : Obj
+    isTerm       : isTerminal 𝒞 𝕋
 
   open AdmitsProducts products public 
   open AdmitsExponentials exponentials public 
